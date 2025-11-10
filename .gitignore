@@ -1,0 +1,33 @@
+# Archivos compilados de Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Carpetas de build
+bin/
+build/
+target/
+out/
+
+# Archivos de IDEs
+.classpath
+.project
+.settings/
+.vscode/
+.idea/
+*.iml
+
+# Archivos de sistema macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archivos temporales
+*.tmp
+*.log
+*.swp
+*~
+
+# Scripts de compilación (opcional, depende)
+# compile.sh

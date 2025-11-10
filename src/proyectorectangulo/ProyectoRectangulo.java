@@ -1,3 +1,5 @@
+package proyectorectangulo;
+
 public class ProyectoRectangulo {
 
     public static void main(String[] args) {

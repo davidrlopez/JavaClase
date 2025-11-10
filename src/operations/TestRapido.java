@@ -22,6 +22,9 @@ public class TestRapido {
         if (nPrimo == 2) {
             return true;
         }
+        if (nPrimo % 2 == 0) {
+            return false;
+        }
         for (int i = 3; i * i <= nPrimo; i += 2) {
             if (nPrimo % i == 0) {
                 return false;
@@ -87,7 +90,6 @@ public class TestRapido {
     public static int sumaFactorial(int a) {
         int sumaFactorial = 0;
         for (int i = 1; i <= a; i++) {
-            TestRapido.factorial(i);
             sumaFactorial += TestRapido.factorial(i);
         }
         return sumaFactorial;

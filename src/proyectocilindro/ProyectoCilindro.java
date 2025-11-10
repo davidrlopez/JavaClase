@@ -16,6 +16,8 @@
         IMPRIMIR "Superficie total:" superficieTotal
 FIN PROCEDIMIENTO*/
 
+package proyectocilindro;
+
 public class ProyectoCilindro {
 
     public static void main(String[] args) {

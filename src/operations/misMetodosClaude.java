@@ -1,3 +1,5 @@
+package operations;
+
 public class misMetodosClaude {
 
     public static void main(String[] args) {

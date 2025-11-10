@@ -1,5 +1,0 @@
-{
-    "java.project.sourcePaths": ["src"],
-    "java.project.outputPath": "bin",
-    "java.compile.nullAnalysis.mode": "automatic"
-}

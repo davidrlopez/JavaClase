@@ -93,6 +93,28 @@ public class arrays1 {
         mostrarArray(arrayFilasColumnas[0]);
         System.out.println("Sumas de columnas:");
         mostrarArray(arrayFilasColumnas[1]);
+        
+        // Test para el ejercicio de salto de longitud
+        System.out.println("\n--- Test de competicion de salto de longitud ---");
+        System.out.print("Introduce el numero de atletas: ");
+        int numeroAtletas = input.nextInt();
+        saltoLongitud(numeroAtletas);
+        
+        // Test para el ejercicio de búsqueda en array generado
+        System.out.println("\n--- Test de búsqueda en array generado ---");
+        System.out.print("Introduce el valor a buscar: ");
+        int valorBuscar = input.nextInt();
+        System.out.print("Introduce el tamaño del array: ");
+        int tamanoArray = input.nextInt();
+        
+        boolean encontrado = ejercicioBusqueda(valorBuscar, tamanoArray);
+        System.out.println("¿El valor " + valorBuscar + " existe en el array? " + 
+                          (encontrado ? "SÍ" : "NO"));
+        
+        // Test para el ejercicio de análisis de notas
+        System.out.println("\n--- Test de análisis de notas ---");
+        analisisNotas();
+        
         input.close();
     }
 
@@ -513,7 +535,7 @@ public class arrays1 {
         double array[][] = new double[filas][columnas];
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
-                array[i][j] = Math.random() * (ls - li + 1) + li;
+                array[i][j] = Math.random() * (ls - li) + li;
             }
         }
         return array;
@@ -541,7 +563,187 @@ public class arrays1 {
     public static void saltoLongitud(int n) {
         double marcas[][] = new double[n][3];
         String atletas[] = new String[n];
-        marcas = generarArrayDobleAzar(n, 3, 7.0, 8.9);
-        mostrarArray2D(marcas);
+        
+        // Generar marcas de salto entre 7.0 y 8.85 metros
+        marcas = generarArrayDobleAzar(n, 3, 7.0, 8.85);
+        
+        // Aplicar posibilidad de salto nulo (10% de probabilidad por intento)
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (Math.random() <= 0.1) {
+                    marcas[i][j] = 0.0; // Salto nulo
+                }
+            }
+        }
+        
+        // Generar nombres de atletas
+        for (int i = 0; i < n; i++) {
+            atletas[i] = "Atleta " + (i + 1);
+        }
+        
+        // Mostrar resultados de todos los atletas
+        System.out.println("\n=== COMPETICION DE SALTO DE LONGITUD ===");
+        System.out.println("Resultados por atleta (3 intentos):");
+        System.out.println("------------------------------------");
+        
+        for (int i = 0; i < n; i++) {
+            System.out.print(atletas[i] + ": ");
+            for (int j = 0; j < 3; j++) {
+                System.out.printf("%.2f", marcas[i][j]);
+                if (j < 2) System.out.print(" - ");
+            }
+            System.out.println();
+        }
+        
+        // Calcular mejor marca de salto
+        double mejorMarca = 0.0;
+        String mejorAtleta = "";
+        int mejorIntento = 0;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (marcas[i][j] > mejorMarca) {
+                    mejorMarca = marcas[i][j];
+                    mejorAtleta = atletas[i];
+                    mejorIntento = j + 1;
+                }
+            }
+        }
+        
+        // Calcular media total (excluyendo saltos nulos)
+        double sumaTotal = 0.0;
+        int intentosValidos = 0;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (marcas[i][j] > 0) { // Solo contar saltos válidos
+                    sumaTotal += marcas[i][j];
+                    intentosValidos++;
+                }
+            }
+        }
+        
+        double mediaTotal = (intentosValidos > 0) ? sumaTotal / intentosValidos : 0.0;
+        
+        // Calcular y mostrar media por atleta y mejor marca personal
+        System.out.println("\n=== ESTADISTICAS POR ATLETA ===");
+        System.out.println("--------------------------------");
+        
+        for (int i = 0; i < n; i++) {
+            double sumaAtleta = 0.0;
+            double mejorMarcaAtleta = 0.0;
+            int intentosValidosAtleta = 0;
+            
+            for (int j = 0; j < 3; j++) {
+                if (marcas[i][j] > 0) { // Solo contar saltos válidos
+                    sumaAtleta += marcas[i][j];
+                    intentosValidosAtleta++;
+                    if (marcas[i][j] > mejorMarcaAtleta) {
+                        mejorMarcaAtleta = marcas[i][j];
+                    }
+                }
+            }
+            
+            double mediaAtleta = (intentosValidosAtleta > 0) ? sumaAtleta / intentosValidosAtleta : 0.0;
+            String mejorMarcaStr = (mejorMarcaAtleta > 0) ? String.format("%.2f m", mejorMarcaAtleta) : "Sin saltos válidos";
+            System.out.printf("%s - Media: %.2f m - Mejor marca: %s%n", 
+                            atletas[i], mediaAtleta, mejorMarcaStr);
+        }
+        
+        // Mostrar resumen final
+        System.out.println("\n=== RESUMEN FINAL ===");
+        System.out.println("--------------------");
+        System.out.printf("Mejor marca de la competicion: %.2f m (%s - Intento %d)%n", 
+                         mejorMarca, mejorAtleta, mejorIntento);
+        System.out.printf("Media total de la competicion: %.2f m%n", mediaTotal);
+        System.out.printf("Total de participantes: %d atletas%n", n);
+        System.out.printf("Saltos válidos: %d de %d intentos totales%n", intentosValidos, n * 3);
+    }
+
+    //Ejercicio de búsqueda en array generado
+    //1 crear metodo que acepte un valor a buscar y un tamaño n array
+    //2 generar array de entero al azar tamaño n
+    //3 devolver booleano indicando si existe o no
+    public static boolean ejercicioBusqueda(int valorABuscar, int tamañoArray) {
+        // Generar array de entero al azar tamaño n
+        int[] array = generarArray(tamañoArray);
+        
+        // Mostrar el array generado para verificación
+        System.out.print("Array generado: ");
+        mostrarArray(array);
+        
+        // Devolver booleano indicando si existe o no
+        return buscarEnArray(array, valorABuscar);
+    }
+    public static int[][] tablaMultiplicar(int numero) {
+      int tabla [][]=new int [10][3];
+      for(int i =0;i<10;i++){
+          tabla[i][0]=numero;
+          tabla[i][i]=i;
+          tabla[i][2]=i*numero;
+          }
+return tabla;
+    }
+
+public static int aparicionesArray(int valor,int array[]) {
+  int apariciones=0;
+  for(int i=0;i<array.length;i++){
+      if (array[i]==valor) {
+        apariciones++;
+      }
+      }
+  return apariciones;
+}
+
+    // Ejercicio 4: Análisis de notas reales
+    // Diseñar una clase que pida por teclado 10 elementos de tipo real.
+    // Calcular la media aritmética de todas las notas, y además indicar
+    // cuántas notas son superiores, inferiores o iguales a la media.
+    public static void analisisNotas() {
+        Scanner input = new Scanner(System.in);
+        double[] notas = new double[10];
+        
+        // Pedir por teclado 10 elementos de tipo real
+        System.out.println("Introduce 10 notas (números reales):");
+        for (int i = 0; i < 10; i++) {
+            System.out.print("Nota " + (i + 1) + ": ");
+            notas[i] = input.nextDouble();
+        }
+        
+        // Calcular la media aritmética
+        double suma = 0.0;
+        for (double nota : notas) {
+            suma += nota;
+        }
+        double media = suma / 10;
+        
+        // Contar notas superiores, inferiores e iguales a la media
+        int superiores = 0;
+        int inferiores = 0;
+        int iguales = 0;
+        
+        for (double nota : notas) {
+            if (nota > media) {
+                superiores++;
+            } else if (nota < media) {
+                inferiores++;
+            } else {
+                iguales++;
+            }
+        }
+        
+        // Mostrar resultados
+        System.out.println("\n=== ANÁLISIS DE NOTAS ===");
+        System.out.print("Notas introducidas: ");
+        for (int i = 0; i < notas.length; i++) {
+            System.out.printf("%.2f", notas[i]);
+            if (i < notas.length - 1) System.out.print(", ");
+        }
+        System.out.println();
+        System.out.printf("Media aritmética: %.2f%n", media);
+        System.out.println("Notas superiores a la media: " + superiores);
+        System.out.println("Notas inferiores a la media: " + inferiores);
+        System.out.println("Notas iguales a la media: " + iguales);
+        System.out.println("Total de notas analizadas: " + (superiores + inferiores + iguales));
     }
 }

@@ -441,6 +441,7 @@ public class arrays1 {
         return matrizC;
     }
 
+    //7
     public static int[][] trasponerMatriz(int A[][]) {
         int matriz[][] = new int[A[0].length][A.length];
         for (int i = 0; i < A.length; i++) {
@@ -501,5 +502,46 @@ public class arrays1 {
         }
 
         return resultado;
+    }
+
+    public static double[][] generarArrayDobleAzar(
+        int filas,
+        int columnas,
+        double li,
+        double ls
+    ) {
+        double array[][] = new double[filas][columnas];
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                array[i][j] = Math.random() * (ls - li + 1) + li;
+            }
+        }
+        return array;
+    }
+
+    public static void mostrarArray2D(double array[][]) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                System.out.print(array[i][j]);
+                if (j < array[i].length - 1) {
+                    System.out.print(", ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("****************************");
+    }
+
+    //variacion del ejercicio 8, competicion de salto de longitud, participan n atletas con 3 intentos cada uno, por tanto tendrremos n filas
+    // con los atletas pero 3 columnas con los intentos. El salto se generara al azar dentro del rango [7..8,95] Array bidimensional
+    // array unidimensional para los nombres de los atletas.
+    // hay q sacar la mejor marca de salto, media total , media por atleta.
+    //{System.out.printf("%.2f",marcas[i][j]);          System.out.print(" ");} System.out.println(""); para imprimir bien redondeando
+
+    public static void saltoLongitud(int n) {
+        double marcas[][] = new double[n][3];
+        String atletas[] = new String[n];
+        marcas = generarArrayDobleAzar(n, 3, 7.0, 8.9);
+        mostrarArray2D(marcas);
     }
 }

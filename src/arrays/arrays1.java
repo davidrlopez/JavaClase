@@ -5,745 +5,859 @@ import operations.TestRapido;
 
 public class arrays1 {
 
-    public static void main(String[] args) {
-        Scanner input;
-        input = new Scanner(System.in);
-        System.out.println("Introduzca el tamaño de la array");
-        int limArray = input.nextInt();
-        arrays1.leer(limArray);
-        mezclar3arrays();
-        int arrayB[] = { 5, 2, 4, 7, 11 };
-        int valor = 11;
-        System.out.println("Existe?" + buscarEnArray(arrayB, valor));
-        System.out.println("\n--- Test de busqueda de valores en array ---");
-        System.out.println("Cuantos numeros quiere buscar en el array?");
-        int cantidadBusquedas = input.nextInt();
-        int aciertos = acertarEnArray(arrayB, cantidadBusquedas, input);
-        System.out.println(
-            "Numero de aciertos: " + aciertos + " de " + cantidadBusquedas
-        );
+  public static void main(String[] args) {
+    Scanner input;
+    input = new Scanner(System.in);
+    System.out.println("Introduzca el tamaño de la array");
+    int limArray = input.nextInt();
+    arrays1.leer(limArray);
+    mezclar3arrays();
+    int arrayB[] = { 5, 2, 4, 7, 11 };
+    int valor = 11;
+    System.out.println("Existe?" + buscarEnArray(arrayB, valor));
+    System.out.println("\n--- Test de busqueda de valores en array ---");
+    System.out.println("Cuantos numeros quiere buscar en el array?");
+    int cantidadBusquedas = input.nextInt();
+    int aciertos = acertarEnArray(arrayB, cantidadBusquedas, input);
+    System.out.println(
+        "Numero de aciertos: " + aciertos + " de " + cantidadBusquedas);
 
-        // Test para el método ordenacionArray
-        System.out.println("\n--- Test de ordenación de array ---");
-        int arrayParaOrdenar[] = { 64, 34, 25, 12, 22, 11, 90 };
-        System.out.print("Array original: ");
-        mostrarArray(arrayParaOrdenar);
+    // Test para el método ordenacionArray
+    System.out.println("\n--- Test de ordenación de array ---");
+    int arrayParaOrdenar[] = { 64, 34, 25, 12, 22, 11, 90 };
+    System.out.print("Array original: ");
+    mostrarArray(arrayParaOrdenar);
 
-        int arrayOrdenado[] = ordenacionArray(arrayParaOrdenar.clone());
-        System.out.print("Array ordenado: ");
-        mostrarArray(arrayOrdenado);
+    int arrayOrdenado[] = ordenacionArray(arrayParaOrdenar.clone());
+    System.out.print("Array ordenado: ");
+    mostrarArray(arrayOrdenado);
 
-        // Test para el método desplazarArray
-        System.out.println("\n--- Test de desplazamiento de array ---");
-        int[] arrayParaDesplazar = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        System.out.print("Array original: ");
-        mostrarArray(arrayParaDesplazar);
+    // Test para el método desplazarArray
+    System.out.println("\n--- Test de desplazamiento de array ---");
+    int[] arrayParaDesplazar = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    System.out.print("Array original: ");
+    mostrarArray(arrayParaDesplazar);
 
-        int posicion = 4; // índice donde insertar (0-based)
-        int nuevoValor = 99; // valor a insertar
-        int[] resultadoDesplazado = desplazarArray(
-            posicion,
-            nuevoValor,
-            arrayParaDesplazar.clone()
-        );
-        System.out.println(
-            "Insertando " + nuevoValor + " en la posición " + posicion + ":"
-        );
-        System.out.print("Array resultante: ");
-        mostrarArray(resultadoDesplazado);
+    int posicion = 4; // índice donde insertar (0-based)
+    int nuevoValor = 99; // valor a insertar
+    int[] resultadoDesplazado = desplazarArray(
+        posicion,
+        nuevoValor,
+        arrayParaDesplazar.clone());
+    System.out.println(
+        "Insertando " + nuevoValor + " en la posición " + posicion + ":");
+    System.out.print("Array resultante: ");
+    mostrarArray(resultadoDesplazado);
 
-        // Test para el método notasAlumnos
-        System.out.println("\n--- Test de notas de alumnos ---");
-        System.out.print("Introduce el número de alumnos: ");
-        int numeroAlumnos = input.nextInt();
-        notasAlumnos(numeroAlumnos);
+    // Test para el método notasAlumnos
+    System.out.println("\n--- Test de notas de alumnos ---");
+    System.out.print("Introduce el número de alumnos: ");
+    int numeroAlumnos = input.nextInt();
+    notasAlumnos(numeroAlumnos);
 
-        //Test mezclar y ordenar
-        System.out.println("********************");
-        System.out.println("Test mezclar y ordenar");
-        int array1[] = generarArray(10);
-        int array2[] = generarArray(10);
-        int array3[] = mezclarArrays(array1, array2); // Remove redundant initialization
-        array3 = ordenacionArray(array3); // Add sorting as the comment suggests
-        mostrarArray(array3); // Show final sorted result
-        System.out.println("********************");
-        System.out.println("Introduce las filas y columnas");
-        int filas = input.nextInt();
-        int columnas = input.nextInt();
-        int[][] array2d = generarArray2D(filas, columnas);
-        mostrarArray2D(array2d);
-        maxMin2d(array2d);
-        System.out.println("Test generar array");
-        mostrarArray(generarArray(100));
-        System.out.println("Test array sumas");
-        int matriz1[][] = generarArray2D(3, 3);
-        int matriz2[][] = generarArray2D(3, 3);
-        int matriz3[][] = sumarMatrices(matriz1, matriz2);
-        mostrarArray2D(matriz1);
-        mostrarArray2D(matriz2);
-        mostrarArray2D(matriz3);
-        System.out.println("\n--- Test de trasponer array ---");
-        int matrizTraspuesta[][] = trasponerMatriz(matriz1);
-        mostrarArray2D(matrizTraspuesta);
-        System.out.println("\n--- Test de suma filas y columnas ---");
-        int arrayFilasColumnas[][] = sumarMatricesFilaColumna(matriz1);
-        System.out.println("Matriz original:");
-        mostrarArray2D(matriz1);
-        System.out.println("Sumas de filas:");
-        mostrarArray(arrayFilasColumnas[0]);
-        System.out.println("Sumas de columnas:");
-        mostrarArray(arrayFilasColumnas[1]);
-        
-        // Test para el ejercicio de salto de longitud
-        System.out.println("\n--- Test de competicion de salto de longitud ---");
-        System.out.print("Introduce el numero de atletas: ");
-        int numeroAtletas = input.nextInt();
-        saltoLongitud(numeroAtletas);
-        
-        // Test para el ejercicio de búsqueda en array generado
-        System.out.println("\n--- Test de búsqueda en array generado ---");
-        System.out.print("Introduce el valor a buscar: ");
-        int valorBuscar = input.nextInt();
-        System.out.print("Introduce el tamaño del array: ");
-        int tamanoArray = input.nextInt();
-        
-        boolean encontrado = ejercicioBusqueda(valorBuscar, tamanoArray);
-        System.out.println("¿El valor " + valorBuscar + " existe en el array? " + 
-                          (encontrado ? "SÍ" : "NO"));
-        
-        // Test para el ejercicio de análisis de notas
-        System.out.println("\n--- Test de análisis de notas ---");
-        analisisNotas();
-        
-        input.close();
+    // Test mezclar y ordenar
+    System.out.println("********************");
+    System.out.println("Test mezclar y ordenar");
+    double array1[] = generarArray(10);
+    double array2[] = generarArray(10);
+    // Convert to int arrays for mezclarArrays method
+    int[] intArray1 = new int[array1.length];
+    int[] intArray2 = new int[array2.length];
+    for (int i = 0; i < array1.length; i++) {
+      intArray1[i] = (int) array1[i];
+      intArray2[i] = (int) array2[i];
+    }
+    int array3[] = mezclarArrays(intArray1, intArray2); // Remove redundant initialization
+    array3 = ordenacionArray(array3); // Add sorting as the comment suggests
+    mostrarArray(array3); // Show final sorted result
+    System.out.println("********************");
+    System.out.println("Introduce las filas y columnas");
+    int filas = input.nextInt();
+    int columnas = input.nextInt();
+    int[][] array2d = generarArray2D(filas, columnas);
+    mostrarArray2D(array2d);
+    maxMin2d(array2d);
+    System.out.println("Test generar array");
+    double[] tempArray = generarArray(100);
+    int[] intArray = new int[tempArray.length];
+    for (int i = 0; i < tempArray.length; i++) {
+      intArray[i] = (int) tempArray[i];
+    }
+    mostrarArray(intArray);
+    System.out.println("Test array sumas");
+    int matriz1[][] = generarArray2D(3, 3);
+    int matriz2[][] = generarArray2D(3, 3);
+    int matriz3[][] = sumarMatrices(matriz1, matriz2);
+    mostrarArray2D(matriz1);
+    mostrarArray2D(matriz2);
+    mostrarArray2D(matriz3);
+    System.out.println("\n--- Test de trasponer array ---");
+    int matrizTraspuesta[][] = trasponerMatriz(matriz1);
+    mostrarArray2D(matrizTraspuesta);
+    System.out.println("\n--- Test de suma filas y columnas ---");
+    int arrayFilasColumnas[][] = sumarMatricesFilaColumna(matriz1);
+    System.out.println("Matriz original:");
+    mostrarArray2D(matriz1);
+    System.out.println("Sumas de filas:");
+    mostrarArray(arrayFilasColumnas[0]);
+    System.out.println("Sumas de columnas:");
+    mostrarArray(arrayFilasColumnas[1]);
+
+    // Test para el ejercicio de salto de longitud
+    System.out.println("\n--- Test de competicion de salto de longitud ---");
+    System.out.print("Introduce el numero de atletas: ");
+    int numeroAtletas = input.nextInt();
+    saltoLongitud(numeroAtletas);
+
+    // Test para el ejercicio de búsqueda en array generado
+    System.out.println("\n--- Test de búsqueda en array generado ---");
+    System.out.print("Introduce el valor a buscar: ");
+    int valorBuscar = input.nextInt();
+    System.out.print("Introduce el tamaño del array: ");
+    int tamanoArray = input.nextInt();
+
+    boolean encontrado = ejercicioBusqueda(valorBuscar, tamanoArray);
+    System.out.println("¿El valor " + valorBuscar + " existe en el array? " +
+        (encontrado ? "SÍ" : "NO"));
+
+    // Test para el ejercicio de análisis de notas
+    System.out.println("\n--- Test de análisis de notas ---");
+    analisisNotas();
+
+    // Test para el método desviacionTipica
+    System.out.println("\n--- Test de desviación típica ---");
+    double[] datos = generarArray(10); // Generate random doubles directly
+
+    System.out.print("Datos para calcular desviación típica: ");
+    for (int i = 0; i < datos.length; i++) {
+      System.out.printf("%.1f", datos[i]);
+      if (i < datos.length - 1)
+        System.out.print(", ");
+    }
+    System.out.println();
+
+    double desviacion = desviacionTipica(datos);
+    System.out.printf("Desviación típica: %.2f%n", desviacion);
+
+    // Test para el método generarArrayPares
+    System.out.println("\n--- Test de generarArrayPares ---");
+    double[] arrayOriginal = generarArray(10); // Generate array with 10 elements
+
+    System.out.print("Array original: ");
+    mostrarArray(arrayOriginal);
+
+    double[] arrayPares = generarArrayPares(arrayOriginal);
+    System.out.print("Array con elementos de posiciones pares: ");
+    mostrarArray(arrayPares);
+
+    input.close();
+  }
+
+  public static void leer(int n) {
+    int array[];
+    array = new int[n];
+    for (int i = 0; i < array.length; i++) {
+      System.out.println(i);
+    }
+  }
+
+  public static void estadisticasArray(double[] valores) {
+    double sumaPos = 0;
+    double sumaNeg = 0;
+    int cantValoresPos = 0;
+    int cantValoresNeg = 0;
+    int suma0s = 0;
+
+    for (int i = 0; i < valores.length; i++) {
+      if (valores[i] > 0) {
+        sumaPos += valores[i];
+        cantValoresPos++;
+      } else if (valores[i] < 0) {
+        sumaNeg += valores[i];
+        cantValoresNeg++;
+      } else if (valores[i] == 0) {
+        suma0s++;
+      }
     }
 
-    public static void leer(int n) {
-        int array[];
-        array = new int[n];
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(i);
+    if (cantValoresPos > 0) {
+      double mediaPos = sumaPos / cantValoresPos;
+      System.out.println("Media positiva: " + mediaPos);
+    }
+    if (cantValoresNeg > 0) {
+      double mediaNeg = sumaNeg / cantValoresNeg;
+      System.out.println("Media negativa: " + mediaNeg);
+    }
+    System.out.println("Numero de 0s: " + suma0s);
+  }
+
+  // 5
+  public static void mezclar3arrays() {
+    int array1[];
+    int array2[];
+    int array3[];
+    int n = (int) TestRapido.randomNumber(1, 11);
+    array1 = new int[n];
+    array2 = new int[n];
+    array3 = new int[2 * n];
+    double[] tempArray1 = generarArray(n);
+    double[] tempArray2 = generarArray(n);
+    for (int i = 0; i < n; i++) {
+      array1[i] = (int) tempArray1[i];
+      array2[i] = (int) tempArray2[i];
+    }
+    mostrarArray(array1);
+    mostrarArray(array2);
+    int cont3 = 0;
+    for (int i = 0; i < n; i++) {
+      array3[cont3++] = array1[i];
+      array3[cont3++] = array2[i];
+    }
+    int arrayOrdenada[] = ordenacionArray(array3);
+    System.out.print(arrayOrdenada);
+  }
+
+  public static void mostrarArray(int array[]) {
+    for (int i = 0; i < array.length; i++) {
+      System.out.print(array[i]);
+      if (i < array.length - 1) {
+        System.out.print(", ");
+      }
+    }
+    System.out.println();
+    System.out.println("****************************");
+  }
+
+  public static void mostrarArray(double array[]) {
+    for (int i = 0; i < array.length; i++) {
+      System.out.printf("%.1f", array[i]);
+      if (i < array.length - 1) {
+        System.out.print(", ");
+      }
+    }
+    System.out.println();
+    System.out.println("****************************");
+  }
+
+  public static double[] generarArray(int n) {
+    double array[] = new double[n];
+    for (int i = 0; i < n; i++) {
+      array[i] = TestRapido.randomNumber(1, 101);
+    }
+    return array;
+  }
+
+  public static boolean buscarEnArray(int array[], int valor) {
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == valor) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static int buscarEnArray2(int array[], int valor) {
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == valor) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  public static boolean buscarEnArray2Ordenado(int array[], int n) {
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == n) {
+        return true;
+      } else {
+        if (array[i] > n)
+          return false;
+      }
+    }
+    return false;
+  }
+
+  public static int acertarEnArray(int array[], int n, Scanner input) {
+    int aciertos = 0;
+    for (int i = 0; i < n; i++) {
+      System.out.println("Introduce un numero para buscar:");
+      int numero = input.nextInt();
+      if (buscarEnArray2(array, numero) != -1) {
+        aciertos++;
+      }
+    }
+    return aciertos;
+  }
+
+  public static int[] ordenacionArray(int array[]) {
+    int minimo,
+        pos_minimo = -1,
+        auxiliar = 0;
+    for (int i = 0; i < array.length; i++) {
+      minimo = 999999;
+      for (int j = i + 1; j < array.length; j++) {
+        if (array[j] < minimo) {
+          minimo = array[j];
+          pos_minimo = j;
         }
+        if (array[i] > minimo) {
+          auxiliar = array[i];
+          array[i] = minimo;
+          array[pos_minimo] = auxiliar;
+        }
+      }
+    }
+    return array;
+  }
+
+  public static int tipo_array(int array[]) {
+    int respuesta;
+
+    boolean iguales = true;
+
+    for (int i = 0; i < array.length - 1; i++) {
+      if (array[i] != array[i + 1]) {
+        iguales = false;
+        break;
+      }
     }
 
-    public static void estadisticasArray(double[] valores) {
-        double sumaPos = 0;
-        double sumaNeg = 0;
-        int cantValoresPos = 0;
-        int cantValoresNeg = 0;
-        int suma0s = 0;
-
-        for (int i = 0; i < valores.length; i++) {
-            if (valores[i] > 0) {
-                sumaPos += valores[i];
-                cantValoresPos++;
-            } else if (valores[i] < 0) {
-                sumaNeg += valores[i];
-                cantValoresNeg++;
-            } else if (valores[i] == 0) {
-                suma0s++;
-            }
-        }
-
-        if (cantValoresPos > 0) {
-            double mediaPos = sumaPos / cantValoresPos;
-            System.out.println("Media positiva: " + mediaPos);
-        }
-        if (cantValoresNeg > 0) {
-            double mediaNeg = sumaNeg / cantValoresNeg;
-            System.out.println("Media negativa: " + mediaNeg);
-        }
-        System.out.println("Numero de 0s: " + suma0s);
+    if (iguales) {
+      return 1;
     }
 
-    //5
-    public static void mezclar3arrays() {
-        int array1[];
-        int array2[];
-        int array3[];
-        int n = (int) TestRapido.randomNumber(1, 11);
-        array1 = new int[n];
-        array2 = new int[n];
-        array3 = new int[2 * n];
-        array1 = generarArray(n);
-        array2 = generarArray(n);
-        mostrarArray(array1);
-        mostrarArray(array2);
-        int cont3 = 0;
-        for (int i = 0; i < n; i++) {
-            array3[cont3++] = array1[i];
-            array3[cont3++] = array2[i];
+    boolean asc = true;
+
+    for (int i = 0; i < array.length - 1; i++) {
+      if (array[i] > array[i + 1]) {
+        asc = false;
+        break;
+      }
+    }
+    if (asc) {
+      return 3;
+    } else
+      return 4;
+  }
+
+  public static int[] desplazarArray(int pos, int valor, int array[]) {
+    if (pos >= 0 && pos < array.length) {
+      for (int i = array.length - 1; i > pos; i--) {
+        array[i] = array[i - 1];
+      }
+      array[pos] = valor;
+    }
+    return array;
+  }
+
+  public static int[] desplazarArray2(int pos, int valor, int array[]) {
+    // poniendo el ultimo valor al principio
+    int ultimo = array[array.length - 1];
+    for (int i = array.length - 1; i > pos; i--) {
+      array[i] = array[i - 1];
+    }
+    array[0] = ultimo;
+    return array;
+  }
+
+  public static int[] desplazarArrayNveces(int n, int array[]) {
+    for (int i = 0; i < n; i++) {
+      array = desplazarArray2(0, 0, array);
+    }
+    return array;
+  }
+
+  public static void notasAlumnos(int nAlumnos) {
+    double array1[] = generarArray(nAlumnos);
+    double array2[] = generarArray(nAlumnos);
+    double array3[] = generarArray(nAlumnos);
+    double suma1 = 0;
+    double suma2 = 0;
+    double suma3 = 0;
+    double mediaTri1 = 0;
+    double mediaTri2 = 0;
+    double mediaTri3 = 0;
+    double mediaCurso = 0;
+
+    for (int i = 0; i < array1.length; i++) {
+      suma1 += array1[i];
+    }
+    mediaTri1 = suma1 / array1.length;
+
+    for (int i = 0; i < array2.length; i++) {
+      suma2 += array2[i];
+    }
+    mediaTri2 = suma2 / array2.length;
+
+    for (int i = 0; i < array3.length; i++) {
+      suma3 += array3[i];
+    }
+    mediaTri3 = suma3 / array3.length;
+
+    mediaCurso = (mediaTri1 + mediaTri2 + mediaTri3) / 3;
+
+    System.out.print("Notas alumnos del trimestre 1: ");
+    mostrarArray(array1);
+    System.out.println("Media trimestre 1: " + mediaTri1);
+
+    System.out.print("Notas alumnos del trimestre 2: ");
+    mostrarArray(array2);
+    System.out.println("Media trimestre 2: " + mediaTri2);
+
+    System.out.print("Notas alumnos del trimestre 3: ");
+    mostrarArray(array3);
+    System.out.println("Media trimestre 3: " + mediaTri3);
+
+    System.out.println("Nota media del curso: " + mediaCurso);
+  }
+
+  public static int[] mezclarArrays(int array1[], int array2[]) {
+    int array3[] = new int[array1.length + array2.length];
+    for (int i = 0; i < array1.length; i++) {
+      array3[i] = array1[i];
+    }
+    int j = 0;
+    for (int i = array1.length; i < array3.length; i++) {
+      array3[i] = array2[j++];
+    }
+    mostrarArray(array1);
+    mostrarArray(array2);
+    mostrarArray(array3);
+    return array3;
+  }
+
+  // ej 13
+  public static void ej13() {
+    double array1[] = generarArray(10);
+    double array2[] = generarArray(10);
+    // Convert to int arrays for mezclarArrays method
+    int[] intArray1 = new int[array1.length];
+    int[] intArray2 = new int[array2.length];
+    for (int i = 0; i < array1.length; i++) {
+      intArray1[i] = (int) array1[i];
+      intArray2[i] = (int) array2[i];
+    }
+    mezclarArrays(intArray1, intArray2);
+  }
+
+  public static void mostrarArray2D(int array[][]) {
+    for (int i = 0; i < array.length; i++) {
+      for (int j = 0; j < array[i].length; j++) {
+        System.out.print(array[i][j]);
+        if (j < array[i].length - 1) {
+          System.out.print(", ");
         }
-        int arrayOrdenada[] = ordenacionArray(array3);
-        System.out.print(arrayOrdenada);
+      }
+      System.out.println();
+    }
+    System.out.println("****************************");
+  }
+
+  public static int[][] generarArray2D(int fila, int columna) {
+    int array[][] = new int[fila][columna];
+    for (int i = 0; i < fila; i++) {
+      for (int j = 0; j < columna; j++) {
+        array[i][j] = (int) (TestRapido.randomNumber(1, 101));
+      }
+    }
+    return array;
+  }
+
+  public static void maxMin2d(int array[][]) {
+    int max, min;
+    min = 99999;
+    max = 0;
+    int fila_max = 0;
+    int col_max = 0;
+    int fila_min = 0;
+    int col_min = 0;
+    for (int i = 0; i < array.length; i++) {
+      for (int j = 0; j < array[i].length; j++) {
+        if (array[i][j] > max) {
+          max = array[i][j];
+          fila_max = i;
+          col_max = j;
+        }
+        if (array[i][j] < min) {
+          min = array[i][j];
+          fila_min = i;
+          col_min = j;
+        }
+      }
+    }
+    System.out.println(
+        "Fila maxima=" + fila_max + " Columna maxima=" + col_max);
+    System.out.println(
+        "Fila minima=" + fila_min + " Columna minima=" + col_min);
+  }
+
+  public static int[][] rellenar_matriz(int n) {
+    int array[][] = new int[n][n];
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < n; j++) {
+        array[i][j] = (int) (TestRapido.randomNumber(1, 101));
+      }
+    }
+    return array;
+  }
+
+  public static boolean matriz_simetrica(int array[][]) {
+    for (int i = 0; i < array.length; i++) {
+      for (int j = 0; j < array.length; j++) {
+        if (array[i][j] != array[j][i]) {
+        }
+      }
+    }
+    return false;
+  }
+
+  public static int[][] sumarMatrices(int matrizA[][], int matrizB[][]) {
+    int matrizC[][] = new int[matrizA.length][matrizA[0].length];
+    for (int i = 0; i < matrizA.length; i++) {
+      for (int j = 0; j < matrizA[i].length; j++) {
+        matrizC[i][j] = matrizA[i][j] + matrizB[i][j];
+      }
+    }
+    return matrizC;
+  }
+
+  // 7
+  public static int[][] trasponerMatriz(int A[][]) {
+    int matriz[][] = new int[A[0].length][A.length];
+    for (int i = 0; i < A.length; i++) {
+      for (int j = 0; j < A.length; j++) {
+        matriz[j][i] = A[i][j];
+      }
+    }
+    return matriz;
+  }
+
+  public static int[][] matrizIdentidad(int n) {
+    // metodo menos eficiente
+    int array[][] = new int[n][n];
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < n; j++) {
+        if (i == j) {
+          array[i][j] = 1;
+        }
+      }
+    }
+    return array;
+  }
+
+  public static int[][] matrizIdentidadOpt(int n) {
+    int array[][] = new int[n][n];
+    for (int i = 0; i < n; i++) {
+      array[i][i] = 1;
+    }
+    return array;
+  }
+
+  // ej 6
+  public static int[][] sumarMatricesFilaColumna(int matrizA[][]) {
+    int filas = matrizA.length;
+    int columnas = matrizA[0].length;
+
+    // Create result: [0] = row sums array, [1] = column sums array
+    int resultado[][] = new int[2][]; // Fixed: proper initialization
+    resultado[0] = new int[filas]; // Row sums
+    resultado[1] = new int[columnas]; // Column sums
+
+    // Calculate row sums
+    for (int i = 0; i < filas; i++) {
+      // Fixed: i < filas
+      for (int j = 0; j < columnas; j++) {
+        // Fixed: j < columnas
+        resultado[0][i] += matrizA[i][j];
+      }
     }
 
-    public static void mostrarArray(int array[]) {
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println();
-        System.out.println("****************************");
+    // Calculate column sums
+    for (int j = 0; j < columnas; j++) {
+      // Fixed: j < columnas
+      for (int i = 0; i < filas; i++) {
+        // Fixed: i < filas
+        resultado[1][j] += matrizA[i][j];
+      }
     }
 
-    public static int[] generarArray(int n) {
-        int array[] = new int[n];
-        for (int i = 0; i < n; i++) {
-            array[i] = (int) (TestRapido.randomNumber(1, 101));
+    return resultado;
+  }
+
+  public static double[][] generarArrayDobleAzar(
+      int filas,
+      int columnas,
+      double li,
+      double ls) {
+    double array[][] = new double[filas][columnas];
+    for (int i = 0; i < filas; i++) {
+      for (int j = 0; j < columnas; j++) {
+        array[i][j] = Math.random() * (ls - li) + li;
+      }
+    }
+    return array;
+  }
+
+  public static void mostrarArray2D(double array[][]) {
+    for (int i = 0; i < array.length; i++) {
+      for (int j = 0; j < array[i].length; j++) {
+        System.out.print(array[i][j]);
+        if (j < array[i].length - 1) {
+          System.out.print(", ");
         }
-        return array;
+      }
+      System.out.println();
+    }
+    System.out.println("****************************");
+  }
+
+  // variacion del ejercicio 8, competicion de salto de longitud, participan n
+  // atletas con 3 intentos cada uno, por tanto tendrremos n filas
+  // con los atletas pero 3 columnas con los intentos. El salto se generara al
+  // azar dentro del rango [7..8,95] Array bidimensional
+  // array unidimensional para los nombres de los atletas.
+  // hay q sacar la mejor marca de salto, media total , media por atleta.
+  // {System.out.printf("%.2f",marcas[i][j]); System.out.print(" ");}
+  // System.out.println(""); para imprimir bien redondeando
+
+  public static void saltoLongitud(int n) {
+    double marcas[][] = new double[n][3];
+    String atletas[] = new String[n];
+
+    // Generar marcas de salto entre 7.0 y 8.85 metros
+    marcas = generarArrayDobleAzar(n, 3, 7.0, 8.85);
+
+    // Aplicar posibilidad de salto nulo (10% de probabilidad por intento)
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (Math.random() <= 0.1) {
+          marcas[i][j] = 0.0; // Salto nulo
+        }
+      }
     }
 
-    public static boolean buscarEnArray(int array[], int valor) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == valor) {
-                return true;
-            }
-        }
-        return false;
+    // Generar nombres de atletas
+    for (int i = 0; i < n; i++) {
+      atletas[i] = "Atleta " + (i + 1);
     }
 
-    public static int buscarEnArray2(int array[], int valor) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == valor) {
-                return i;
-            }
-        }
-        return -1;
+    // Mostrar resultados de todos los atletas
+    System.out.println("\n=== COMPETICION DE SALTO DE LONGITUD ===");
+    System.out.println("Resultados por atleta (3 intentos):");
+    System.out.println("------------------------------------");
+
+    for (int i = 0; i < n; i++) {
+      System.out.print(atletas[i] + ": ");
+      for (int j = 0; j < 3; j++) {
+        System.out.printf("%.2f", marcas[i][j]);
+        if (j < 2)
+          System.out.print(" - ");
+      }
+      System.out.println();
     }
 
-    public static boolean buscarEnArray2Ordenado(int array[], int n) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == n) {
-                return true;
-            } else {
-                if (array[i] > n) return false;
-            }
+    // Calcular mejor marca de salto
+    double mejorMarca = 0.0;
+    String mejorAtleta = "";
+    int mejorIntento = 0;
+
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (marcas[i][j] > mejorMarca) {
+          mejorMarca = marcas[i][j];
+          mejorAtleta = atletas[i];
+          mejorIntento = j + 1;
         }
-        return false;
+      }
     }
 
-    public static int acertarEnArray(int array[], int n, Scanner input) {
-        int aciertos = 0;
-        for (int i = 0; i < n; i++) {
-            System.out.println("Introduce un numero para buscar:");
-            int numero = input.nextInt();
-            if (buscarEnArray2(array, numero) != -1) {
-                aciertos++;
-            }
+    // Calcular media total (excluyendo saltos nulos)
+    double sumaTotal = 0.0;
+    int intentosValidos = 0;
+
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (marcas[i][j] > 0) { // Solo contar saltos válidos
+          sumaTotal += marcas[i][j];
+          intentosValidos++;
         }
-        return aciertos;
+      }
     }
 
-    public static int[] ordenacionArray(int array[]) {
-        int minimo,
-            pos_minimo = -1,
-            auxiliar = 0;
-        for (int i = 0; i < array.length; i++) {
-            minimo = 999999;
-            for (int j = i + 1; j < array.length; j++) {
-                if (array[j] < minimo) {
-                    minimo = array[j];
-                    pos_minimo = j;
-                }
-                if (array[i] > minimo) {
-                    auxiliar = array[i];
-                    array[i] = minimo;
-                    array[pos_minimo] = auxiliar;
-                }
-            }
-        }
-        return array;
-    }
+    double mediaTotal = (intentosValidos > 0) ? sumaTotal / intentosValidos : 0.0;
 
-    public static int tipo_array(int array[]) {
-        int respuesta;
+    // Calcular y mostrar media por atleta y mejor marca personal
+    System.out.println("\n=== ESTADISTICAS POR ATLETA ===");
+    System.out.println("--------------------------------");
 
-        boolean iguales = true;
+    for (int i = 0; i < n; i++) {
+      double sumaAtleta = 0.0;
+      double mejorMarcaAtleta = 0.0;
+      int intentosValidosAtleta = 0;
 
-        for (int i = 0; i < array.length - 1; i++) {
-            if (array[i] != array[i + 1]) {
-                iguales = false;
-                break;
-            }
-        }
-
-        if (iguales) {
-            return 1;
-        }
-
-        boolean asc = true;
-
-        for (int i = 0; i < array.length - 1; i++) {
-            if (array[i] > array[i + 1]) {
-                asc = false;
-                break;
-            }
-        }
-        if (asc) {
-            return 3;
-        } else return 4;
-    }
-
-    public static int[] desplazarArray(int pos, int valor, int array[]) {
-        if (pos >= 0 && pos < array.length) {
-            for (int i = array.length - 1; i > pos; i--) {
-                array[i] = array[i - 1];
-            }
-            array[pos] = valor;
-        }
-        return array;
-    }
-
-    public static int[] desplazarArray2(int pos, int valor, int array[]) {
-        //poniendo el ultimo valor al principio
-        int ultimo = array[array.length - 1];
-        for (int i = array.length - 1; i > pos; i--) {
-            array[i] = array[i - 1];
-        }
-        array[0] = ultimo;
-        return array;
-    }
-
-    public static int[] desplazarArrayNveces(int n, int array[]) {
-        for (int i = 0; i < n; i++) {
-            array = desplazarArray2(0, 0, array);
-        }
-        return array;
-    }
-
-    public static void notasAlumnos(int nAlumnos) {
-        int array1[] = generarArray(nAlumnos);
-        int array2[] = generarArray(nAlumnos);
-        int array3[] = generarArray(nAlumnos);
-        double suma1 = 0;
-        double suma2 = 0;
-        double suma3 = 0;
-        double mediaTri1 = 0;
-        double mediaTri2 = 0;
-        double mediaTri3 = 0;
-        double mediaCurso = 0;
-
-        for (int i = 0; i < array1.length; i++) {
-            suma1 += array1[i];
-        }
-        mediaTri1 = suma1 / array1.length;
-
-        for (int i = 0; i < array2.length; i++) {
-            suma2 += array2[i];
-        }
-        mediaTri2 = suma2 / array2.length;
-
-        for (int i = 0; i < array3.length; i++) {
-            suma3 += array3[i];
-        }
-        mediaTri3 = suma3 / array3.length;
-
-        mediaCurso = (mediaTri1 + mediaTri2 + mediaTri3) / 3;
-
-        System.out.print("Notas alumnos del trimestre 1: ");
-        mostrarArray(array1);
-        System.out.println("Media trimestre 1: " + mediaTri1);
-
-        System.out.print("Notas alumnos del trimestre 2: ");
-        mostrarArray(array2);
-        System.out.println("Media trimestre 2: " + mediaTri2);
-
-        System.out.print("Notas alumnos del trimestre 3: ");
-        mostrarArray(array3);
-        System.out.println("Media trimestre 3: " + mediaTri3);
-
-        System.out.println("Nota media del curso: " + mediaCurso);
-    }
-
-    public static int[] mezclarArrays(int array1[], int array2[]) {
-        int array3[] = new int[array1.length + array2.length];
-        for (int i = 0; i < array1.length; i++) {
-            array3[i] = array1[i];
-        }
-        int j = 0;
-        for (int i = array1.length; i < array3.length; i++) {
-            array3[i] = array2[j++];
-        }
-        mostrarArray(array1);
-        mostrarArray(array2);
-        mostrarArray(array3);
-        return array3;
-    }
-
-    //ej 13
-    public static void ej13() {
-        int array1[] = generarArray(10);
-        int array2[] = generarArray(10);
-        mezclarArrays(array1, array2);
-    }
-
-    public static void mostrarArray2D(int array[][]) {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                System.out.print(array[i][j]);
-                if (j < array[i].length - 1) {
-                    System.out.print(", ");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println("****************************");
-    }
-
-    public static int[][] generarArray2D(int fila, int columna) {
-        int array[][] = new int[fila][columna];
-        for (int i = 0; i < fila; i++) {
-            for (int j = 0; j < columna; j++) {
-                array[i][j] = (int) (TestRapido.randomNumber(1, 101));
-            }
-        }
-        return array;
-    }
-
-    public static void maxMin2d(int array[][]) {
-        int max, min;
-        min = 99999;
-        max = 0;
-        int fila_max = 0;
-        int col_max = 0;
-        int fila_min = 0;
-        int col_min = 0;
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (array[i][j] > max) {
-                    max = array[i][j];
-                    fila_max = i;
-                    col_max = j;
-                }
-                if (array[i][j] < min) {
-                    min = array[i][j];
-                    fila_min = i;
-                    col_min = j;
-                }
-            }
-        }
-        System.out.println(
-            "Fila maxima=" + fila_max + " Columna maxima=" + col_max
-        );
-        System.out.println(
-            "Fila minima=" + fila_min + " Columna minima=" + col_min
-        );
-    }
-
-    public static int[][] rellenar_matriz(int n) {
-        int array[][] = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                array[i][j] = (int) (TestRapido.randomNumber(1, 101));
-            }
-        }
-        return array;
-    }
-
-    public static boolean matriz_simetrica(int array[][]) {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array.length; j++) {
-                if (array[i][j] != array[j][i]) {}
-            }
-        }
-        return false;
-    }
-
-    public static int[][] sumarMatrices(int matrizA[][], int matrizB[][]) {
-        int matrizC[][] = new int[matrizA.length][matrizA[0].length];
-        for (int i = 0; i < matrizA.length; i++) {
-            for (int j = 0; j < matrizA[i].length; j++) {
-                matrizC[i][j] = matrizA[i][j] + matrizB[i][j];
-            }
-        }
-        return matrizC;
-    }
-
-    //7
-    public static int[][] trasponerMatriz(int A[][]) {
-        int matriz[][] = new int[A[0].length][A.length];
-        for (int i = 0; i < A.length; i++) {
-            for (int j = 0; j < A.length; j++) {
-                matriz[j][i] = A[i][j];
-            }
-        }
-        return matriz;
-    }
-
-    public static int[][] matrizIdentidad(int n) {
-        //metodo menos eficiente
-        int array[][] = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i == j) {
-                    array[i][j] = 1;
-                }
-            }
-        }
-        return array;
-    }
-
-    public static int[][] matrizIdentidadOpt(int n) {
-        int array[][] = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            array[i][i] = 1;
-        }
-        return array;
-    }
-
-    //ej 6
-    public static int[][] sumarMatricesFilaColumna(int matrizA[][]) {
-        int filas = matrizA.length;
-        int columnas = matrizA[0].length;
-
-        // Create result: [0] = row sums array, [1] = column sums array
-        int resultado[][] = new int[2][]; // Fixed: proper initialization
-        resultado[0] = new int[filas]; // Row sums
-        resultado[1] = new int[columnas]; // Column sums
-
-        // Calculate row sums
-        for (int i = 0; i < filas; i++) {
-            // Fixed: i < filas
-            for (int j = 0; j < columnas; j++) {
-                // Fixed: j < columnas
-                resultado[0][i] += matrizA[i][j];
-            }
-        }
-
-        // Calculate column sums
-        for (int j = 0; j < columnas; j++) {
-            // Fixed: j < columnas
-            for (int i = 0; i < filas; i++) {
-                // Fixed: i < filas
-                resultado[1][j] += matrizA[i][j];
-            }
-        }
-
-        return resultado;
-    }
-
-    public static double[][] generarArrayDobleAzar(
-        int filas,
-        int columnas,
-        double li,
-        double ls
-    ) {
-        double array[][] = new double[filas][columnas];
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                array[i][j] = Math.random() * (ls - li) + li;
-            }
-        }
-        return array;
-    }
-
-    public static void mostrarArray2D(double array[][]) {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                System.out.print(array[i][j]);
-                if (j < array[i].length - 1) {
-                    System.out.print(", ");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println("****************************");
-    }
-
-    //variacion del ejercicio 8, competicion de salto de longitud, participan n atletas con 3 intentos cada uno, por tanto tendrremos n filas
-    // con los atletas pero 3 columnas con los intentos. El salto se generara al azar dentro del rango [7..8,95] Array bidimensional
-    // array unidimensional para los nombres de los atletas.
-    // hay q sacar la mejor marca de salto, media total , media por atleta.
-    //{System.out.printf("%.2f",marcas[i][j]);          System.out.print(" ");} System.out.println(""); para imprimir bien redondeando
-
-    public static void saltoLongitud(int n) {
-        double marcas[][] = new double[n][3];
-        String atletas[] = new String[n];
-        
-        // Generar marcas de salto entre 7.0 y 8.85 metros
-        marcas = generarArrayDobleAzar(n, 3, 7.0, 8.85);
-        
-        // Aplicar posibilidad de salto nulo (10% de probabilidad por intento)
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (Math.random() <= 0.1) {
-                    marcas[i][j] = 0.0; // Salto nulo
-                }
-            }
-        }
-        
-        // Generar nombres de atletas
-        for (int i = 0; i < n; i++) {
-            atletas[i] = "Atleta " + (i + 1);
-        }
-        
-        // Mostrar resultados de todos los atletas
-        System.out.println("\n=== COMPETICION DE SALTO DE LONGITUD ===");
-        System.out.println("Resultados por atleta (3 intentos):");
-        System.out.println("------------------------------------");
-        
-        for (int i = 0; i < n; i++) {
-            System.out.print(atletas[i] + ": ");
-            for (int j = 0; j < 3; j++) {
-                System.out.printf("%.2f", marcas[i][j]);
-                if (j < 2) System.out.print(" - ");
-            }
-            System.out.println();
-        }
-        
-        // Calcular mejor marca de salto
-        double mejorMarca = 0.0;
-        String mejorAtleta = "";
-        int mejorIntento = 0;
-        
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (marcas[i][j] > mejorMarca) {
-                    mejorMarca = marcas[i][j];
-                    mejorAtleta = atletas[i];
-                    mejorIntento = j + 1;
-                }
-            }
-        }
-        
-        // Calcular media total (excluyendo saltos nulos)
-        double sumaTotal = 0.0;
-        int intentosValidos = 0;
-        
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (marcas[i][j] > 0) { // Solo contar saltos válidos
-                    sumaTotal += marcas[i][j];
-                    intentosValidos++;
-                }
-            }
-        }
-        
-        double mediaTotal = (intentosValidos > 0) ? sumaTotal / intentosValidos : 0.0;
-        
-        // Calcular y mostrar media por atleta y mejor marca personal
-        System.out.println("\n=== ESTADISTICAS POR ATLETA ===");
-        System.out.println("--------------------------------");
-        
-        for (int i = 0; i < n; i++) {
-            double sumaAtleta = 0.0;
-            double mejorMarcaAtleta = 0.0;
-            int intentosValidosAtleta = 0;
-            
-            for (int j = 0; j < 3; j++) {
-                if (marcas[i][j] > 0) { // Solo contar saltos válidos
-                    sumaAtleta += marcas[i][j];
-                    intentosValidosAtleta++;
-                    if (marcas[i][j] > mejorMarcaAtleta) {
-                        mejorMarcaAtleta = marcas[i][j];
-                    }
-                }
-            }
-            
-            double mediaAtleta = (intentosValidosAtleta > 0) ? sumaAtleta / intentosValidosAtleta : 0.0;
-            String mejorMarcaStr = (mejorMarcaAtleta > 0) ? String.format("%.2f m", mejorMarcaAtleta) : "Sin saltos válidos";
-            System.out.printf("%s - Media: %.2f m - Mejor marca: %s%n", 
-                            atletas[i], mediaAtleta, mejorMarcaStr);
-        }
-        
-        // Mostrar resumen final
-        System.out.println("\n=== RESUMEN FINAL ===");
-        System.out.println("--------------------");
-        System.out.printf("Mejor marca de la competicion: %.2f m (%s - Intento %d)%n", 
-                         mejorMarca, mejorAtleta, mejorIntento);
-        System.out.printf("Media total de la competicion: %.2f m%n", mediaTotal);
-        System.out.printf("Total de participantes: %d atletas%n", n);
-        System.out.printf("Saltos válidos: %d de %d intentos totales%n", intentosValidos, n * 3);
-    }
-
-    //Ejercicio de búsqueda en array generado
-    //1 crear metodo que acepte un valor a buscar y un tamaño n array
-    //2 generar array de entero al azar tamaño n
-    //3 devolver booleano indicando si existe o no
-    public static boolean ejercicioBusqueda(int valorABuscar, int tamañoArray) {
-        // Generar array de entero al azar tamaño n
-        int[] array = generarArray(tamañoArray);
-        
-        // Mostrar el array generado para verificación
-        System.out.print("Array generado: ");
-        mostrarArray(array);
-        
-        // Devolver booleano indicando si existe o no
-        return buscarEnArray(array, valorABuscar);
-    }
-    public static int[][] tablaMultiplicar(int numero) {
-      int tabla [][]=new int [10][3];
-      for(int i =0;i<10;i++){
-          tabla[i][0]=numero;
-          tabla[i][i]=i;
-          tabla[i][2]=i*numero;
+      for (int j = 0; j < 3; j++) {
+        if (marcas[i][j] > 0) { // Solo contar saltos válidos
+          sumaAtleta += marcas[i][j];
+          intentosValidosAtleta++;
+          if (marcas[i][j] > mejorMarcaAtleta) {
+            mejorMarcaAtleta = marcas[i][j];
           }
-return tabla;
+        }
+      }
+
+      double mediaAtleta = (intentosValidosAtleta > 0) ? sumaAtleta / intentosValidosAtleta : 0.0;
+      String mejorMarcaStr = (mejorMarcaAtleta > 0) ? String.format("%.2f m", mejorMarcaAtleta) : "Sin saltos válidos";
+      System.out.printf("%s - Media: %.2f m - Mejor marca: %s%n",
+          atletas[i], mediaAtleta, mejorMarcaStr);
     }
 
-public static int aparicionesArray(int valor,int array[]) {
-  int apariciones=0;
-  for(int i=0;i<array.length;i++){
-      if (array[i]==valor) {
+    // Mostrar resumen final
+    System.out.println("\n=== RESUMEN FINAL ===");
+    System.out.println("--------------------");
+    System.out.printf("Mejor marca de la competicion: %.2f m (%s - Intento %d)%n",
+        mejorMarca, mejorAtleta, mejorIntento);
+    System.out.printf("Media total de la competicion: %.2f m%n", mediaTotal);
+    System.out.printf("Total de participantes: %d atletas%n", n);
+    System.out.printf("Saltos válidos: %d de %d intentos totales%n", intentosValidos, n * 3);
+  }
+
+  // Ejercicio de búsqueda en array generado
+  // 1 crear metodo que acepte un valor a buscar y un tamaño n array
+  // 2 generar array de entero al azar tamaño n
+  // 3 devolver booleano indicando si existe o no
+  public static boolean ejercicioBusqueda(int valorABuscar, int tamañoArray) {
+    // Generar array de entero al azar tamaño n
+    double[] arrayTemp = generarArray(tamañoArray);
+    int[] array = new int[arrayTemp.length];
+    for (int i = 0; i < arrayTemp.length; i++) {
+      array[i] = (int) arrayTemp[i];
+    }
+
+    // Mostrar el array generado para verificación
+    System.out.print("Array generado: ");
+    mostrarArray(array);
+
+    // Devolver booleano indicando si existe o no
+    return buscarEnArray(array, valorABuscar);
+  }
+
+  public static int[][] tablaMultiplicar(int numero) {
+    int tabla[][] = new int[10][3];
+    for (int i = 0; i < 10; i++) {
+      tabla[i][0] = numero;
+      tabla[i][i] = i;
+      tabla[i][2] = i * numero;
+    }
+    return tabla;
+  }
+
+  public static int aparicionesArray(int valor, int array[]) {
+    int apariciones = 0;
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == valor) {
         apariciones++;
       }
-      }
-  return apariciones;
-}
-
-    // Ejercicio 4: Análisis de notas reales
-    // Diseñar una clase que pida por teclado 10 elementos de tipo real.
-    // Calcular la media aritmética de todas las notas, y además indicar
-    // cuántas notas son superiores, inferiores o iguales a la media.
-    public static void analisisNotas() {
-        Scanner input = new Scanner(System.in);
-        double[] notas = new double[10];
-        
-        // Pedir por teclado 10 elementos de tipo real
-        System.out.println("Introduce 10 notas (números reales):");
-        for (int i = 0; i < 10; i++) {
-            System.out.print("Nota " + (i + 1) + ": ");
-            notas[i] = input.nextDouble();
-        }
-        
-        // Calcular la media aritmética
-        double suma = 0.0;
-        for (double nota : notas) {
-            suma += nota;
-        }
-        double media = suma / 10;
-        
-        // Contar notas superiores, inferiores e iguales a la media
-        int superiores = 0;
-        int inferiores = 0;
-        int iguales = 0;
-        
-        for (double nota : notas) {
-            if (nota > media) {
-                superiores++;
-            } else if (nota < media) {
-                inferiores++;
-            } else {
-                iguales++;
-            }
-        }
-        
-        // Mostrar resultados
-        System.out.println("\n=== ANÁLISIS DE NOTAS ===");
-        System.out.print("Notas introducidas: ");
-        for (int i = 0; i < notas.length; i++) {
-            System.out.printf("%.2f", notas[i]);
-            if (i < notas.length - 1) System.out.print(", ");
-        }
-        System.out.println();
-        System.out.printf("Media aritmética: %.2f%n", media);
-        System.out.println("Notas superiores a la media: " + superiores);
-        System.out.println("Notas inferiores a la media: " + inferiores);
-        System.out.println("Notas iguales a la media: " + iguales);
-        System.out.println("Total de notas analizadas: " + (superiores + inferiores + iguales));
     }
+    return apariciones;
+  }
+
+  // Ejercicio 4: Análisis de notas reales
+  // Diseñar una clase que pida por teclado 10 elementos de tipo real.
+  // Calcular la media aritmética de todas las notas, y además indicar
+  // cuántas notas son superiores, inferiores o iguales a la media.
+  public static void analisisNotas() {
+    Scanner input = new Scanner(System.in);
+    double[] notas = new double[10];
+
+    // Pedir por teclado 10 elementos de tipo real
+    System.out.println("Introduce 10 notas (números reales):");
+    for (int i = 0; i < 10; i++) {
+      System.out.print("Nota " + (i + 1) + ": ");
+      notas[i] = input.nextDouble();
+    }
+
+    // Calcular la media aritmética
+    double suma = 0.0;
+    for (double nota : notas) {
+      suma += nota;
+    }
+    double media = suma / 10;
+
+    // Contar notas superiores, inferiores e iguales a la media
+    int superiores = 0;
+    int inferiores = 0;
+    int iguales = 0;
+
+    for (double nota : notas) {
+      if (nota > media) {
+        superiores++;
+      } else if (nota < media) {
+        inferiores++;
+      } else {
+        iguales++;
+      }
+    }
+
+    // Mostrar resultados
+    System.out.println("\n=== ANÁLISIS DE NOTAS ===");
+    System.out.print("Notas introducidas: ");
+    for (int i = 0; i < notas.length; i++) {
+      System.out.printf("%.2f", notas[i]);
+      if (i < notas.length - 1)
+        System.out.print(", ");
+    }
+    System.out.println();
+    System.out.printf("Media aritmética: %.2f%n", media);
+    System.out.println("Notas superiores a la media: " + superiores);
+    System.out.println("Notas inferiores a la media: " + inferiores);
+    System.out.println("Notas iguales a la media: " + iguales);
+    System.out.println("Total de notas analizadas: " + (superiores + inferiores + iguales));
+  }
+
+  // ejercicio 5
+  public static double desviacionTipica(double[] datos) {
+    double desviacion;
+    double suma = 0;
+    double media;
+
+    // Calculate mean
+    for (int i = 0; i < datos.length; i++) {
+      suma += datos[i];
+    }
+    media = suma / datos.length;
+    suma = 0;
+
+    // Calculate variance
+    for (int i = 0; i < datos.length; i++) {
+      suma += Math.pow(datos[i] - media, 2);
+    }
+    desviacion = suma / (datos.length - 1);
+    desviacion = Math.sqrt(desviacion);
+
+    return desviacion;
+  }
+
+  // metodo equals sin Arrays.equals
+  public static boolean equalsSinUtil(double array1[], double array2[]) {
+    if (array1.length != array2.length) {
+      return false;
+    }
+    for (int i = 0; i < array1.length; i++) {
+      if (array1[i] != array2[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // ejercicio 9
+  public static double[] generarArrayPares(double array[]) {
+    double array_par[] = new double[(array.length + 1) / 2];
+    int pos_par = 0;
+    for (int i = 0; i < array.length; i += 2) {
+      array_par[pos_par] = array[i];
+      pos_par++;
+    }
+    return array_par;
+  }
 }

@@ -1,5 +1,6 @@
 package arrays;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import operations.TestRapido;
 
@@ -150,6 +151,45 @@ public class arrays1 {
     System.out.print("Array con elementos de posiciones pares: ");
     mostrarArray(arrayPares);
 
+    // Ejercicio 10: Análisis de vector de 10 elementos aleatorios
+    System.out.println("\n--- Ejercicio 10: Vector de 10 elementos aleatorios ---");
+    System.out.println("=== ANÁLISIS DE VECTOR DE 10 ELEMENTOS ALEATORIOS ===");
+    double[] vectorDouble = generarArray(10);
+    int[] vector = new int[vectorDouble.length];
+    for (int i = 0; i < vectorDouble.length; i++) {
+      vector[i] = (int) vectorDouble[i];
+    }
+    System.out.print("Vector generado: ");
+    mostrarArray(vector);
+    valoresArray(vector);
+
+    // Test buscar_ocurrencias_array - Binary Search todas las ocurrencias
+    System.out.println("\n--- Test buscar_ocurrencias_array (Binary Search) ---");
+
+    // Usar un valor que probablemente exista en el array (el máximo del ejercicio
+    // anterior)
+    int valorParaBuscar = vector[0]; // Tomar el primer valor del array como ejemplo
+    System.out.println("Buscando todas las ocurrencias del valor: " + valorParaBuscar);
+
+    // Crear una copia del vector para no modificar el original
+    int[] vectorParaBusqueda = vector.clone();
+
+    int totalOcurrencias = buscar_ocurrencias_array(vectorParaBusqueda, valorParaBuscar);
+    System.out.println("Método retorna: " + totalOcurrencias + " ocurrencias");
+    // test intercambiar maximos array
+    System.out.println("\n===Test intercambiar maximos entre arrays===");
+    
+    // Crear un nuevo array int desordenado directamente
+    int[] arrayIntercambiar = new int[10];
+    for (int i = 0; i < arrayIntercambiar.length; i++) {
+      arrayIntercambiar[i] = (int) TestRapido.randomNumber(1, 101);
+    }
+    
+    System.out.println("Array original");
+    mostrarArray(arrayIntercambiar);
+    System.out.println("Array intercambiada");
+    int[] vectorIntercambiado = cambiarMaximo(arrayIntercambiar.clone());
+    mostrarArray(vectorIntercambiado);
     input.close();
   }
 
@@ -231,6 +271,17 @@ public class arrays1 {
   public static void mostrarArray(double array[]) {
     for (int i = 0; i < array.length; i++) {
       System.out.printf("%.1f", array[i]);
+      if (i < array.length - 1) {
+        System.out.print(", ");
+      }
+    }
+    System.out.println();
+    System.out.println("****************************");
+  }
+
+  public static void mostrarArray(String array[]) {
+    for (int i = 0; i < array.length; i++) {
+      System.out.print(array[i]);
       if (i < array.length - 1) {
         System.out.print(", ");
       }
@@ -859,5 +910,104 @@ public class arrays1 {
       pos_par++;
     }
     return array_par;
+  }
+
+  // Ejercicio 10: Continuando desde la versión original
+  public static int valoresArray(int array[]) {
+    // Guardar array original para encontrar posición del mínimo
+    int[] arrayOriginal = array.clone();
+
+    Arrays.sort(array);
+    int minimo = array[0];
+    int maximo = array[array.length - 1];
+    int maximos = 0;
+
+    // Contar las repeticiones del valor máximo
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == maximo) {
+        maximos++;
+      }
+    }
+
+    // Encontrar posición del mínimo en el array original
+    int posicionMinimo = 0;
+    for (int i = 0; i < arrayOriginal.length; i++) {
+      if (arrayOriginal[i] == minimo) {
+        posicionMinimo = i;
+        break;
+      }
+    }
+
+    // Mostrar resultados
+    System.out.println("a) ELEMENTO MENOR:");
+    System.out.println("   Valor menor: " + minimo);
+    System.out.println("   Posición: " + posicionMinimo);
+
+    System.out.println("b) ELEMENTO MAYOR:");
+    System.out.println("   Valor mayor: " + maximo);
+    System.out.println("   Veces que se repite: " + maximos);
+
+    if (maximos > 1) {
+      System.out.print("   Posiciones donde aparece: ");
+      boolean primera = true;
+      for (int i = 0; i < arrayOriginal.length; i++) {
+        if (arrayOriginal[i] == maximo) {
+          if (!primera) {
+            System.out.print(", ");
+          }
+          System.out.print(i);
+          primera = false;
+        }
+      }
+      System.out.println();
+    }
+
+    return maximos; // Retornamos el número de repeticiones del máximo
+  }
+
+  public static int buscar_ocurrencias_array(int array[], int valor) {
+
+    int ocurrencias = 0;
+
+    Arrays.sort(array);
+    int posicion = Arrays.binarySearch(array, valor);
+
+    if (posicion >= 0) {
+      System.out.println("Se encontró " + valor + " en las posiciones:");
+      int i = posicion;
+      while (i >= 0 && array[i] == valor) {
+        i--;
+      }
+      int j = i + 1;
+      while (j < array.length && array[j] == valor) {
+        System.out.println("- Posicion: " + j);
+        ocurrencias++;
+        j++;
+      }
+    } else
+      System.out.println("El valor " + valor + " no se encontró");
+    System.out.println("Total de concurrencias de " + valor + ": " + ocurrencias);
+
+    return ocurrencias;
+  }
+
+  public static int[] cambiarMaximo(int array[]) {
+    int maximo = array[0]; // Inicializar con el primer elemento
+    int pos_maximo = 0;
+
+    // Encontrar el máximo y su posición
+    for (int i = 1; i < array.length; i++) {
+      if (array[i] > maximo) {
+        maximo = array[i];
+        pos_maximo = i;
+      }
+    }
+
+    // Intercambiar el máximo con el último elemento (SOLO UNA VEZ)
+    int ultimo = array[array.length - 1];
+    array[array.length - 1] = maximo;
+    array[pos_maximo] = ultimo;
+
+    return array;
   }
 }

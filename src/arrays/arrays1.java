@@ -178,18 +178,41 @@ public class arrays1 {
     System.out.println("Método retorna: " + totalOcurrencias + " ocurrencias");
     // test intercambiar maximos array
     System.out.println("\n===Test intercambiar maximos entre arrays===");
-    
+
     // Crear un nuevo array int desordenado directamente
     int[] arrayIntercambiar = new int[10];
     for (int i = 0; i < arrayIntercambiar.length; i++) {
       arrayIntercambiar[i] = (int) TestRapido.randomNumber(1, 101);
     }
-    
+
     System.out.println("Array original");
     mostrarArray(arrayIntercambiar);
     System.out.println("Array intercambiada");
     int[] vectorIntercambiado = cambiarMaximo(arrayIntercambiar.clone());
     mostrarArray(vectorIntercambiado);
+
+    // Test generar2Vectores method
+    System.out.println("\n=== Test generar2Vectores ===");
+    int[] testArray = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    System.out.print("Array de entrada: ");
+    mostrarArray(testArray);
+
+    int[][] resultado2Vectores = generar2Vectores(testArray);
+    System.out.print("Vector 1 (impares +15, pares sin cambio): ");
+    mostrarArray(resultado2Vectores[0]);
+    System.out.print("Vector 2 (resto división por 3): ");
+    mostrarArray(resultado2Vectores[1]);
+
+    // Test devolverMinimo method
+    System.out.println("\n=== Test devolverMinimo ===");
+    int[] testArrayMinimo = { 15, 3, 8, 1, 12, 7, 20, 0, 9, 5 };
+    System.out.print("Array de entrada: ");
+    mostrarArray(testArrayMinimo);
+
+    int[] resultadoMinimo = devolverMinimo(testArrayMinimo);
+    System.out.println("Valor mínimo: " + resultadoMinimo[0]);
+    System.out.println("Posición del mínimo: " + resultadoMinimo[1]);
+
     input.close();
   }
 
@@ -1002,12 +1025,146 @@ public class arrays1 {
         pos_maximo = i;
       }
     }
-
     // Intercambiar el máximo con el último elemento (SOLO UNA VEZ)
     int ultimo = array[array.length - 1];
     array[array.length - 1] = maximo;
     array[pos_maximo] = ultimo;
 
     return array;
+  }
+
+  // ejercicio 19 PROBABLE EXAMEN
+  public static int[][] generar2Vectores(int[] arrayEntrada) {
+    int vectorSol[][] = new int[2][arrayEntrada.length];
+
+    for (int i = 0; i < arrayEntrada.length; i++) {
+      // vector2: resto de dividir por 3
+      vectorSol[1][i] = arrayEntrada[i] % 3;
+
+      // vector1: si es impar sumar 15, si es par mantener el valor original
+      if (arrayEntrada[i] % 2 != 0) {
+        vectorSol[0][i] = arrayEntrada[i] + 15;
+      } else {
+        vectorSol[0][i] = arrayEntrada[i];
+      }
+    }
+    return vectorSol;
+  }
+
+  // ejercicio 22
+  public static int[] devolverMinimo(int array[]) {
+    int minimo = array[0]; // Inicializar con el primer elemento
+    int pos_minimo = 0;
+    int vectorSol[] = new int[2];
+
+    // Encontrar el mínimo y su posición
+    for (int i = 1; i < array.length; i++) {
+      if (array[i] < minimo) {
+        minimo = array[i];
+        pos_minimo = i;
+      }
+    }
+
+    // Almacenar el mínimo valor y su posición
+    vectorSol[0] = minimo;
+    vectorSol[1] = pos_minimo;
+
+    return vectorSol;
+  }
+
+  public static int[] devolverMaximo(int array[]) {
+    int maximo = array[0]; // Inicializar con el primer elemento
+    int pos_maximo = 0;
+    int vectorSol[] = new int[2];
+
+    // Encontrar el mínimo y su posición
+    for (int i = 1; i < array.length; i++) {
+      if (array[i] > maximo) {
+        maximo = array[i];
+        pos_maximo = i;
+      }
+    }
+
+    // Almacenar el mínimo valor y su posición
+    vectorSol[0] = maximo;
+    vectorSol[1] = pos_maximo;
+
+    return vectorSol;
+  }
+
+  public static double ejercicio24(int array[]) {
+    double media = 0;
+    int cont = 0;
+    int suma = 0;
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] != 0) {
+        suma += array[i];
+        cont++;
+      }
+      media = suma / cont;
+    }
+    return media;
+  }
+
+  public static int[] ejercicio25(int array[]) {
+    int vectorSol[] = new int[2];
+    int maximo = 0;
+    int minimo = 0;
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] != 0) {
+        devolverMinimo(array);
+        devolverMaximo(array);
+      }
+      vectorSol[0] = maximo;
+      vectorSol[1] = minimo;
+
+    }
+    return vectorSol;
+  }
+
+  // Ejercicios 26-27 no salen. EJERCICIO 29 SALE CASI SEGURO
+  public static void ejercicio28() {
+    int[][] array = {
+        { 12, 34, 56 },
+        { 45, 67, 89, 23, 45 },
+        { 67, 89 }
+    };
+    int sumaTotal = 0;
+    int sumaFila1 = 0;
+    int sumaFila2 = 0;
+    int sumaFila3 = 0;
+    int maximo = array[0][0]; // Inicializar con el primer elemento
+    int pos_maximo = 0;
+    for (int i = 0; i < array.length; i++) {
+      sumaTotal += array[array.length][i];
+      sumaFila1 += array[0][i];
+      sumaFila2 += array[1][i];
+      sumaFila3 += array[2][i];
+      if (array[i][i] > maximo) {
+        maximo = array[i][i];
+        pos_maximo = i;
+      }
+
+    }
+    int[][] vectorFilas = {
+        { sumaFila1 },
+        { sumaFila2 },
+        { sumaFila3 }
+    };
+    int[][] vectorMax = {
+        { maximo },
+        { pos_maximo }
+    };
+    System.out.println("Suma total de todos los elementos=" + sumaTotal);
+    System.out.println("**********************************************");
+    System.out.println("Suma por fila");
+    System.out.println("Fila 1=" + sumaFila1);
+    System.out.println("Fila 2=" + sumaFila2);
+    System.out.println("Fila 3=" + sumaFila3);
+    System.out.println("**********************************************");
+    System.out.println("Vector de la suma de las filas=" + vectorFilas);
+    System.out.println("**********************************************");
+    System.out.println("Valor maximo de la matriz(valor,posicion)=" + vectorMax);
+
   }
 }

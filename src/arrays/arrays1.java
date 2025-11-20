@@ -1167,4 +1167,177 @@ public class arrays1 {
     System.out.println("Valor maximo de la matriz(valor,posicion)=" + vectorMax);
 
   }
+
+  // Ejercicio 29 version de clase recorriendo 2 veces, intentar hacer despues
+  // recorriendo una sola vez
+  public static void media_meses(double temp[][], String meses[]) {
+    for (int i = 0; i < temp.length; i++) {
+      double suma = 0;
+
+      // Sum all temperatures for the current month
+      for (int j = 0; j < temp[i].length; j++) {
+        suma += temp[i][j];
+      }
+
+      // Calculate average for the month
+      double media = suma / temp[i].length;
+
+      // Display result with proper formatting
+      System.out.printf("Mes %s: Temperatura media = %.1f°C (%d días)%n",
+          meses[i], media, temp[i].length);
+    }
+  }
+
+  public static void maxmin_meses(double temp[][], String meses[]) {
+    double max;
+    double min;
+    int dia_max = 0;
+    int dia_min = 0;
+
+    for (int i = 0; i < temp.length; i++) {
+      max = temp[i][0];
+      min = temp[i][0];
+      dia_max = 1;
+      dia_min = 1;
+
+      for (int j = 0; j < temp[i].length; j++) {
+        if (temp[i][j] > max) {
+          max = temp[i][j];
+          dia_max = j + 1; // +1 because days start from 1
+        }
+        if (temp[i][j] < min) {
+          min = temp[i][j];
+          dia_min = j + 1; // +1 because days start from 1
+        }
+      }
+
+      System.out.println("Mes " + meses[i] + ":");
+      System.out.println("  Temperatura máxima: " + max + "°C (día " + dia_max + ")");
+      System.out.println("  Temperatura mínima: " + min + "°C (día " + dia_min + ")");
+      System.out.println();
+    }
+  }
+
+  public static void maxmin_año(double temp[][], String meses[]) {
+    double maxAnual = temp[0][0];
+    double minAnual = temp[0][0];
+    int mesMax = 0;
+    int diaMax = 0;
+    int mesMin = 0;
+    int diaMin = 0;
+
+    double sumaTotal = 0;
+    int totalDias = 0;
+
+    // Find overall max and min for the entire year
+    for (int i = 0; i < temp.length; i++) {
+      for (int j = 0; j < temp[i].length; j++) {
+        // Track overall maximum
+        if (temp[i][j] > maxAnual) {
+          maxAnual = temp[i][j];
+          mesMax = i;
+          diaMax = j + 1; // +1 because days start from 1
+        }
+
+        // Track overall minimum
+        if (temp[i][j] < minAnual) {
+          minAnual = temp[i][j];
+          mesMin = i;
+          diaMin = j + 1; // +1 because days start from 1
+        }
+
+        // Calculate total for yearly average
+        sumaTotal += temp[i][j];
+        totalDias++;
+      }
+    }
+
+    double mediaAnual = sumaTotal / totalDias;
+
+    // Display yearly statistics
+    System.out.println("=== ANÁLISIS ANUAL DE TEMPERATURAS ===");
+    System.out.println("--------------------------------------");
+    System.out.printf("Temperatura máxima del año: %.1f°C%n", maxAnual);
+    System.out.printf("  Fecha: %s, día %d%n", meses[mesMax], diaMax);
+    System.out.println();
+    System.out.printf("Temperatura mínima del año: %.1f°C%n", minAnual);
+    System.out.printf("  Fecha: %s, día %d%n", meses[mesMin], diaMin);
+    System.out.println();
+    System.out.printf("Temperatura media anual: %.1f°C%n", mediaAnual);
+    System.out.printf("Rango térmico anual: %.1f°C%n", (maxAnual - minAnual));
+    System.out.printf("Total de días registrados: %d días%n", totalDias);
+  }
+
+  public static double[][] generarMatrizAzar(
+      int filas,
+      int dias_mes[],
+      double li,
+      double ls) {
+    double array[][] = new double[filas][];
+    for (int i = 0; i < 12; i++) {
+      array[i] = new double[dias_mes[i]];
+      for (int j = 0; j < dias_mes[i]; j++) {
+        array[i][j] = Math.random() * (ls - li) + li;
+      }
+    }
+    return array;
+  }
+
+  public static void ejercicio29() {
+    // Array with days per month (non-leap year)
+    int dia_mes[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    // Create jagged array for temperatures (each month has different number of
+    // days)
+    double temp[][] = new double[12][];
+    for (int i = 0; i < 12; i++) {
+      temp[i] = new double[dia_mes[i]];
+    }
+
+    // Array of month names
+    String[] meses = {
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    };
+
+    // Generate random temperatures for each day of the year (realistic ranges)
+    for (int i = 0; i < 12; i++) {
+      for (int j = 0; j < dia_mes[i]; j++) {
+        // Different temperature ranges for different seasons
+        double tempMin, tempMax;
+        if (i >= 11 || i <= 1) { // Winter: Dec, Jan, Feb
+          tempMin = 5.0;
+          tempMax = 15.0;
+        } else if (i >= 2 && i <= 4) { // Spring: Mar, Apr, May
+          tempMin = 15.0;
+          tempMax = 25.0;
+        } else if (i >= 5 && i <= 7) { // Summer: Jun, Jul, Aug
+          tempMin = 25.0;
+          tempMax = 40.0;
+        } else { // Autumn: Sep, Oct, Nov
+          tempMin = 10.0;
+          tempMax = 25.0;
+        }
+        temp[i][j] = Math.random() * (tempMax - tempMin) + tempMin;
+      }
+    }
+
+    // Perform comprehensive temperature analysis
+    System.out.println("=== EJERCICIO 29: ANÁLISIS COMPLETO DE TEMPERATURAS ANUALES ===");
+    System.out.println("================================================================");
+
+    // Monthly analysis
+    System.out.println("\n1. ANÁLISIS POR MESES:");
+    maxmin_meses(temp, meses);
+
+    // Annual analysis
+    System.out.println("\n2. ANÁLISIS ANUAL:");
+    maxmin_año(temp, meses);
+
+    // Monthly averages
+    System.out.println("\n3. TEMPERATURAS MEDIAS MENSUALES:");
+    media_meses(temp, meses);
+
+    System.out.println("\n=== FIN DEL ANÁLISIS ===");
+  }
 }

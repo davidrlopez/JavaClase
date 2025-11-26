@@ -3,6 +3,7 @@ package arrays;
 import java.util.Arrays;
 import java.util.Scanner;
 import operations.TestRapido;
+import arrays.arrays1;
 
 public class arraysYstrings {
   public static void main(String[] args) {
@@ -78,6 +79,33 @@ public class arraysYstrings {
     System.out.println("Numero de vocales: " + contVoc);
   }
 
+  // Nueva versión de ejercicio3 usando string con todas las vocales
+  public static void ejercicio3Nueva(String frase) {
+    // String con todas las vocales: minúsculas, mayúsculas y con tildes
+    String vocales = "aeiouAEIOUáéíóúÁÉÍÓÚàèìòùÀÈÌÒÙäëïöüÄËÏÖÜ";
+    String asVocales = "aAáÁàÀäÄ";
+
+    int contA = 0;
+    int contVoc = 0;
+
+    for (int i = 0; i < frase.length(); i++) {
+      char caracter = frase.charAt(i);
+
+      // Verificar si es vocal usando indexOf (retorna -1 si no encuentra)
+      if (vocales.indexOf(caracter) != -1) {
+        contVoc++;
+      }
+
+      // Verificar si es una 'A' en cualquier forma usando indexOf
+      if (asVocales.indexOf(caracter) != -1) {
+        contA++;
+      }
+    }
+
+    System.out.println("Numero de As (nueva version): " + contA);
+    System.out.println("Numero de vocales (nueva version): " + contVoc);
+  }
+
   public static void ejercicio4(String frase) {
     boolean encontrado = false;
     for (int i = 0; i < frase.length(); i++) {
@@ -97,6 +125,11 @@ public class arraysYstrings {
     }
   }
 
+  // Nueva versión de ejercicio4 usando indexOf y devolviendo la posición
+  public static int ejercicio4Nueva(String frase, char letra) {
+    return frase.indexOf(letra);
+  }
+
   public static void ejercicio5(String frase) {
     boolean encontrado = false;
     for (int i = 0; i < frase.length(); i++) {
@@ -112,6 +145,49 @@ public class arraysYstrings {
     if (!encontrado) {
       System.out.println("No se encontró la letra 't' o 'T' en la frase");
     }
+  }
+
+  public static int[] ejercicio5(String cadena, char letra) {
+
+    int array[] = new int[cadena.length()];
+    int cont = 0;
+
+    Arrays.fill(array, -1);
+
+    int pos = cadena.indexOf(letra);
+
+    while (pos != -1) {
+
+      array[cont++] = pos;
+
+      pos = cadena.indexOf(letra, pos + 1);
+
+    }
+
+    return array;
+  }
+
+  public static int ejercicio6(String texto, char letra) {
+    return texto.lastIndexOf(letra);
+  }
+
+  public static void mostrarArray(char array[]) {
+    for (int i = 0; i < array.length; i++) {
+      System.out.print(array[i]);
+      if (i < array.length - 1) {
+        System.out.print(", ");
+      }
+    }
+    System.out.println();
+    System.out.println("****************************");
+  }
+
+  public static char[] buscarChar(String cadena) {
+    char array[] = new char[cadena.length()];
+    for (int i = 0; i < cadena.length(); i++) {
+      array[i] = cadena.charAt(i);
+    }
+    return array;
   }
 
   // Additional utility methods for string manipulation
@@ -157,5 +233,38 @@ public class arraysYstrings {
       resultado.append(texto.charAt(i));
     }
     return resultado.toString();
+  }
+
+  public static boolean esNumero(String cadena) {
+    char array[] = cadena.toCharArray();
+    for (int i = 0; i < cadena.length(); i++) {
+      if (array[i] < '0' || array[i] > '9') {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public static boolean esTodoletra(String cadena) {
+    char caracter;
+    for (int i = 0; i < cadena.length(); i++) {
+      caracter = cadena.charAt(i);
+      if (!(caracter >= 'A' || caracter <= 'Z') || (caracter >= 'a' || caracter <= 'z') || caracter == 'n'
+          || caracter == 'Ñ') {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public static int sumaDigitos(String cadena) {
+    int suma = 0;
+    char array[] = cadena.toCharArray();
+    for (int i = 0; i < cadena.length(); i++) {
+      if (array[i] >= '0' && array[i] <= '9') {
+        suma += (array[i] - '0');
+      }
+    }
+    return suma;
   }
 }

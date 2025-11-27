@@ -2,8 +2,6 @@ package arrays;
 
 import java.util.Arrays;
 import java.util.Scanner;
-import operations.TestRapido;
-import arrays.arrays1;
 
 public class arraysYstrings {
   public static void main(String[] args) {
@@ -44,6 +42,45 @@ public class arraysYstrings {
     String frase3 = "Hello beautiful day";
     System.out.println("Searching for 't'/'T' in: \"" + frase3 + "\"");
     ejercicio5(frase3);
+
+    // Interactive Caesar cipher tests with user input
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.println("\n=== CAESAR CIPHER INTERACTIVE TESTS ===");
+
+    System.out.println("\n8. Test Caesar encryption:");
+    System.out.print("Enter a message to encrypt: ");
+    String original = scanner.nextLine();
+    System.out.print("Enter encryption key (1-25): ");
+    int encryptKey = scanner.nextInt();
+    scanner.nextLine(); // consume newline
+
+    String encrypted = encriptacionCesar(original, encryptKey);
+    System.out.println("Original: " + original);
+    System.out.println("Encrypted (key=" + encryptKey + "): " + encrypted);
+
+    System.out.println("\n9. Test Caesar decryption with known key:");
+    String decrypted = DesencriptacionCesar(encrypted, encryptKey);
+    System.out.println("Decrypted back: " + decrypted);
+    System.out.println("Match original? " + original.toUpperCase().equals(decrypted));
+
+    System.out.println("\n10. Test brute force decryption (all keys):");
+    System.out.print("Enter an encrypted message to decrypt (or press Enter to use previous): ");
+    String bruteForceMessage = scanner.nextLine();
+    if (bruteForceMessage.trim().isEmpty()) {
+      bruteForceMessage = encrypted;
+    }
+    DesencriptacionCesarsinClave(bruteForceMessage);
+
+    System.out.println("\n11. Test smart dictionary decryption:");
+    System.out.print("Enter an encrypted Spanish message (or press Enter to use previous): ");
+    String dictionaryMessage = scanner.nextLine();
+    if (dictionaryMessage.trim().isEmpty()) {
+      dictionaryMessage = encrypted;
+    }
+    mensajeDescifrado(dictionaryMessage);
+
+    scanner.close();
 
     System.out.println("\n=== ALL TESTS COMPLETED ===");
   }
@@ -235,6 +272,14 @@ public class arraysYstrings {
     return resultado.toString();
   }
 
+  public static String invertirStringClase(String texto) { // version de clase
+    String invertida = "";
+    for (int i = texto.length() - 1; i >= 0; i--) {
+      invertida += texto.charAt(i);
+    }
+    return invertida;
+  }
+
   public static boolean esNumero(String cadena) {
     char array[] = cadena.toCharArray();
     for (int i = 0; i < cadena.length(); i++) {
@@ -266,5 +311,122 @@ public class arraysYstrings {
       }
     }
     return suma;
+  }
+
+  public static String quitarEspacios(String cadena) {
+    String sinEspacios = "";
+
+    for (int i = 0; i < cadena.length(); i++) {
+      if (cadena.charAt(i) != ' ') {
+        sinEspacios += cadena.charAt(i);
+      }
+    }
+    return sinEspacios;
+  }
+
+  public static boolean palindromo(String cadena) {
+    boolean es_pal = false;
+    cadena = quitarEspacios(cadena);
+    cadena = cadena.toLowerCase();
+    if (cadena.equals(invertirString(cadena))) {
+      es_pal = true;
+
+    }
+    return es_pal;
+  }
+
+  public static boolean palindromo2(String cadena) { // version optimizada
+    cadena = quitarEspacios(cadena);
+    cadena = cadena.toLowerCase();
+    for (int i = 0; i < cadena.length() / 2; i++) {
+
+      if (cadena.charAt(i) != cadena.charAt(cadena.length() - i - 1)) {
+        return false;
+
+      }
+    }
+    return true;
+  }
+
+  public static String encriptacionCesar(String cadena, int clave) {
+    cadena = cadena.toUpperCase();
+    String cifrado = "";
+    for (int i = 0; i < cadena.length(); i++) {
+      char caracter = cadena.charAt(i);
+      if (caracter >= 'A' && caracter <= 'Z') {
+        char cifradoChar = (char) (((caracter - 'A' + clave) % 26) + 'A');
+        cifrado += cifradoChar;
+        if (caracter == 'Ñ' || caracter == 'ñ') {
+          caracter = '$';
+        }
+      } else {
+        cifrado += caracter;
+      }
+    }
+    return cifrado;
+  }
+
+  public static String DesencriptacionCesar(String cadena, int clave) {
+    cadena = cadena.toUpperCase();
+    String cifrado = "";
+    for (int i = 0; i < cadena.length(); i++) {
+      char caracter = cadena.charAt(i);
+      if (caracter >= 'A' && caracter <= 'Z') {
+        char cifradoChar = (char) (((caracter - 'A' - clave + 26) % 26) + 'A');
+        cifrado += cifradoChar;
+        if (caracter == '$') {
+          caracter = 'Ñ';
+        }
+      } else {
+        cifrado += caracter;
+      }
+    }
+    return cifrado;
+  }
+
+  public static void DesencriptacionCesarsinClave(String cadena) {
+    System.out.println("Mensaje cifrado=" + cadena);
+    for (int i = 1; i <= 26; i++) {
+      System.out.println("****************************");
+      System.out.println("Clave=" + i);
+      System.out.println(DesencriptacionCesar(cadena, i));
+    }
+  }
+
+  public static void mensajeDescifrado(String cadena) {
+    String[] diccionario = { "EN", "HOLA", "ES", "ESTA", "YO", "HAS", "MUNDO", "CASA", "AGUA", "AMOR", "VIDA", "SOY",
+        "TU", "EL", "LA", "DE", "QUE", "SE", "NO", "UN", "UNA", "CON", "PARA", "POR", "TODO", "BIEN", "MAS", "COMO",
+        "PERO", "SIN" };
+
+    System.out.println("Analyzing: \"" + cadena + "\" using dictionary...");
+
+    int maxMatches = 0, bestKey = 0;
+    String bestDecryption = "";
+
+    for (int key = 1; key <= 26; key++) {
+      String decrypted = DesencriptacionCesar(cadena, key);
+      int matches = countDictionaryMatches(quitarEspacios(decrypted).toUpperCase(), diccionario);
+
+      System.out.printf("Key %2d: %s (%d coincidencias)\n", key, decrypted, matches);
+
+      if (matches > maxMatches) {
+        maxMatches = matches;
+        bestKey = key;
+        bestDecryption = decrypted;
+      }
+    }
+
+    System.out
+        .println("\n Mas coincidencias; " + bestKey + " -> " + bestDecryption + " (" + maxMatches + " coincidencias)");
+  }
+
+  // Simplified helper using existing methods
+  private static int countDictionaryMatches(String cleanMessage, String[] dictionary) {
+    int matches = 0;
+    for (String word : dictionary) {
+      if (cleanMessage.indexOf(word) != -1)
+        matches++; // Reuse indexOf logic from ejercicio4Nueva
+    }
+    return matches;
   }
 }

@@ -429,4 +429,147 @@ public class arraysYstrings {
     }
     return matches;
   }
+
+  public static String encriptar(String cadena, int clave) {
+    cadena = cadena.toUpperCase();
+    // cadena=sinEspacios(cadena);
+
+    String encriptada = "";
+    int pos_letra;
+
+    for (int i = 0; i < cadena.length(); i++) {
+      if (cadena.charAt(i) == 'Ñ') {
+        encriptada += '$';
+        continue;
+      }
+      if (cadena.charAt(i) != ' ') {
+
+        pos_letra = (int) cadena.charAt(i);
+        pos_letra += clave;
+
+        if (pos_letra > 90) {
+          pos_letra -= 26;
+        }
+
+        encriptada += (char) pos_letra;
+      } else
+        encriptada += ' ';
+    }
+
+    return encriptada;
+  }
+
+  public static String desencriptar(String cadena, int clave) {
+
+    String encriptada = "";
+    int pos_letra;
+
+    for (int i = 0; i < cadena.length(); i++) {
+      if (cadena.charAt(i) == '$') {
+        encriptada += 'Ñ';
+        continue;
+      }
+      if (cadena.charAt(i) != ' ') {
+
+        pos_letra = (int) cadena.charAt(i);
+        pos_letra -= clave;
+
+        if (pos_letra < 65) {
+          pos_letra += 26;
+        }
+
+        encriptada += (char) pos_letra;
+      } else
+        encriptada += ' ';
+    }
+
+    return encriptada;
+  }
+
+  public static void descrifrado_cesar(String mensaje) {
+
+    System.out.println("Mensaje cifrado: " + mensaje);
+    for (int i = 0; i <= 26; i++) {
+      System.out.println("  ");
+      System.out.println("Clave: " + i);
+      System.out.println(desencriptar(mensaje, i));
+
+    }
+
+  }
+
+  public static boolean mensaje_con_sentido(String mensaje) {
+
+    String diccionario[] = { " HOLA ", " ADIOS ", " EN ", " HAS ", " PLATA " };
+
+    for (int i = 0; i < diccionario.length; i++) {
+      if (mensaje.contains(diccionario[i])) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public static void clave_descifrado_cesar(String mensaje) {
+
+    String descifrado;
+
+    System.out.println("Mensaje cifrado: " + mensaje);
+
+    for (int i = 0; i <= 26; i++) {
+      System.out.println("_______________");
+      System.out.println("Clave: " + i);
+
+      descifrado = desencriptar(mensaje, i);
+      System.out.println(descifrado);
+
+      if (mensaje_con_sentido(descifrado)) {
+        System.out.println("********Esta es la clave*******");
+      }
+
+    }
+
+  }
+
+  public static String numero_telefono(String telefono) {
+
+    String formateado = "";
+    String pais, codigo1, codigo2, codigo3, codigo4;
+
+    if (telefono.length() != 11) {
+      System.out.println("Error formato");
+      return telefono;
+    }
+    pais = telefono.substring(0, 2);
+    codigo1 = telefono.substring(2, 5);
+    codigo2 = telefono.substring(5, 7);
+    codigo3 = telefono.substring(7, 9);
+    codigo4 = telefono.substring(9, 11);
+
+    formateado = "(" + pais + ")_" + codigo1 + "_" + codigo2 + "_" + codigo3 + "_" + codigo4;
+
+    return formateado;
+  }
+
+  public static int numero_de_palabras(String frase) {
+
+    frase = frase.trim();
+
+    // Con un while de que haya " " puedes remplazarlos con " " y luego cuentas los
+    // espacios
+
+    if (frase.length() == 0) {
+      return 0;
+    }
+
+    int suma = 1;
+
+    for (int i = 0; i < frase.length(); i++)
+      if (frase.charAt(i) == ' ' && frase.charAt(i - 1) != ' ')
+        suma++;
+
+    return suma;
+
+  }
 }

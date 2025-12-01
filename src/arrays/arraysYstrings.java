@@ -43,12 +43,31 @@ public class arraysYstrings {
     System.out.println("Searching for 't'/'T' in: \"" + frase3 + "\"");
     ejercicio5(frase3);
 
+    // Test esPrimo method
+    System.out.println("\n8. Test esPrimo method:");
+    int[] testNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 17, 19, 20, 25, 29, 97 };
+    for (int num : testNumbers) {
+      System.out.println(num + " is prime: " + esPrimo(num));
+    }
+
+    // Test primo_mayor method
+    System.out.println("\n9. Test primo_mayor method:");
+    int[] testArray = { 4, 7, 12, 17, 3, 19, 8, 23, 6 };
+    System.out.println("Array: " + Arrays.toString(testArray));
+    int positionOfLargestPrime = primo_mayor(testArray);
+    if (positionOfLargestPrime >= 0 && positionOfLargestPrime < testArray.length) {
+      System.out.println("Position of largest prime: " + positionOfLargestPrime);
+      System.out.println("Largest prime value: " + testArray[positionOfLargestPrime]);
+    } else {
+      System.out.println("No prime numbers found in array");
+    }
+
     // Interactive Caesar cipher tests with user input
     Scanner scanner = new Scanner(System.in);
 
     System.out.println("\n=== CAESAR CIPHER INTERACTIVE TESTS ===");
 
-    System.out.println("\n8. Test Caesar encryption:");
+    System.out.println("\n10. Test Caesar encryption:");
     System.out.print("Enter a message to encrypt: ");
     String original = scanner.nextLine();
     System.out.print("Enter encryption key (1-25): ");
@@ -59,12 +78,12 @@ public class arraysYstrings {
     System.out.println("Original: " + original);
     System.out.println("Encrypted (key=" + encryptKey + "): " + encrypted);
 
-    System.out.println("\n9. Test Caesar decryption with known key:");
+    System.out.println("\n11. Test Caesar decryption with known key:");
     String decrypted = DesencriptacionCesar(encrypted, encryptKey);
     System.out.println("Decrypted back: " + decrypted);
     System.out.println("Match original? " + original.toUpperCase().equals(decrypted));
 
-    System.out.println("\n10. Test brute force decryption (all keys):");
+    System.out.println("\n12. Test brute force decryption (all keys):");
     System.out.print("Enter an encrypted message to decrypt (or press Enter to use previous): ");
     String bruteForceMessage = scanner.nextLine();
     if (bruteForceMessage.trim().isEmpty()) {
@@ -72,7 +91,7 @@ public class arraysYstrings {
     }
     DesencriptacionCesarsinClave(bruteForceMessage);
 
-    System.out.println("\n11. Test smart dictionary decryption:");
+    System.out.println("\n13. Test smart dictionary decryption:");
     System.out.print("Enter an encrypted Spanish message (or press Enter to use previous): ");
     String dictionaryMessage = scanner.nextLine();
     if (dictionaryMessage.trim().isEmpty()) {
@@ -571,5 +590,207 @@ public class arraysYstrings {
 
     return suma;
 
+  }
+
+  // ejercicios refuerzo tema 4
+  public static boolean esPrimo(int n) {
+    if (n <= 1) {
+      return false;
+    }
+    if (n == 2) {
+      return true;
+    }
+    if (n % 2 == 0) {
+      return false;
+    }
+    for (int i = 3; i <= Math.sqrt(n); i += 2) {
+      if (n % i == 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // ejercicio 1
+  public static int primo_mayor(int array[]) {
+    int pos_primo_mayor = 0;
+    int primo_mayor = 0;
+    for (int i = 0; i < array.length; i++) {
+      if (esPrimo(array[i]) && array[i] > primo_mayor) {
+        primo_mayor = array[i];
+        pos_primo_mayor = i;
+      }
+    }
+    return pos_primo_mayor;
+  }
+
+  // ejercicio2
+  public static int[] primos2(int n) { // version del pdf para entre 100 y 300
+    int[] respuesta = new int[n];
+    int primos = 0;
+    for (int i = 100; i <= 300; i++) {
+      if (esPrimo(respuesta[i]) && primos < n) {
+        respuesta[primos++] = i;
+      }
+    }
+    return respuesta;
+  }
+
+  public static int[] primos2limites(int n, int li, int ls) { // version con limites
+    int[] respuesta = new int[n];
+    int primos = 0;
+    for (int i = li; i <= ls; i++) {
+      if (primos == n) {
+        break;
+      }
+      if (esPrimo(respuesta[i]) && primos < n) {
+        respuesta[primos++] = i;
+      }
+    }
+    return respuesta;
+  }
+
+  // ejercicio3
+  public static int[] ejercicio3(int array[]) {
+    int solucion[] = new int[array.length];
+    int posicion = 0;
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] % 10 == 4) {
+        solucion[posicion++] = i;
+      }
+    }
+    return solucion;
+  }
+
+  public static int[] ejercicio3String(int array[]) { // mi version convirtiendo a string
+    int solucion[] = new int[array.length];
+    int posicion = 0;
+    String cadena;
+    for (int i = 0; i < array.length; i++) {
+      cadena = String.valueOf(array[i]);
+      if (cadena.charAt(cadena.length() - 1) == '4') {
+        solucion[posicion++] = i;
+      }
+    }
+    return solucion;
+  }
+
+  // ejercicio4 POSIBLE EXAMEN
+  public static int ejercicio4(int array[]) {
+    int posicionMaxima = 0;
+    int sumaMaxima = 0;
+
+    for (int i = 0; i < array.length; i++) {
+      String cadena = String.valueOf(Math.abs(array[i])); // Math.abs por si hay negativos
+      int sumaActual = 0;
+
+      // Sumar los dígitos del número actual
+      for (int j = 0; j < cadena.length(); j++) {
+
+        sumaActual += (cadena.charAt(j) - '0');
+      }
+
+      // Comparar después de haber sumado todos los dígitos
+      if (sumaActual > sumaMaxima) {
+        sumaMaxima = sumaActual;
+        posicionMaxima = i;
+      }
+    }
+
+    return posicionMaxima;
+  }
+
+  public static int ejercicio4sinString(int array[]) { // version de clase numerica
+    int posicionMaxima = 0;
+    int sumaMaxima = 0;
+
+    for (int i = 0; i < array.length; i++) {
+      int sumaActual = 0;
+      int valor = array[i];
+      while (valor > 0) {
+        sumaActual += valor % 10;
+        valor /= 10;
+      }
+
+      // Comparar después de haber sumado todos los dígitos
+      if (sumaActual > sumaMaxima) {
+        sumaMaxima = sumaActual;
+        posicionMaxima = i;
+      }
+    }
+
+    return posicionMaxima;
+  }
+
+  public static int ejercicio4sinStringClaude(int array[]) { // version claude
+    int posicionMaxima = 0;
+    int sumaMaxima = 0;
+
+    for (int i = 0; i < array.length; i++) {
+      int sumaActual = 0;
+      int valor = array[i];
+
+      // Caso especial: si el número es 0
+      if (valor == 0) {
+        sumaActual = 0;
+      } else {
+        while (valor > 0) {
+          sumaActual += valor % 10; // Obtiene el último dígito
+          valor /= 10; // Elimina el último dígito
+        }
+      }
+
+      if (sumaActual > sumaMaxima) {
+        sumaMaxima = sumaActual;
+        posicionMaxima = i;
+      }
+    }
+
+    return posicionMaxima;
+  }
+
+  // ejercicio 5
+  public static int ejercicio5(int array[]) {
+    int posicionMaxima = 0;
+    int maxDigitos = 0;
+
+    for (int i = 0; i < array.length; i++) {
+      String cadena = String.valueOf(array[i]);
+      int cantidadDigitos = cadena.length();
+
+      if (cantidadDigitos > maxDigitos) {
+        maxDigitos = cantidadDigitos;
+        posicionMaxima = i;
+      }
+    }
+
+    return posicionMaxima;
+  }
+
+  public static int ejercicio5sinString(int array[]) {
+    int posicionMaxima = 0;
+    int maxDigitos = 0;
+
+    for (int i = 0; i < array.length; i++) {
+      int cantidadDigitos = 0;
+      int valor = array[i];
+
+      // Caso especial: 0 tiene 1 dígito
+      if (valor == 0) {
+        cantidadDigitos = 1;
+      } else {
+        while (valor > 0) {
+          cantidadDigitos++;
+          valor /= 10;
+        }
+      }
+
+      if (cantidadDigitos > maxDigitos) {
+        maxDigitos = cantidadDigitos;
+        posicionMaxima = i;
+      }
+    }
+
+    return posicionMaxima;
   }
 }

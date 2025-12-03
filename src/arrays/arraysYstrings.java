@@ -101,6 +101,20 @@ public class arraysYstrings {
 
     scanner.close();
 
+    // Test factorial functionality (ejercicio6) with 10 numbers
+    System.out.println("\n14. Test factorial functionality (ejercicio6):");
+    int[] testNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    System.out.println("Original array: " + Arrays.toString(testNumbers));
+
+    int[] factorialResults = ejercicio6(testNumbers);
+    System.out.println("Factorial results: " + Arrays.toString(factorialResults));
+
+    // Show individual calculations for clarity
+    System.out.println("Individual factorial calculations:");
+    for (int i = 0; i < testNumbers.length; i++) {
+      System.out.println(testNumbers[i] + "! = " + factorialResults[i]);
+    }
+
     System.out.println("\n=== ALL TESTS COMPLETED ===");
   }
 
@@ -792,5 +806,125 @@ public class arraysYstrings {
     }
 
     return posicionMaxima;
+  }
+
+  public static int Factorial(int a) {
+    int Factorial = 1;
+    for (int i = 1; i <= a; i++) {
+      Factorial *= i;
+    }
+    return Factorial;
+  }
+
+  public static int[] ejercicio6(int array[]) {
+    int solucion[] = new int[array.length];
+    for (int i = 0; i < array.length; i++) {
+      solucion[i] = Factorial(array[i]);
+    }
+    return solucion;
+  }
+
+  public static int ejercicio7(int array[]) {
+    int contador = 0;
+    String cadena;
+    for (int i = 0; i < array.length; i++) {
+      cadena = String.valueOf(array[i]);
+      if (cadena.endsWith("15")) {
+        contador++;
+      }
+    }
+    return contador;
+  }
+
+  public static int ejercicio7sinString(int array[]) {
+    int contador = 0;
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] % 100 == 15) {
+        contador++;
+      }
+    }
+    return contador;
+  }
+
+  // ejercicio8: University survey analysis
+  public static void ejercicio8() {
+    Scanner input = new Scanner(System.in);
+
+    System.out.print("Introduzca el numero de estudiantes (max 50): ");
+    int estudiantes = input.nextInt();
+
+    // Validation
+    if (estudiantes <= 0 || estudiantes > 50) {
+      System.out.println("Error: Numero de estudiantes debe estar entre 1 y 50");
+      return;
+    }
+
+    // ✅ CORRECT array declaration: [students][4 fields]
+    // Fields: [0]=cedula, [1]=sexo, [2]=trabaja, [3]=sueldo
+    int[][] datos = new int[estudiantes][4];
+
+    // Input data for each student
+    for (int i = 0; i < estudiantes; i++) {
+      System.out.println("\n--- Estudiante " + (i + 1) + " ---");
+
+      System.out.print("Cedula: ");
+      datos[i][0] = input.nextInt();
+
+      System.out.print("Sexo (1-Masculino, 2-Femenino): ");
+      datos[i][1] = input.nextInt();
+
+      System.out.print("Trabaja (1-Si, 2-No): ");
+      datos[i][2] = input.nextInt();
+
+      System.out.print("Sueldo: ");
+      datos[i][3] = input.nextInt();
+    }
+
+    // Initialize counters and sums
+    int cantHombres = 0, cantMujeres = 0;
+    int hombresTrabajan = 0, mujeresTrabajan = 0;
+    int sumaSueldoHombres = 0, sumaSueldoMujeres = 0;
+
+    // Process data
+    for (int i = 0; i < estudiantes; i++) {
+      int sexo = datos[i][1];
+      int trabaja = datos[i][2];
+      int sueldo = datos[i][3];
+
+      if (sexo == 1) { // Male
+        cantHombres++;
+        if (trabaja == 1) {
+          hombresTrabajan++;
+          sumaSueldoHombres += sueldo;
+        }
+      } else if (sexo == 2) { // Female
+        cantMujeres++;
+        if (trabaja == 1) {
+          mujeresTrabajan++;
+          sumaSueldoMujeres += sueldo;
+        }
+      }
+    }
+
+    // Calculate percentages and averages
+    double porcentajeHombres = (cantHombres * 100.0) / estudiantes;
+    double porcentajeMujeres = (cantMujeres * 100.0) / estudiantes;
+
+    double porcentajeHombresTrabajan = cantHombres > 0 ? (hombresTrabajan * 100.0) / cantHombres : 0;
+    double porcentajeMujeresTrabajan = cantMujeres > 0 ? (mujeresTrabajan * 100.0) / cantMujeres : 0;
+
+    double promedioSueldoHombres = hombresTrabajan > 0 ? (double) sumaSueldoHombres / hombresTrabajan : 0;
+    double promedioSueldoMujeres = mujeresTrabajan > 0 ? (double) sumaSueldoMujeres / mujeresTrabajan : 0;
+
+    // Display results
+    System.out.println("\n=== RESULTADOS DE LA ENCUESTA ===");
+    System.out.printf("1. Porcentaje de hombres: %.2f%%\n", porcentajeHombres);
+    System.out.printf("2. Porcentaje de mujeres: %.2f%%\n", porcentajeMujeres);
+    System.out.printf("3. Porcentaje de hombres que trabajan: %.2f%% (Sueldo promedio: %.2f)\n",
+        porcentajeHombresTrabajan, promedioSueldoHombres);
+    System.out.printf("4. Porcentaje de mujeres que trabajan: %.2f%% (Sueldo promedio: %.2f)\n",
+        porcentajeMujeresTrabajan, promedioSueldoMujeres);
+
+    input.close();
   }
 }

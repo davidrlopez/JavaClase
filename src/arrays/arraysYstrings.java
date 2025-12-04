@@ -927,4 +927,154 @@ public class arraysYstrings {
 
     input.close();
   }
+
+  public static void ejercicio9() {
+    double[][] vehiculos = new double[20][2];
+    Scanner input = new Scanner(System.in);
+
+    // Lectura de datos
+    for (int i = 0; i < vehiculos.length; i++) {
+      System.out.println("\n--- Vehiculo " + (i + 1) + " ---");
+      System.out.println("Tipo de vehiculo (1-Familiar, 2-Publico, 3-Carga): ");
+      vehiculos[i][0] = input.nextInt();
+      System.out.println("Valor comercial del vehiculo: ");
+      vehiculos[i][1] = input.nextDouble();
+    }
+
+    // Cálculo y visualización
+    System.out.println("\n=== RESULTADOS ===");
+    for (int i = 0; i < vehiculos.length; i++) {
+      int tipo = (int) vehiculos[i][0];
+      double valorComercial = vehiculos[i][1];
+
+      // 1. Calcular IVA según valor
+      double iva;
+      if (valorComercial > 35000) {
+        iva = 0.30;
+      } else {
+        iva = 0.21;
+      }
+
+      double montoIva = valorComercial * iva;
+      double precio = valorComercial + montoIva;
+
+      // 2. Descuento para tipo 1 (familiar) con valor <= 15000
+      double descuento = 0;
+      if (tipo == 1 && valorComercial <= 15000) {
+        descuento = montoIva * 0.5; // 50% del IVA
+        precio = precio - descuento;
+      }
+
+      // 3. Sobrecosto para tipo 2 y 3 con valor > 30000
+      double sobrecosto = 0;
+      if ((tipo == 2 || tipo == 3) && valorComercial > 30000) {
+        sobrecosto = valorComercial * 0.05;
+        precio = precio + sobrecosto;
+      }
+
+      // 4. Descuento adicional si precio final < 20000
+      double descuentoAdicional = 0;
+      if (precio < 20000) {
+        descuentoAdicional = valorComercial * 0.05; // 5% del valor comercial
+        precio = precio - descuentoAdicional;
+      }
+
+      // Mostrar resultado
+      System.out.printf("Vehiculo %d - Tipo %d - Valor: %.2f€ - PRECIO FINAL: %.2f€\n",
+          (i + 1), tipo, valorComercial, precio);
+    }
+
+    input.close();
+  }
+
+  public static void ejercicio10() {
+    int[][] salas = new int[5][20]; // 0 = libre, 1 = reservado
+    int opcion;
+    Scanner input = new Scanner(System.in);
+
+    do {
+      System.out.println("\n=== MENU SALA DE SISTEMAS ===");
+      System.out.println("1. Asignar o cancelar turno");
+      System.out.println("2. Cantidad de equipos disponibles por sala");
+      System.out.println("3. Cantidad de turnos asignados en toda la UCPR");
+      System.out.println("4. Salir");
+      System.out.print("Seleccione opcion: ");
+      opcion = input.nextInt();
+
+      switch (opcion) {
+        case 1:
+          System.out.print("Introduzca numero de sala (1-5): ");
+          int sala = input.nextInt() - 1;
+
+          if (sala < 0 || sala > 4) {
+            System.out.println("Sala invalida.");
+            break;
+          }
+
+          System.out.print("Introduzca numero de ordenador (1-20): ");
+          int ordenador = input.nextInt() - 1;
+
+          if (ordenador < 0 || ordenador > 19) {
+            System.out.println("Ordenador invalido.");
+            break;
+          }
+
+          // Verificar estado
+          if (salas[sala][ordenador] == 0) {
+            System.out.println("El ordenador esta DISPONIBLE.");
+            System.out.print("¿Desea reservarlo? (1-Si, 0-No): ");
+            int conf = input.nextInt();
+            if (conf == 1) {
+              salas[sala][ordenador] = 1;
+              System.out.println("Reserva confirmada.");
+            }
+          } else {
+            System.out.println("El ordenador esta RESERVADO.");
+            System.out.print("¿Desea cancelar? (1-Si, 0-No): ");
+            int conf = input.nextInt();
+            if (conf == 1) {
+              salas[sala][ordenador] = 0;
+              System.out.println("Reserva cancelada.");
+            }
+          }
+          break;
+
+        case 2:
+          System.out.println("\n--- Equipos disponibles ---");
+          for (int i = 0; i < salas.length; i++) {
+            int disponibles = 0;
+            for (int j = 0; j < salas[i].length; j++) {
+              if (salas[i][j] == 0) {
+                disponibles++;
+              }
+            }
+            System.out.println("Sala " + (i + 1) + ": " + disponibles + " equipos");
+          }
+          break;
+
+        case 3:
+          int totalTurnos = 0;
+          for (int i = 0; i < salas.length; i++) {
+            for (int j = 0; j < salas[i].length; j++) {
+              if (salas[i][j] == 1) {
+                totalTurnos++;
+              }
+            }
+          }
+          System.out.println("Total turnos asignados: " + totalTurnos);
+          break;
+
+        case 4:
+          System.out.println("Saliendo...");
+          break;
+
+        default:
+          System.out.println("Opcion invalida.");
+          break;
+      }
+
+    } while (opcion != 4);
+
+    input.close();
+  }
 }

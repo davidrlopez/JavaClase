@@ -1,0 +1,67 @@
+package Trimestre2.ProyectoGeometria;
+
+public class Circulo {
+  private int cx;
+  private int cy;
+  private int r;
+
+  public Circulo() {
+    this.cx = this.cy = -1;
+    this.r = 0;
+  }
+
+  public Circulo(int cx, int cy, int r) {
+    this.cx = cx;
+    this.cy = cy;
+    this.r = r;
+  }
+
+  public int getCx() {
+    return cx;
+  }
+
+  public void setCx(int cx) {
+    this.cx = cx;
+  }
+
+  public int getCy() {
+    return cy;
+  }
+
+  public void setCy(int cy) {
+    this.cy = cy;
+  }
+
+  public int getR() {
+    return r;
+  }
+
+  public void setR(int r) {
+    this.r = r;
+  }
+
+  public void verDatos() {
+    System.out.println("---------------------");
+    System.out.println("Coordenada X:" + this.getCx());
+    System.out.println("Coordenada Y:" + this.getCy());
+    System.out.println("Radio:" + this.getR());
+
+  }
+
+  public String toString() {
+    return "Coordenada X:" + this.getCx() + " Coordenada Y:" + this.getCy() + " Radio:" + this.getR();
+  }
+
+  public boolean equals(Circulo c1) {
+    if (this.getCx() == cx && this.getCy() == cy && this.getR() == r) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public boolean equals(int cx, int cy, int radio) {
+    Circulo c1 = new Circulo(cx, cy, r);
+    return this.equals(c1);
+  }
+}

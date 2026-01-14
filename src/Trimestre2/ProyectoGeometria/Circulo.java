@@ -53,7 +53,7 @@ public class Circulo {
   }
 
   public boolean equals(Circulo c1) {
-    if (this.getCx() == cx && this.getCy() == cy && this.getR() == r) {
+    if (this.getCx() == c1.getCx() && this.getCy() == c1.getCy() && this.getR() == c1.getR()) {
       return true;
     } else {
       return false;
@@ -63,5 +63,23 @@ public class Circulo {
   public boolean equals(int cx, int cy, int radio) {
     Circulo c1 = new Circulo(cx, cy, r);
     return this.equals(c1);
+  }
+
+  public void ampliaCirculo(int escalar) {
+    this.setR(escalar * this.getR());
+  }
+
+  public double distanciaCirculo(Circulo c1) {
+    double distancia;
+    distancia = Math.sqrt(Math.pow(this.getCx() - c1.getCx(), 2) +
+        Math.pow(this.getCy() - c1.getCy(), 2));
+    return distancia;
+  }
+
+  public double distanciaCirculo(double cx, double cy) {
+    double distancia;
+    distancia = Math.sqrt(Math.pow(this.getCx() - cx, 2) +
+        Math.pow(this.getCy() - cy, 2));
+    return distancia;
   }
 }

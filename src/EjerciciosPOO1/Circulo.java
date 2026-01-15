@@ -1,4 +1,4 @@
-package Trimestre2.ProyectoGeometria;
+package EjerciciosPOO1;
 
 public class Circulo {
   private int cx;

@@ -1,4 +1,4 @@
-package Trimestre2.ProyectoGeometria;
+package EjerciciosPOO1;
 
 public class Geometria {
   public static void main(String[] args) {
@@ -14,6 +14,12 @@ public class Geometria {
     System.out.println("Distancia c1 a c2=" + c1.distanciaCirculo(c2));
     System.out.println("Distancia c2 a c1=" + c2.distanciaCirculo(c1));
     System.out.println("Distancia c1 a punto=" + c1.distanciaCirculo(8, 9));
+    Fecha f1 = new Fecha(30, 6, 2025);
+    Fecha f2 = new Fecha(-30, 2, 2020);
+    Fecha f3 = new Fecha();
+    f1.verFecha();
+    f2.verFecha();
+    f3.verFecha();
 
   }
 }

@@ -54,6 +54,16 @@ public class Nif {
     return this.getDni() == n.getDni();
   }
 
+  public void ver_datos() {
+    System.out.println("Nif:" + this.dni);
+  }
+
+  @Override
+  public String toString() {
+    return "Nif [dni=" + dni + ", getDni()=" + getDni() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+        + ", toString()=" + super.toString() + "]";
+  }
+
   public static void main(String[] args) {
     System.out.println("--- Probando Nif ---");
     Nif nif1 = new Nif("12345678A"); // Assuming this is a valid DNI for testing

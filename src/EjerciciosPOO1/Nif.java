@@ -1,12 +1,15 @@
 package EjerciciosPOO1;
 
+import java.util.Objects;
+
 public class Nif {
+  private static final String DEFAULT_NIF = "00000000A";
   private String dni;
   private static final String letra = "TRWAGMYFPDXBNJZSQVHLCKE";
 
   // Default constructor
   public Nif() {
-    this.dni = "00000000A"; // Default NIF
+    this.dni = DEFAULT_NIF;
   }
 
   // Constructor that takes a DNI string
@@ -14,8 +17,8 @@ public class Nif {
     if (isNIF(numeroDni)) {
       this.dni = numeroDni;
     } else {
-      System.out.println("NIF inválido. Estableciendo NIF por defecto: 00000000A");
-      this.dni = "00000000A"; // Default NIF for invalid input
+      System.out.println("NIF inválido. Estableciendo NIF por defecto: " + DEFAULT_NIF);
+      this.dni = DEFAULT_NIF; // Default NIF for invalid input
     }
   }
 
@@ -41,27 +44,31 @@ public class Nif {
     if (isNIF(newDni)) {
       this.dni = newDni;
     } else {
-      this.dni = "00000000A";
+      this.dni = DEFAULT_NIF;
       System.out.println("NIF inválido. No se ha cambiado el NIF.");
     }
   }
 
-  public void setDni(Nif n) {
-    this.dni = n.dni;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Nif nif = (Nif) o;
+    return dni.equals(nif.dni);
   }
 
-  public boolean equals(Nif n) {
-    return this.getDni() == n.getDni();
+  @Override
+  public int hashCode() {
+    return Objects.hash(dni);
   }
 
-  public void ver_datos() {
+  public void displayDetails() {
     System.out.println("Nif:" + this.dni);
   }
 
   @Override
   public String toString() {
-    return "Nif [dni=" + dni + ", getDni()=" + getDni() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-        + ", toString()=" + super.toString() + "]";
+    return "Nif [dni=" + dni + "]";
   }
 
   public static void main(String[] args) {

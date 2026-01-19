@@ -1,69 +1,52 @@
 package EjerciciosPOO1;
 
-import java.util.Scanner;
-
 class Persona {
   private Nif nif;
-  private String nombre;
-  private String apellido1;
-  private String apellido2;
-  private boolean sexo;
+  private FullName fullName;
+  private Gender gender;
+  private Status status;
   private double sueldo;
-  private Fecha fecha_nacimiento;
-  private boolean estado;
 
-  public void ver_datos() {
-    this.nif.ver_datos();
-    System.out.println("Nombre: " + this.nombre);
-    System.out.println("Primer Apellido: " + this.apellido1);
-    System.out.println("Segundo Apellido: " + this.apellido2);
-    System.out.println("Sexo:" + this.sexo);
-    System.out.println("Estado:" + this.estado);
-    this.getFecha_nacimiento().verFecha();
+  private static final String DEFAULT_NAME = "****";
+  private static final String DEFAULT_APELLIDO1 = "*****";
+  private static final String DEFAULT_APELLIDO2 = "******";
 
+  public void displayDetails() {
+    this.nif.displayDetails();
+    System.out.println("Nombre: " + this.fullName.getFirstName());
+    System.out.println("Primer Apellido: " + this.fullName.getLastName1());
+    System.out.println("Segundo Apellido: " + this.fullName.getLastName2());
+    System.out.println("Sexo:" + this.gender);
+    System.out.println("Estado:" + this.status);
+    this.getBirthDate().verFecha();
   }
 
-  public Persona(String nif, String no, String ap1, String ap2, boolean se, boolean es, double su, int d, int m,
+  public Persona(String nif, String no, String ap1, String ap2, Gender gender, Status estado, double su, int d, int m,
       int a) {
-    this.setPersona(nif, no, ap1, ap2, se, es, su, d, m, a);
+    this.nif = new Nif(nif); // Assuming nif is a valid string DNI
+    this.fullName = new FullName(no, ap1, ap2);
+    this.gender = gender;
+    this.status = estado;
+    this.sueldo = su;
+    this.birthDate = new Fecha(d, m, a);
   }
 
-  public Persona(Nif ni, String no, String ap1, String ap2, boolean se, boolean es, double su, Fecha fe) {
-    this.setPersona(ni, no, ap1, ap2, se, es, su, fe);
+  public Persona(Nif ni, String no, String ap1, String ap2, Gender gender, Status estado, double su, Fecha fe) {
+    this.nif = ni;
+    this.fullName = new FullName(no, ap1, ap2);
+    this.gender = gender;
+    this.status = estado;
+    this.sueldo = su;
+    this.birthDate = fe;
   }
 
   public Persona() {
 
     this.nif = new Nif();
-    this.nombre = "****";
-    this.apellido1 = "*****";
-    this.apellido2 = "******";
-    this.sexo = true;
-    this.estado = true;
-    this.fecha_nacimiento = new Fecha();
-  }
-
-  public void setPersona(Nif ni, String no, String ap1, String ap2, boolean se, boolean es, double su, Fecha fe) {
-    this.nif = new Nif();
-    this.nombre = "****";
-    this.apellido1 = "*****";
-    this.apellido2 = "******";
-    this.sexo = true;
-    this.estado = true;
-    this.fecha_nacimiento = new Fecha();
-
-  }
-
-  public void setPersona(String ni, String no, String ap1, String ap2, boolean se, boolean es, double su, int d, int m,
-      int a) {
-    this.nif = new Nif();
-    this.nombre = "****";
-    this.apellido1 = "*****";
-    this.apellido2 = "******";
-    this.sexo = true;
-    this.estado = true;
-    this.fecha_nacimiento = new Fecha(d, m, a);
-
+    this.fullName = new FullName(DEFAULT_NAME, DEFAULT_APELLIDO1, DEFAULT_APELLIDO2);
+    this.gender = Gender.UNKNOWN;
+    this.status = Status.ACTIVE;
+    this.birthDate = new Fecha();
   }
 
   public Nif getNif() {
@@ -74,102 +57,109 @@ class Persona {
     this.nif = nif;
   }
 
-  public String getNombre() {
-    return nombre;
+  public FullName getFullName() {
+    return fullName;
   }
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
+  public void setFullName(FullName fullName) {
+    this.fullName = fullName;
   }
 
-  public String getApellido1() {
-    return apellido1;
+  public String getFirstName() {
+    return fullName.getFirstName();
   }
 
-  public void setApellido1(String apellido1) {
-    this.apellido1 = apellido1;
+  public void setFirstName(String firstName) {
+    this.fullName = new FullName(firstName, fullName.getLastName1(), fullName.getLastName2());
   }
 
-  public String getApellido2() {
-    return apellido2;
+  public String getLastName1() {
+    return fullName.getLastName1();
   }
 
-  public void setApellido2(String apellido2) {
-    this.apellido2 = apellido2;
+  public void setLastName1(String lastName1) {
+    this.fullName = new FullName(fullName.getFirstName(), lastName1, fullName.getLastName2());
   }
 
-  public boolean isSexo() {
-    return sexo;
+  public String getLastName2() {
+    return fullName.getLastName2();
   }
 
-  public void setSexo(boolean sexo) {
-    this.sexo = sexo;
+  public void setLastName2(String lastName2) {
+    this.fullName = new FullName(fullName.getFirstName(), fullName.getLastName1(), lastName2);
+  }
+
+  public Gender getGender() {
+    return gender;
+  }
+
+  public void setGender(Gender gender) {
+    this.gender = gender;
   }
 
   public double getSueldo() {
     return sueldo;
   }
 
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
+
   public void setSueldo(double sueldo) {
     this.sueldo = sueldo;
   }
 
-  public Fecha getFecha_nacimiento() {
-    return fecha_nacimiento;
+  private Fecha birthDate;
+
+  public Fecha getBirthDate() {
+    return birthDate;
   }
 
-  public void setFecha_nacimiento(Fecha fecha_nacimiento) {
-    this.fecha_nacimiento = fecha_nacimiento;
+  public void setBirthDate(Fecha birthDate) {
+    this.birthDate = birthDate;
   }
 
-  public void guardar_datos(String nombre, String apellido1, String apellido2, boolean sexo,
+  public void updateDetails(String nombre, String apellido1, String apellido2, Gender gender,
       double sueldo) {
 
-    this.nombre = nombre;
-    this.apellido1 = apellido1;
-    this.apellido2 = apellido2;
-    this.sexo = sexo;
+    this.fullName = new FullName(nombre, apellido1, apellido2);
+    this.gender = gender;
     this.sueldo = sueldo;
 
   }
 
   @Override
   public String toString() {
-    return "Persona [nif=" + nif + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2
-        + ", sexo=" + sexo + ", sueldo=" + sueldo + ", fecha_nacimiento=" + fecha_nacimiento + ", estado=" + estado
-        + ", getNif()=" + getNif() + ", getNombre()=" + getNombre() + ", getApellido1()=" + getApellido1()
-        + ", getApellido2()=" + getApellido2() + ", isSexo()=" + isSexo() + ", getClass()=" + getClass()
-        + ", getSueldo()=" + getSueldo() + ", getFecha_nacimiento()=" + getFecha_nacimiento() + ", hashCode()="
-        + hashCode() + ", toString()=" + super.toString() + "]";
+    return "Persona [nif=" + nif + ", fullName=" + fullName + ", gender=" + gender + ", sueldo=" + sueldo +
+        ", birthDate=" + birthDate + ", status=" + status + "]";
   }
 
   public static void main(String[] args) {
     Persona Alberto;
     Alberto = new Persona();
     System.out.println(Alberto.toString());
-    String sexo = "";
-
-    Alberto.ver_datos();
+    Alberto.displayDetails();
 
     System.out.println("     -----      ");
-    Alberto.nombre = "Juan";
-    Alberto.apellido1 = "Garcia";
-    Alberto.apellido2 = "Torreznos";
-    Alberto.sexo = true;
+    Alberto.setFirstName("Juan");
+    Alberto.setLastName1("Garcia");
+    Alberto.setLastName2("Torreznos");
+    Alberto.gender = Gender.MALE;
     Alberto.sueldo = 1050.4;
 
-    if (Alberto.sexo) {
-      sexo = "Macho";
-    } else
-      sexo = "Hembra";
-
-    Alberto.ver_datos();
-    Persona ana = new Persona("123455", "Ana", "Robles", "Montilla", false, true, 1200, 5, 1, 1980);
+    Alberto.displayDetails();
+    Persona ana = new Persona("123455", "Ana", "Robles", "Montilla", Gender.FEMALE, Status.ACTIVE, 1200, 5, 1, 1980);
     System.out.println(ana.toString());
-    ana.ver_datos();
+    ana.displayDetails();
 
     Fecha fe = new Fecha(01, 01, 1980);
     Nif ni = new Nif("888888881A");
-    Persona elena = new Persona(ni, "Elena", "Lopez", "Lopez", false, true, 1500, fe);
+    Persona elena = new Persona(ni, "Elena", "Lopez", "Lopez", Gender.FEMALE, Status.ACTIVE, 1500, fe);
+    System.out.println(elena.toString());
+    elena.displayDetails();
   }
 }

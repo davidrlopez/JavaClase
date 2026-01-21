@@ -14,6 +14,11 @@ public class Vector2D {
     this.dirY = dirY;
   }
 
+  public Vector2D(Punto2D p1, Punto2D p2) {
+    this.dirX = p2.getX() - p1.getX();
+    this.dirY = p2.getY() - p1.getY();
+  }
+
   public void Ver_Datos_Vector2D() {
     System.out.println("Vector2D [dirX=" + dirX + ", dirY=" + dirY + "]");
   }

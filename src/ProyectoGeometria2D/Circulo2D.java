@@ -17,9 +17,17 @@ public class Circulo2D {
     this.centro = new Punto2D(x, y);
   }
 
+  public Circulo2D(double radio, Punto2D centro) {
+    this.radio = radio;
+    this.centro = centro;
+  }
+
   public void ver_datos() {
+    System.out.println("*********************");
     System.out.println("radio:" + this.radio);
-    System.out.println("Punto2D:" + this.centro);
+    this.centro.toString();
+    // System.out.println("x:"+this.centro.getX());
+    // System.out.println("y:"+this.centro.getY());
   }
 
   public double getRadio() {
@@ -56,11 +64,17 @@ public class Circulo2D {
     return Math.abs(this.radio - otro.getRadio()) < epsilon;
   }
 
-  public double distanciaPunto(Punto2D punto2) {
+  public boolean igualSuperficieV2(Circulo2D otro) {
+    if (otro == null) {
+      return false;
+    }
+    return this.radio == otro.getRadio();
+  }
+
+  public double distanciaPunto(Punto2D punto2) { // clase de Punto2D
     return centro.distanceTo(punto2);
   }
 
-  // Renamed from distanciaPunto(Circulo2D) as requested
   public double distanciaCirculo(Circulo2D circulo2) {
     return centro.distanceTo(circulo2.centro);
   }

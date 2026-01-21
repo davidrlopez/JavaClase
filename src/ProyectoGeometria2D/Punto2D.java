@@ -51,6 +51,10 @@ public class Punto2D {
     return distanceTo(other.x, other.y);
   }
 
+  public Vector2D vectorPunto2D() {
+    return new Vector2D(this.getX(), this.getY());
+  }
+
   // Replaces ver_datos() with standard toString()
   @Override
   public String toString() {

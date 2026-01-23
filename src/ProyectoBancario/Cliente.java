@@ -116,25 +116,29 @@ public class Cliente {
   public double saldoTodasCuentas(String dni) {
     this.dni_propietario = dni;
     double saldoTotal = 0;
-    if (dni != null) {
-      for (int i = 0; i < cuenta.length; i++) {
-        saldoTotal += cuenta[i].getSaldo();
-      }
+    if (dni == null || !dni.equals(this.dni_propietario)) {
+      return -1;
+    }
+    for (int i = 0; i < num_cuentas; i++) {
+      saldoTotal += cuenta[i].getSaldo();
     }
     return saldoTotal;
   }
 
   public int maximaCuentaCliente(String dni) {
-    this.dni_propietario = dni;
+    if (dni == null || !dni.equals(this.dni_propietario)) {
+      return -1;
+    }
     int max = 0;
     if (dni != null) {
-      for (int i = 0; i < cuenta.length; i++) {
-        if (max > cuenta[i].getSaldo()) {
+      for (int i = 0; i < num_cuentas; i++) {
+        if (cuenta[i].getSaldo() > cuenta[max].getSaldo()) {
           max = i;
         }
       }
     }
     return max;
+
   }
 
   public CuentaBancaria[] CuentasOrdenadas(String dni) {

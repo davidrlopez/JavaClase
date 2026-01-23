@@ -12,7 +12,7 @@ public class Principal {
         // Test Transfer
         System.out.println("\n--- Transfiriendo 200 de cuenta1 a cuenta2 ---");
         // Now transferir returns the current saldo of the source account
-        double nuevoSaldo = cuenta1.transferir(cuenta2, 200);
+        double nuevoSaldo = cuenta1.transferir(cuenta2, 200, 0.01);
 
         System.out.println("Saldo Final 1: " + nuevoSaldo); // Should be 798.0
         System.out.println("Saldo Final 2: " + cuenta2.getSaldo()); // Should be 700.0

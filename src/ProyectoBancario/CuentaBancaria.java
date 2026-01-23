@@ -52,6 +52,35 @@ public class CuentaBancaria {
     return this.saldo;
   }
 
+  // Versiones que devuelven boolean
+  public boolean ingresarExito(double cantidad) {
+    if (cantidad > 0) {
+      saldo += cantidad;
+      return true;
+    }
+    return false;
+  }
+
+  public boolean retirarExito(double cantidad) {
+    if (cantidad > 0 && this.saldo >= cantidad) {
+      saldo -= cantidad;
+      return true;
+    }
+    return false;
+  }
+
+  public boolean transferirExito(CuentaBancaria destino, double cantidad, double comision) {
+    double Tcomision = cantidad * comision;
+    double totalRetirar = cantidad + Tcomision;
+
+    if (this.saldo >= totalRetirar) {
+      this.saldo -= totalRetirar; // Hacemos la operación manual para no imprimir mensajes duplicados
+      destino.ingresar(cantidad);
+      return true;
+    }
+    return false;
+  }
+
   public boolean tieneMasSaldoQue(CuentaBancaria otra) {
     return this.saldo > otra.getSaldo();
   }

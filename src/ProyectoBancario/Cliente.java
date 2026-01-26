@@ -229,4 +229,52 @@ public class Cliente {
       return new CuentaBancaria[0]; // Devolvemos un array vacío en caso de error
     }
   }
+
+  // CLASE
+  /*
+   * public boolean BorrarCuentaCliente(String iban) {
+   * for (int i=0; i < this.num_cuentas;i++) {
+   *
+   * if (this.cuenta[i].getIban() == iban) {
+   * this.cuenta[0].getSaldo(this.cuenta[0].getSaldo() +
+   * this.cuenta[i].getSaldo());
+   *
+   * for (int j = i; j < Cliente.num_maximo_cuentas-1;j++) {
+   *
+   * this.cuenta[Cliente.num_maximo_cuentas-1] = null;
+   * this.num_cuentas[j] = this.cuenta[j+1];
+   * System.out.println("Cuenta borrada");
+   * return true;
+   * }
+   *
+   * }
+   *
+   * }
+   * System.out.println("Error en la iban cuenta a borrar")
+   * return false;
+   * }
+   *
+   * public boolean Transferencia_cuenta_a_cuenta(Cliente cli_destino, String
+   * iban_origen, String iban_destino, double cantidad)
+   * {
+   * for (int i = 0; i < this.Num_cuentas; i++)
+   * {
+   * if (this.cuentas[i].getIban() == iban_origen)
+   * {
+   * for (int j = 0; j < cli_destino.Num_cuentas; j++)
+   * {
+   * if (cli_destino.cuentas[j].getIban() == iban_destino)
+   * {
+   * return this.cuentas[i].transferencia(cli_destino.cuentas[j], cantidad);
+   * }
+   * }
+   * System.out.println("Error en iban de destino, transferencia no realizada");
+   * return false;
+   * }
+   * }
+   * System.out.println("Error en iban de origen, transferencia no realizada");
+   * return false;
+   * }
+   * }
+   */
 }

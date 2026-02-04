@@ -2,26 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package paqCoche;
+package Trimestre2.ProyectoCoche2.src.main.java.paqCoche;
 
 /**
  *
  * @author juanp
  */
 
-public class PuertasException extends Exception
+
+public class CambioException extends Exception
 {
-    private int num_puertas;
+    private String cambio;
     
-    public PuertasException(int np)
+    public CambioException(String camb)
     {
-        this.num_puertas = np;
+        this.cambio = camb;
     }
     
     @Override
     public String toString()
     {
-        return "Error en Num_puertas " + this.num_puertas;
+        return "Error en Cambio " + this.cambio;
     } 
     
 }

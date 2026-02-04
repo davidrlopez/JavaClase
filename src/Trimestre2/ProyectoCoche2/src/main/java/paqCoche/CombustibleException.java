@@ -2,27 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package paqCoche;
+package Trimestre2.ProyectoCoche2.src.main.java.paqCoche;
 
 /**
  *
  * @author juanp
  */
-
-
-public class CambioException extends Exception
+public class CombustibleException extends Exception
 {
-    private String cambio;
+    private String combustible;
     
-    public CambioException(String camb)
+    public CombustibleException(String combus)
     {
-        this.cambio = camb;
+        this.combustible = combus;
     }
     
     @Override
     public String toString()
     {
-        return "Error en Cambio " + this.cambio;
+        return "Error en Combustible " + this.combustible;
     } 
     
 }

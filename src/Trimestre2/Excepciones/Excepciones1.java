@@ -1,4 +1,4 @@
-package Excepciones;
+package Trimestre2.Excepciones;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;

@@ -1,7 +1,7 @@
-package EjerciciosPOO1;
+package Trimestre2.Excepciones.EjerciciosPOO1;
 
 public class ExcepcionesCoche {
-  static class PuertasException extends Exception {
+  public static class PuertasException extends Exception {
     String mensaje;
 
     public PuertasException(String mensaje) {
@@ -15,7 +15,7 @@ public class ExcepcionesCoche {
     }
   }
 
-  static class PrecioException extends Exception {
+  public static class PrecioException extends Exception {
     String mensaje;
 
     public PrecioException(String mensaje) {
@@ -29,7 +29,7 @@ public class ExcepcionesCoche {
     }
   }
 
-  static class CombustibleException extends Exception {
+  public static class CombustibleException extends Exception {
     String mensaje;
 
     public CombustibleException(String mensaje) {
@@ -43,7 +43,7 @@ public class ExcepcionesCoche {
     }
   }
 
-  static class CambioException extends Exception {
+  public static class CambioException extends Exception {
     String mensaje;
 
     public CambioException(String mensaje) {

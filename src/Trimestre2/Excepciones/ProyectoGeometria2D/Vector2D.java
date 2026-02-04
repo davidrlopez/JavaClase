@@ -1,4 +1,4 @@
-package ProyectoGeometria2D;
+package Trimestre2.Excepciones.ProyectoGeometria2D;
 
 public class Vector2D {
 

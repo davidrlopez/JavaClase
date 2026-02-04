@@ -16,7 +16,7 @@
         IMPRIMIR "Superficie total:" superficieTotal
 FIN PROCEDIMIENTO*/
 
-package proyectocilindro;
+package Trimestre1.proyectocilindro;
 
 public class ProyectoCilindro {
 

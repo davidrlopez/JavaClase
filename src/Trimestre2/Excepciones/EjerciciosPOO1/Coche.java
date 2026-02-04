@@ -1,6 +1,6 @@
-package EjerciciosPOO1;
+package Trimestre2.Excepciones.EjerciciosPOO1;
 
-import EjerciciosPOO1.ExcepcionesCoche.*;
+import static Trimestre2.Excepciones.EjerciciosPOO1.ExcepcionesCoche.*;
 
 public class Coche {
   private int numPuertas;

@@ -1,4 +1,4 @@
-package EjerciciosPOO1;
+package Trimestre2.Excepciones.EjerciciosPOO1;
 
 public class Fecha {
   private int dia;

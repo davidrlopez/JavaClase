@@ -1,4 +1,4 @@
-package ProyectoBancario;
+package Trimestre2.Excepciones.ProyectoBancario;
 
 public class CuentaBancaria {
   // Attributes

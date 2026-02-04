@@ -1,4 +1,4 @@
-package imc;
+package Trimestre1.imc;
 
 public class IMC {
 

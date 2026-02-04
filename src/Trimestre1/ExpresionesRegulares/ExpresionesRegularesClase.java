@@ -1,4 +1,4 @@
-package ExpresionesRegulares;
+package Trimestre1.ExpresionesRegulares;
 
 class ExpresionesRegularesClase {
 
@@ -135,7 +135,7 @@ class ExpresionesRegularesClase {
       // m. dirección de correo electrónico
       case 'm':
         // Patrón estándar simple para email
-        if (inp utLimpio.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+        if (inputLimpio.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
           // version clase murciaeduca
           // profesor y alumno separado por OR|
           // "^[A-z]+[A-z]+\\d*@murciaeduca.es|\\d{7}@alu.murciaeduca.es$"

@@ -1,4 +1,4 @@
-package proyectocirculo;
+package Trimestre1.proyectocirculo;
 
 public class ProyectoCirculo {
 

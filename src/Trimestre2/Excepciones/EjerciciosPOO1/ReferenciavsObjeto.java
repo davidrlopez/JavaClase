@@ -1,4 +1,4 @@
-package EjerciciosPOO1;
+package Trimestre2.Excepciones.EjerciciosPOO1;
 
 // A simple mutable class to demonstrate object behavior
 class Contenedor {

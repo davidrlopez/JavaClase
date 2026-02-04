@@ -1,4 +1,4 @@
-package arrays;
+package Trimestre1.arrays;
 
 import java.util.Arrays;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package operations;
+package Trimestre1.operations;
 
 public class misMetodosClaude {
 

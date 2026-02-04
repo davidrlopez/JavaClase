@@ -1,4 +1,4 @@
-package Task;
+package Trimestre1.Task;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

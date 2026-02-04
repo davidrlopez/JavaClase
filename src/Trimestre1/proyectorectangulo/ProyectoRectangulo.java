@@ -1,4 +1,4 @@
-package proyectorectangulo;
+package Trimestre1.proyectorectangulo;
 
 public class ProyectoRectangulo {
 

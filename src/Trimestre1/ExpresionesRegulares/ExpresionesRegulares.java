@@ -1,4 +1,4 @@
-package ExpresionesRegulares;
+package Trimestre1.ExpresionesRegulares;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

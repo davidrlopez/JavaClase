@@ -1,4 +1,4 @@
-package helloworld;
+package Trimestre1.helloworld;
 
 public class main {
 

@@ -1,4 +1,4 @@
-package arrays;
+package Trimestre1.arrays;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -103,10 +103,10 @@ public class arraysYstrings {
 
     // Test factorial functionality (ejercicio6) with 10 numbers
     System.out.println("\n14. Test factorial functionality (ejercicio6):");
-    int[] testNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    System.out.println("Original array: " + Arrays.toString(testNumbers));
+    int[] testNumbersFactorial = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    System.out.println("Original array: " + Arrays.toString(testNumbersFactorial));
 
-    int[] factorialResults = ejercicio6(testNumbers);
+    int[] factorialResults = ejercicio6(testNumbersFactorial);
     System.out.println("Factorial results: " + Arrays.toString(factorialResults));
 
     // Show individual calculations for clarity

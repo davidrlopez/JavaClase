@@ -1,8 +1,8 @@
-package arrays;
+package Trimestre1.arrays;
 
 import java.util.Arrays;
 import java.util.Scanner;
-import operations.TestRapido;
+import Trimestre1.operations.TestRapido;
 
 public class arrays1 {
 

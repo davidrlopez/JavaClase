@@ -1,4 +1,4 @@
-package strings;
+package Trimestre1.strings;
 
 import java.util.Scanner;
 

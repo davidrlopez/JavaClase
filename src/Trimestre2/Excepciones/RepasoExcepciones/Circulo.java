@@ -1,37 +1,40 @@
 package Trimestre2.Excepciones.RepasoExcepciones;
 
+import Trimestre2.Excepciones.RepasoExcepciones.ExceptionsCirculo.*;
+import Trimestre2.Excepciones.ProyectoGeometria2D.*;
+
 public class Circulo {
-  private Punto centro;
+  private Punto2D centro;
   private int r;
 
   // 1. Constructor por defecto
   public Circulo() {
-    this.centro = new Punto(-1, -1);
+    this.centro = new Punto2D(-1, -1);
     this.r = 0;
   }
 
   // 2. Centro (-1,-1) y radio entero
   public Circulo(int radio) throws RadioException {
-    this.centro = new Punto(-1, -1);
+    this.centro = new Punto2D(-1, -1);
     setRadio(radio); // Usamos el setter para centralizar la validación
   }
 
   // 3. Dos enteros para centro y uno para radio
   public Circulo(int x, int y, int radio) throws RadioException {
-    this.centro = new Punto(x, y);
+    this.centro = new Punto2D(x, y);
     if (radio < 0)
       throw new RadioException("El radio no puede ser negativo");
     this.r = radio;
   }
 
-  // 4. Punto de entrada y radio entero
-  public Circulo(Punto punto, int radio) throws RadioException {
+  // 4. Punto2D de entrada y radio entero
+  public Circulo(Punto2D punto, int radio) throws RadioException {
     this.centro = punto;
     setRadio(radio);
   }
 
-  // 5. Punto de entrada y radio como String
-  public Circulo(Punto punto, String radioStr) throws RadioException {
+  // 5. Punto2D de entrada y radio como String
+  public Circulo(Punto2D punto, String radioStr) throws RadioException {
     this.centro = punto;
 
     /*
@@ -70,16 +73,11 @@ public class Circulo {
 
     // Una vez validados por Regex, el parseInt es seguro y no saltará
     // NumberFormatException
-    this.centro = new Punto(Double.parseDouble(xStr), Double.parseDouble(yStr));
+    this.centro = new Punto2D(Double.parseDouble(xStr), Double.parseDouble(yStr));
     this.r = Integer.parseInt(radioStr);
   }
 
   // ... (Resto de métodos: area, longitud, distancia...) ...
-
-  // Ejemplo de método de cálculo
-  public double area() {
-    return Math.PI * r * r;
-  }
 
   // 7. Constructor de copia
   public Circulo(Circulo otro) {
@@ -89,7 +87,7 @@ public class Circulo {
 
   // --- MÉTODOS DE ACCESO ---
 
-  public Punto getCentro() {
+  public Punto2D getCentro() {
     return centro;
   }
 
@@ -97,12 +95,12 @@ public class Circulo {
     return r;
   }
 
-  public void setCentro(Punto punto) {
+  public void setCentro(Punto2D punto) {
     this.centro = punto;
   }
 
   public void setCentro(int x, int y) {
-    this.centro = new Punto(x, y);
+    this.centro = new Punto2D(x, y);
   }
 
   public void setRadio(int radio) throws RadioException {
@@ -112,7 +110,7 @@ public class Circulo {
   }
 
   public void setCirculo(int x, int y, int radio) throws RadioException {
-    this.centro = new Punto(x, y);
+    this.centro = new Punto2D(x, y);
     setRadio(radio);
   }
 
@@ -121,7 +119,7 @@ public class Circulo {
     this.r = otro.r;
   }
 
-  public void setCirculo(Punto punto, int radio) throws RadioException {
+  public void setCirculo(Punto2D punto, int radio) throws RadioException {
     this.centro = punto;
     setRadio(radio);
   }
@@ -139,7 +137,7 @@ public class Circulo {
         this.centro.getY() == otro.centro.getY();
   }
 
-  public boolean equals(int radio, Punto punto) {
+  public boolean equals(int radio, Punto2D punto) {
     return this.r == radio &&
         this.centro.getX() == punto.getX() &&
         this.centro.getY() == punto.getY();
@@ -169,7 +167,7 @@ public class Circulo {
     return calcularDistancia(otro.centro.getX(), otro.centro.getY());
   }
 
-  public double distancia(Punto punto) {
+  public double distancia(Punto2D punto) {
     return calcularDistancia(punto.getX(), punto.getY());
   }
 

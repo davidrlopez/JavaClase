@@ -2,6 +2,11 @@ package Trimestre2.Excepciones.RepasoExcepciones;
 
 import Trimestre2.Excepciones.ProyectoGeometria2D.Punto2D;
 import Trimestre2.Excepciones.RepasoExcepciones.ExceptionsCirculo.*;
+import Trimestre2.Excepciones.RepasoExcepciones.ExceptionsCoche.*;
+import Trimestre2.Excepciones.RepasoExcepciones.FechasException.DiaException;
+import Trimestre2.Excepciones.RepasoExcepciones.FechasException.MesException;
+import Trimestre2.Excepciones.RepasoExcepciones.FechasException.YearException;
+import java.util.Scanner;
 
 public class Main {
 
@@ -9,6 +14,7 @@ public class Main {
     Punto2D P = new Punto2D();
     Punto2D Q = new Punto2D(5, 4);
     Punto2D Qr = new Punto2D(Q.getY(), Q.getX());
+    Scanner input = new Scanner(System.in);
     try {
       Circulo c1 = new Circulo(0);
       Circulo c2 = new Circulo(Q, 4);
@@ -53,5 +59,85 @@ public class Main {
     } catch (CentroException e) {
       System.out.println("Error en el centro:" + e.getMessage());
     }
+    try {
+      Fecha f1 = new Fecha();
+      System.out.println(f1.toString());
+      Fecha f2 = new Fecha(20, 1, 1);
+      Fecha f3 = new Fecha();
+      boolean fechaCorrecta = false; // Nuestra bandera
+      do {
+        try {
+          System.out.println("Introduce día, mes y año:");
+          int d1 = input.nextInt();
+          int m1 = input.nextInt();
+          int a1 = input.nextInt();
+
+          // 1. Intentamos cambiar la fecha
+          f3.setFecha(d1, m1, a1);
+
+          // 2. Si llegamos aquí es que NO hubo excepción
+          fechaCorrecta = true;
+
+        } catch (DiaException | MesException | YearException e) {
+          // 3. Si hubo error, informamos y el bucle sigue porque fechaCorrecta sigue
+          // siendo false
+          System.out.println("Fecha inválida: " + e.getMessage() + ". Inténtalo de nuevo.");
+          input.nextLine(); // Limpieza básica del buffer por si acaso
+        }
+      } while (!fechaCorrecta);
+      Fecha f4 = new Fecha();
+      f4.setFecha(f2);
+      Fecha f6 = new Fecha();
+      f6.setFecha(f4.getDia(), f1.getMes(), 2000);
+      fechaCorrecta = false;
+      do {
+        try {
+          f6.setYear(f6.getYear() + 10);
+          fechaCorrecta = true;
+        } catch (YearException e) {
+          System.out.println("Fecha invalida:" + e.getMessage());
+          input.nextLine();
+        }
+
+      } while (!fechaCorrecta);
+      Fecha f7 = new Fecha();
+      fechaCorrecta = false;
+      do {
+        try {
+          Fecha f4dd = new Fecha();
+          f4dd.setFecha(f4.fechaSiguiente());
+          f7.setFecha(f7.getDia(), f7.getMes(), f4dd.getYear());
+          fechaCorrecta = true;
+        } catch (YearException e) {
+          System.out.println("Fecha invalida:" + e.getMessage());
+          input.nextLine();
+        }
+        System.out.println(f1.toString(1));
+      } while (!fechaCorrecta);
+
+    } catch (DiaException e) {
+      System.out.println("Error en el dia" + e.getMessage());
+    } catch (MesException e) {
+      System.out.println("Error en el mes:" + e.getMessage());
+    } catch (YearException e) {
+      System.out.println("Error en el año:" + e.getMessage());
+    } catch (Exception e) {
+      System.out.println("Error inesperado:" + e.getMessage());
+      try {
+        Coche c1 = new Coche(3, 250000, "SEAT", "IBIZA", "ROJO", "DIESEL", "MANUAL");
+        System.out.println(c1);
+        Coche c2 = new Coche(c1);
+        System.out.println(c2);
+        System.out.println(c1.equals(c2));
+      } catch (PuertasException ex) {
+        ex.getMessage();
+      } catch (PrecioException ex) {
+        ex.getMessage();
+      } catch (Exception ex) {
+        // TODO: handle exception
+        ex.getMessage();
+      }
+    }
+    input.close();
   }
 }

@@ -1,6 +1,7 @@
 package Trimestre2.Herencias;
 
 import static Trimestre2.Herencias.HombreExceptions.*;
+import java.util.Arrays;
 
 public class Hombre extends Vertebrado {
 
@@ -31,7 +32,7 @@ public class Hombre extends Vertebrado {
   }
 
   public void setNumHijos(int numHijos) throws HijosException {
-    if (numHijos < 0 || numHijos > 10) {
+    if (numHijos < 0 || numHijos > 9) {
       throw new HijosException("El numero de hijos no puede ser negativo o mayor a 10");
     }
     this.numHijos = numHijos;
@@ -97,7 +98,74 @@ public class Hombre extends Vertebrado {
     return this.isVivo();
   }
 
-  public int[] tenerHijos(String nombre, int edad) throws HijosException {
+  public void addHijo(String nombreHijo, int edadHijo) throws HijosException {
+    int pos = getNumHijos(); // última posición libre
+    setNumHijos(pos + 1); // valida (0..10) en el setter
 
+    String[] nuevosNombres = (getNamesHijos() == null)
+        ? new String[getNumHijos()]
+        : Arrays.copyOf(getNamesHijos(), getNumHijos());
+
+    int[] nuevasEdades = (getEdadHijos() == null)
+        ? new int[getNumHijos()]
+        : Arrays.copyOf(getEdadHijos(), getNumHijos());
+
+    nuevosNombres[pos] = nombreHijo;
+    nuevasEdades[pos] = edadHijo;
+
+    setNamesHijos(nuevosNombres);
+    setEdadHijos(nuevasEdades);
+  }
+
+  public int edadHijoMenor() throws HijosException {
+    int[] edades = getEdadHijos();
+    if (edades == null || edades.length == 0) {
+      throw new HijosException("No hay edades de hijos registradas");
+    }
+
+    int min = edades[0];
+    for (int i = 1; i < edades.length; i++) {
+      if (edades[i] < min) {
+        min = edades[i];
+      }
+    }
+    return min;
+  }
+
+  public String nombreHijoMenor() throws HijosException {
+    int[] edades = getEdadHijos();
+    String[] nombres = getNamesHijos();
+    if (edades == null || nombres == null || edades.length == 0 || nombres.length == 0) {
+      throw new HijosException("No hay datos de hijos registrados");
+    }
+
+    int limite = Math.min(edades.length, nombres.length);
+    int idxMin = 0;
+    for (int i = 1; i < limite; i++) {
+      if (edades[i] < edades[idxMin]) {
+        idxMin = i;
+      }
+    }
+    return nombres[idxMin];
+  }
+
+  public int lugarNombreHijo(String nombre) {
+    String[] nombres = getNamesHijos();
+    if (nombres == null)
+      return -1;
+    for (int i = 0; i < numHijos; i++) {
+      if (nombres[i] != null && nombres[i].equalsIgnoreCase(nombre)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  public String darNombre(int pos) throws HijosException {
+    if (pos < 0 || pos > this.numHijos - 1) {
+      throw new HijosException("Fuera de rango del numero de hijos para este persona");
+    }
+    String[] nombres = this.getNamesHijos();
+    return nombres[pos];
   }
 }

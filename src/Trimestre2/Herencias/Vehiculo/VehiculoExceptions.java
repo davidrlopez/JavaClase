@@ -23,12 +23,14 @@ public class VehiculoExceptions {
       return this.getClass().getSimpleName() + ":" + getMessage();
     }
   }
-  public static class RevisionesIncorrectas extends IllegalArgumentException{
-    public RevisionesIncorrectas(String mensaje){
+
+  public static class RevisionesIncorrectas extends IllegalArgumentException {
+    public RevisionesIncorrectas(String mensaje) {
       super(mensaje);
     }
+
     @Override
-    public String toString(){
+    public String toString() {
       return getClass().getSimpleName() + ":" + getMessage();
     }
   }

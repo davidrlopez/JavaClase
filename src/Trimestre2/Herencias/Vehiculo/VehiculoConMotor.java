@@ -19,7 +19,8 @@ public class VehiculoConMotor extends Vehiculo {
     this.potencia = potencia;
   }
 
-  public VehiculoConMotor(int potencia) throws PotenciaIncorrecta, PrecioIncorrecto, DiaException, MesException, YearException {
+  public VehiculoConMotor(int potencia)
+      throws PotenciaIncorrecta, PrecioIncorrecto, DiaException, MesException, YearException {
     super();
     setPotencia(potencia);
   }

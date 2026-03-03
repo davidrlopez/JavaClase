@@ -9,6 +9,7 @@ bin/
 build/
 target/
 out/
+*.zip
 
 # Archivos de IDEs
 .classpath
@@ -17,6 +18,10 @@ out/
 .vscode/
 .idea/
 *.iml
+build.gradle
+gradle
+gradlew.bat
+gradlew
 
 # Archivos de sistema macOS
 .DS_Store
@@ -32,5 +37,5 @@ out/
 # Scripts de compilación (opcional, depende)
 # compile.sh
 
-#apuntes de Lorca 
+#apuntes de Lorca
 EjemplosLorca

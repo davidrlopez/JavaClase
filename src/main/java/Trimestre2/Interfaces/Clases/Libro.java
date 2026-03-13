@@ -12,7 +12,7 @@ public class Libro extends Publicacion implements Prestable {
   }
 
   public void setPrestado(boolean prestado) throws IllegalComponentStateException {
-    if (prestado() == true) {
+    if (this.prestado && prestado) {
       throw new IllegalComponentStateException("El libro ya estaba prestado");
     }
     this.prestado = prestado;
@@ -24,18 +24,18 @@ public class Libro extends Publicacion implements Prestable {
   }
 
   public boolean prestar() throws IllegalArgumentException {
-    setPrestado(prestado);
-    return prestado;
+    if (this.prestado) {
+      throw new IllegalArgumentException("El libro ya estaba prestado");
+    }
+    setPrestado(true);
+    return true;
   }
 
   public boolean devolver() throws IllegalArgumentException {
-    boolean devuelto = false;
-    if (prestado() == false) {
+    if (!this.prestado) {
       throw new IllegalArgumentException("No esta prestado para poder devolverlo");
-    } else {
-      setPrestado(true);
-      devuelto = true;
     }
-    return devuelto;
+    setPrestado(false);
+    return true;
   }
 }

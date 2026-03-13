@@ -58,9 +58,9 @@ public class Pila implements ColeccionInterfaz {
 
   }
 
-  public boolean añadir() {
+  public boolean añadir(Object o) {
     if (this.arrayList.size() < maxArray) {
-      this.arrayList.add();
+      this.arrayList.add(o);
       return true;
     } else {
       return false;

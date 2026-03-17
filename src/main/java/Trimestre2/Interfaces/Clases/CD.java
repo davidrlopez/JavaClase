@@ -1,25 +1,32 @@
 package Trimestre2.Interfaces.Clases;
 
-public class CD {
+import Trimestre2.Interfaces.Interfaces.*;
+import Trimestre2.Interfaces.Excepciones.VideoClubExceptions.DuracionCDException;
+import Trimestre2.Interfaces.Excepciones.VideoClubExceptions.AlquilarException;
 
-  private static int duracion = 0;
-  private static int genero = 0;
+public class CD extends ProductoVideoClub implements Alquilable {
+
+  private int duracion = 0;
+  private int genero = 0;
   private static int contCD = 0;
 
-  public static int getDuracion() {
-    return duracion;
+  public int getDuracion() {
+    return this.duracion;
   }
 
-  public static void setDuracion(int duracion) {
-    CD.duracion = duracion;
+  public void setDuracion(int duracion) throws DuracionCDException {
+    if (duracion <= 0) {
+      throw new DuracionCDException("La duracion tiene que ser mayor a 0");
+    }
+    this.duracion = duracion;
   }
 
-  public static int getGenero() {
-    return genero;
+  public int getGenero() {
+    return this.genero;
   }
 
-  public static void setGenero(int genero) {
-    CD.genero = genero;
+  public void setGenero(int genero) {
+    this.genero = genero;
   }
 
   public static int getContCD() {
@@ -30,11 +37,32 @@ public class CD {
     CD.contCD = contCD;
   }
 
-  public CD() {
+  public CD(String nombre, int genero, int duracion) throws DuracionCDException {
+    super(nombre);
     setGenero(genero);
-    setContCD(contCD);
     setDuracion(duracion);
+    contCD++;
   }
 
-public CD()
+  public CD(CD otro) throws DuracionCDException {
+    super(otro.getNombre());
+    setDuracion(otro.getDuracion());
+    setGenero(otro.getGenero());
+    contCD++;
+  }
+
+  @Override
+  public double getPrecio() {
+    return 1.0;
+  }
+
+  @Override
+  public void devolver() throws AlquilarException {
+    super.devolver();
+  }
+
+  @Override
+  public void retirar() throws AlquilarException {
+    super.retirar();
+  }
 }

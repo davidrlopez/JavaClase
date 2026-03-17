@@ -153,7 +153,7 @@ public class VideoClubExceptions {
 
   public static class AlquilarException extends Exception {
     public AlquilarException() {
-      super("Error, al intentar alquilar un producto");
+      super("Error al intentar alquilar un producto");
     }
 
     public AlquilarException(String mensaje) {

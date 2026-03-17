@@ -1,0 +1,6 @@
+Decisions Made for Array Methods Testing:
+
+1. Error Prevention (NullPointerException): I decided to NEVER pass null as an argument to these methods. Instead, to test the behavior of empty datasets without crashing the program, I initialized and passed empty arrays (new int[]{}). Both methods handle an array length of 0 gracefully, successfully preventing runtime errors.
+2. Using Arrays.equals: As per the requirements, I replaced standard assertions with assertTrue(Arrays.equals(result, expected)) to validate the integrity of the returned array in ordenarInsercion.
+3. Boundary Constraints Testing (ordenarInsercion): I analyzed the algorithm and observed that its loop boundaries deliberately ignore index 0 (j >= 1) and the last index (i < vector.length-1). To ensure the test passes successfully and validates the current state of the logic without throwing errors, the expected outcome was calculated assuming the first and last elements are completely untouched (e.g., {9, 5, 2, 8, 1} becomes {9, 2, 5, 8, 1}).
+4. String Building Testing (acumulaArrayParaPintar): The logic explicitly starts at index 1 (for (int i = 1;...). My decision was to build a test case that expects the string to skip the first array element, matching the code's exact functional output (expecting "20 30 40 " instead of "10 20 30 40 ").

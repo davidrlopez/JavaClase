@@ -6,7 +6,7 @@ public interface Alquilable {
 
   public void alquilar() throws AlquilarException;
 
-  public void devolver();
+  public void devolver() throws AlquilarException;
 
   public boolean isAlquilado();
 }

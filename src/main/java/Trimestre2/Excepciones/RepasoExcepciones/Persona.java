@@ -47,6 +47,58 @@ public class Persona {
     this.nif = new Nif(nifStr);
   }
 
+  public String getNombre() {
+    return nombre;
+  }
+
+  public String getApellido1() {
+    return apellido1;
+  }
+
+  public void setApellido1(String apellido1) {
+    this.apellido1 = apellido1;
+  }
+
+  public String getApellido2() {
+    return apellido2;
+  }
+
+  public void setApellido2(String apellido2) {
+    this.apellido2 = apellido2;
+  }
+
+  public String getSexo() {
+    return sexo;
+  }
+
+  public void setSexo(String sexo) {
+    this.sexo = sexo;
+  }
+
+  public String getEstado() {
+    return estado;
+  }
+
+  public void setEstado(String estado) {
+    this.estado = estado;
+  }
+
+  public Fecha getFechaNac() {
+    return fechaNac;
+  }
+
+  public void setFechaNac(Fecha fechaNac) {
+    this.fechaNac = fechaNac;
+  }
+
+  public Nif getNif() {
+    return nif;
+  }
+
+  public void setNif(Nif nif) {
+    this.nif = nif;
+  }
+
   public void setPersona(Persona otra) throws NombreException, YearException, MesException, DiaException {
     if (otra == null)
       return;

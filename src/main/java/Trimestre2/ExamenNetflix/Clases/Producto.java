@@ -59,6 +59,10 @@ public abstract class Producto implements Alquilable {
     setPrecioSinIVA(otro.precioAqluiler);
   }
 
+  public Producto() {
+
+  }
+
   @Override
   public String toString() {
     return "Nombre del producto:" + this.getNombreProd() + " ID:" + this.getIdProd() + " estado alquiler:"

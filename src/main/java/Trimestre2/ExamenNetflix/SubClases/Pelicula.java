@@ -121,6 +121,10 @@ public class Pelicula extends Producto implements Vendible {
     setPrecioVenta(precioVenta);
   }
 
+  public Pelicula() {
+    super();
+  }
+
   @Override
   public boolean alquilar() throws IllegalArgumentException {
     if (this.isAlquilado() == true) {

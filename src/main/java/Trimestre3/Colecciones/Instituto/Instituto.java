@@ -1,10 +1,10 @@
-package Trimestre3.Colecciones;
+package Trimestre3.Colecciones.Instituto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import Trimestre2.Excepciones.RepasoExcepciones.Persona;
-import Trimestre3.Colecciones.InstitutoExceptions.GeneracionDatosException;
+import Trimestre3.Colecciones.Instituto.InstitutoExceptions.GeneracionDatosException;
 
 public class Instituto {
 
@@ -21,7 +21,7 @@ public class Instituto {
       throw new IllegalArgumentException("Persona no valida");
     }
     personas.add(p);
-    System.out.println("-> Añadido a la lista: " + p.getClass().getSimpleName() + " con DNI " + p.getNif().toString());
+    System.out.println("-> Añadido [" + p.getClass().getSimpleName() + "]: " + p.toString());
   }
 
   public boolean buscarPersonaPorDni(String dni) {
@@ -72,7 +72,7 @@ public class Instituto {
         } while (mapaProfesores.containsKey(clave));
 
         mapaProfesores.put(clave, prof);
-        System.out.println("   [Clave " + clave + "] " + prof.toString() + " | Sueldo: " + prof.getSueldo());
+        System.out.println("   [Clave " + clave + "] " + prof.toString());
       } catch (Exception e) {
         throw new GeneracionDatosException("Error al crear profesor aleatorio " + i + ": " + e.getMessage());
       }
@@ -91,7 +91,7 @@ public class Instituto {
   public void borrarProfesorEnMapa(int clave) {
     Profesor profBorrado = mapaProfesores.remove(clave);
     if (profBorrado != null) {
-      System.out.println("  Profesor con clave " + clave + " borrado correctamente del mapa.");
+      System.out.println("Profesor con clave " + clave + " borrado correctamente del mapa.");
     } else {
       System.out.println("No se encontró ningún profesor con la clave " + clave);
     }

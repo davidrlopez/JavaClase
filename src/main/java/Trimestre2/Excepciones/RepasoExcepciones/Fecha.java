@@ -148,6 +148,11 @@ public class Fecha {
     this.setFecha(otra.d, otra.m, otra.a);
   }
 
+  @Override
+  public String toString() {
+    return toString(2);
+  }
+
   public String toString(int entrada) {
     int year2d = a % 100;
     String mes = (m >= 1 && m <= 12) ? nombres[m - 1] : "MesInválido";

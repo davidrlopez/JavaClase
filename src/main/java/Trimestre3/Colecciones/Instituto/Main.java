@@ -1,8 +1,8 @@
-package Trimestre3.Colecciones;
+package Trimestre3.Colecciones.Instituto;
 
 import java.util.Scanner;
 import Trimestre2.Excepciones.RepasoExcepciones.Persona;
-import Trimestre3.Colecciones.InstitutoExceptions.GeneracionDatosException;
+import Trimestre3.Colecciones.Instituto.InstitutoExceptions.GeneracionDatosException;
 
 public class Main {
 

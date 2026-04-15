@@ -1,4 +1,4 @@
-package Trimestre3.Colecciones;
+package Trimestre3.Colecciones.Instituto;
 
 import Trimestre2.Excepciones.RepasoExcepciones.Persona;
 import static Trimestre2.Excepciones.RepasoExcepciones.FechasException.*;
@@ -50,6 +50,11 @@ public class Alumno extends Persona {
       throw new IllegalArgumentException("Nivel no valido");
     }
     this.nvIngles = nvIngles;
+  }
+
+  @Override
+  public String toString() {
+    return super.toString() + " | Curso: " + curso + ", Nivel Inglés: " + nvIngles;
   }
 
 }

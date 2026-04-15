@@ -1,4 +1,4 @@
-package Trimestre3.Colecciones;
+package Trimestre3.Colecciones.Instituto;
 
 import Trimestre2.Excepciones.RepasoExcepciones.Persona;
 import static Trimestre2.Excepciones.RepasoExcepciones.FechasException.*;
@@ -66,10 +66,7 @@ public class Profesor extends Persona {
 
   @Override
   public String toString() {
-    return "Profesor [years_trabajados=" + years_trabajados + ", especialidad=" + especialidad + ", sueldo=" + sueldo
-        + ", getYears_trabajados()=" + getYears_trabajados() + ", getEspecialidad()=" + getEspecialidad()
-        + ", getSueldo()=" + getSueldo() + ", toString()=" + super.toString() + ", getClass()=" + getClass()
-        + ", hashCode()=" + hashCode() + "]";
+    return super.toString() + " | Especialidad: " + especialidad + ", Sueldo: " + sueldo + "€";
   }
 
 }

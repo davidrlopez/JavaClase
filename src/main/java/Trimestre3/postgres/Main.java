@@ -13,11 +13,11 @@ public class Main {
         // --- 1. CONFIGURA ESTOS DATOS ---
         // Sustituye por la IP de Tailscale (100.x.x.x) del servidor (Mac o Linux) donde
         // está PostgreSQL
-        String ipTailscale = "100.x.y.z";
-        String puerto = "5432"; // 5432 es el puerto por defecto de PostgreSQL
-        String nombreBaseDatos = "mi_base_de_datos";
-        String usuario = "mi_usuario";
-        String password = "mi_password";
+        String ipTailscale = "100.72.238.39";
+        String puerto = "5432";
+        String nombreBaseDatos = "postgres";
+        String usuario = "dev";
+        String password = "dev";
 
         // --- 2. CADENA DE CONEXIÓN ---
         String url = "jdbc:postgresql://" + ipTailscale + ":" + puerto + "/" + nombreBaseDatos;

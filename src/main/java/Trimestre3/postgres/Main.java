@@ -15,27 +15,27 @@ public class Main {
             Data data = new Data(conn);
 
             // INSERT
-            data.insertPersonaje("Alice", "alice@test.com");
-            data.insertPersonaje("Bob", "bob@test.com");
-            System.out.println("Users inserted");
+            data.insertPersonaje("Kratos", "Esparta", null, 9999.99);
+            data.insertPersonaje("Samus", "Aran", null, 7500.00);
+            System.out.println("Personajes inserted");
 
             // SELECT ALL
-            System.out.println("\n-- All users --");
+            System.out.println("\n-- All personajes --");
             data.getAllPersonajes();
 
             // UPDATE
-            data.updatePersonaje(1, "Alice Updated", "alice_new@test.com");
-            System.out.println("Personaje 1 updated");
+            data.updatePersonaje(5, "Don", "Quijote", "Mancha", 100.00);
+            System.out.println("\nPersonaje 5 updated");
 
-            // SELECT ALL again
+            // SELECT ALL
             System.out.println("\n-- After update --");
             data.getAllPersonajes();
 
             // DELETE
-            data.deletePersonaje(2);
-            System.out.println("Personaje 2 deleted");
+            data.deletePersonaje(6);
+            System.out.println("\nPersonaje 6 deleted");
 
-            // SELECT ALL again
+            // SELECT ALL
             System.out.println("\n-- After delete --");
             data.getAllPersonajes();
 

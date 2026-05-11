@@ -1,50 +1,33 @@
 package Trimestre3.postgres;
 
 import java.sql.*;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
-        String url = "jdbc:postgresql://100.72.238.39:5432/myapp";
-        String usuario = "dev";
-        String password = "dev";
+    public static void main(String[] args) throws IOException, SQLException {
+        Properties props = new Properties();
+        props.load(new FileInputStream(".properties"));
 
+        String url = props.getProperty("db.url");
+        String user = props.getProperty("db.user");
+        String password = props.getProperty("db.password");
         System.out.println("Connecting: " + url);
 
-        try (Connection conn = DriverManager.getConnection(url, usuario, password)) {
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
             System.out.println("Connected");
-            Data data = new Data(conn);
-
-            // INSERT
-            data.insertPersonaje("Kratos", "Esparta", null, 9999.99);
-            data.insertPersonaje("Samus", "Aran", null, 7500.00);
-            System.out.println("Personajes inserted");
-
-            // SELECT ALL
-            System.out.println("\n-- All personajes --");
-            data.getAllPersonajes();
-
-            // UPDATE
-            data.updatePersonaje(5, "Don", "Quijote", "Mancha", 100.00);
-            System.out.println("\nPersonaje 5 updated");
-
-            // SELECT ALL
-            System.out.println("\n-- After update --");
-            data.getAllPersonajes();
-
-            // DELETE
-            data.deletePersonaje(6);
-            System.out.println("\nPersonaje 6 deleted");
-
-            // SELECT ALL
-            System.out.println("\n-- After delete --");
-            data.getAllPersonajes();
-
+            new Menu(conn).run();
         } catch (SQLException e) {
+            System.err.println("SQLState: " + e.getSQLState());
             System.err.println("Error: " + e.getMessage());
-            if (e.getMessage().contains("Connection refused")) {
-                System.err.println("Server down");
-            } else if (e.getMessage().contains("pg_hba.conf")) {
-                System.err.println("Bridge connection problem");
+
+            switch (e.getSQLState()) {
+                case "08001", "08006" -> System.err.println("Server unreachable");
+                case "28P01" -> System.err.println("Wrong credentials");
+                case "3D000" -> System.err.println("DB doesn't exist");
+                case "42P01" -> System.err.println("Table doesn't exist");
+                default -> System.err.println("Unknown error: " + e.getSQLState());
             }
         }
     }

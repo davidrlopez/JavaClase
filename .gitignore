@@ -30,6 +30,7 @@ out/
 *.log
 *.swp
 *~
+.properties
 
 # Scripts de compilación (opcional, depende)
 # compile.sh

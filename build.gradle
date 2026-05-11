@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'application'
+}
+group = 'com.cursojava'
+version = '1.0-SNAPSHOT'
+repositories {
+    mavenCentral()
+}
+dependencies {
+    testImplementation 'org.testng:testng:7.8.0'
+    implementation 'org.postgresql:postgresql:42.7.3'
+}
+test {
+    useTestNG()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+    }
+    }
+application {
+    mainClass = project.hasProperty('mainClass') ? project.property('mainClass') : 'Main'
+}
+

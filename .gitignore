@@ -18,10 +18,6 @@ out/
 .vscode/
 .idea/
 *.iml
-build.gradle
-gradle
-gradlew.bat
-gradlew
 .gradle
 
 # Archivos de sistema macOS

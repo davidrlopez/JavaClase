@@ -19,6 +19,7 @@ out/
 .idea/
 *.iml
 .gradle
+.gradle/
 
 # Archivos de sistema macOS
 .DS_Store

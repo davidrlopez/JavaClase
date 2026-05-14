@@ -156,6 +156,19 @@ public class Data {
         }
     }
 
+    public void updateAccount(int codBanco, int codSucur, int numCta, String dni, double saldo)
+            throws SQLException {
+        String sql = "UPDATE ACCOUNT SET DNI_DUENO=?, SALDO=? WHERE COD_BANCO=? AND COD_SUCUR=? AND NUM_CTA=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, codBanco);
+            ps.setInt(2, codSucur);
+            ps.setInt(3, numCta);
+            ps.setString(4, dni);
+            ps.setDouble(5, saldo);
+            ps.executeUpdate();
+        }
+    }
+
     public void insertMovement(int numOperac, int codBanco, int codSucur, int numCta,
             Date fecha, double cantidad, String tipo, String observacion)
             throws SQLException {

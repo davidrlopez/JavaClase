@@ -215,6 +215,7 @@ public class Menu {
                 1. Ver todas
                 2. Insertar
                 3. Eliminar
+                4. Actualizar
                 0. Volver
                 """);
         System.out.print("Opción: ");
@@ -256,6 +257,24 @@ public class Menu {
                     data.deleteAccount(codB, codS, numCta);
                     System.out.println("Cuenta eliminada");
                 } catch (SQLException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+            case "4" -> {
+                try {
+                    System.out.print("Código banco: ");
+                    int codB = Integer.parseInt(scanner.nextLine().trim());
+                    System.out.print("Código sucursal: ");
+                    int codS = Integer.parseInt(scanner.nextLine().trim());
+                    System.out.print("Número de cuenta: ");
+                    int numCta = Integer.parseInt(scanner.nextLine().trim());
+                    System.out.println("DNI dueño: ");
+                    String dni = scanner.nextLine().trim();
+                    System.out.print("Saldo: ");
+                    double saldo = Double.parseDouble(scanner.nextLine().trim());
+                    data.updateAccount(codB, codS, numCta, dni, saldo);
+                    System.out.println("Cuenta actualizada");
+                } catch (Exception e) {
                     System.err.println(e.getMessage());
                 }
             }

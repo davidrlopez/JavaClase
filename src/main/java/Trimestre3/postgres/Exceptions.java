@@ -28,10 +28,13 @@ public class Exceptions {
         public static class TransactionException extends RuntimeException {
             private int codB;
             private int codBdest;
+            private double tryMoney;
 
             public TransactionException(int codB, int codBdest, double tryMoney) {
                 super("Transaction failed for account:" + codBdest + " from:" + codB);
-
+                this.codBdest = codBdest;
+                this.codB = codB;
+                this.tryMoney = tryMoney;
             }
 
             public int getCodB() {
@@ -40,6 +43,51 @@ public class Exceptions {
 
             public int getCodBdest() {
                 return codBdest;
+            }
+
+            public double tryMoney() {
+                return tryMoney;
+            }
+        }
+
+        public static class IngreException extends RuntimeException {
+            private int codB;
+            private double tryMoney;
+            private String dni;
+
+            public IngreException(int codB, double tryMoney, String dni) {
+                super("Ingress failed for:" + codB);
+
+            }
+
+            public int getCodB() {
+                return codB;
+            }
+
+            public double getTryMoney() {
+                return tryMoney;
+            }
+
+            public String getDni() {
+                return dni;
+            }
+        }
+
+        public static class ValidationException extends RuntimeException {
+            private int codB;
+            private String dni;
+
+            public ValidationException(int codB, String dni) {
+                super("Validation failed.Dni:" + dni + " isn't associated with account:" + codB);
+
+            }
+
+            public int getCodB() {
+                return codB;
+            }
+
+            public String getDni() {
+                return dni;
             }
         }
     }

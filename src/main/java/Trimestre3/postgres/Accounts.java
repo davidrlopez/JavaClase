@@ -8,18 +8,18 @@ public class Accounts {
     private double balance;
     private int idB;
     private int idS;
-    private long accNum;
+    private String accNum;
     private String dni;
 
     public Accounts() {
         this.balance = 0;
     }
 
-    public Accounts(int idB, int idS, long accNum, String iban, String dni, double balance) {
+    public Accounts(int idB, int idS, String accNum, String dni, double balance) {
         this.idB = idB;
         this.idS = idS;
         this.accNum = accNum;
-        this.iban = iban;
+        this.iban = generateIban(String.format("%04d", idB) + String.format("%04d", idS) + "06" + accNum);
         this.dni = dni;
         this.balance = balance;
     }
@@ -31,7 +31,9 @@ public class Accounts {
         String ccc = bank + branch + "06" + accountNumber;
         String iban = generateIban(ccc);
 
-        return new Accounts(idB, idS, accNum, iban, dni, balance);
+        Accounts account = new Accounts(idB, idS, accountNumber, dni, balance);
+        account.setIban(iban);
+        return account;
     }
 
     public static String generateIban(String ccc) {
@@ -78,11 +80,11 @@ public class Accounts {
         this.idS = idS;
     }
 
-    public long getAccNum() {
+    public String getAccNum() {
         return accNum;
     }
 
-    public void setAccNum(long accNum) {
+    public void setAccNum(String accNum) {
         this.accNum = accNum;
     }
 

@@ -21,12 +21,12 @@ public class Actions {
         return bankDao.getAllAccounts();
     }
 
-    public boolean updateAccount(int idBank, int idBranch, long accNum, String dni, double amount)
+    public boolean updateAccount(int idBank, int idBranch, String accNum, String dni, double amount)
             throws SQLException {
         return bankDao.updateAccount(idBank, idBranch, accNum, dni, amount);
     }
 
-    public boolean deleteAccount(int idBank, int idBranch, long accNum) throws SQLException {
+    public boolean deleteAccount(int idBank, int idBranch, String accNum) throws SQLException {
         return bankDao.deleteAccount(idBank, idBranch, accNum);
     }
 }

@@ -26,69 +26,70 @@ public class Exceptions {
         }
 
         public static class TransactionException extends RuntimeException {
-            private int codB;
-            private int codBdest;
+            private int idB;
+            private int idBdest;
             private double tryMoney;
 
-            public TransactionException(int codB, int codBdest, double tryMoney) {
-                super("Transaction failed for account:" + codBdest + " from:" + codB);
-                this.codBdest = codBdest;
-                this.codB = codB;
+            public TransactionException(int idB, int idBdest, double tryMoney) {
+                super("Transaction failed for account:" + idBdest + " from:" + idB);
+                this.idBdest = idBdest;
+                this.idB = idB;
                 this.tryMoney = tryMoney;
             }
 
             public int getCodB() {
-                return codB;
+                return idB;
             }
 
             public int getCodBdest() {
-                return codBdest;
+                return idBdest;
             }
 
             public double tryMoney() {
                 return tryMoney;
             }
         }
+    }
 
-        public static class IngreException extends RuntimeException {
-            private int codB;
-            private double tryMoney;
-            private String dni;
+    public static class DepositException extends RuntimeException {
+        private int idB;
+        private double tryMoney;
+        private String dni;
 
-            public IngreException(int codB, double tryMoney, String dni) {
-                super("Ingress failed for:" + codB);
+        public DepositException(int idB, double tryMoney, String dni) {
+            super("Ingress failed for:" + idB);
 
-            }
-
-            public int getCodB() {
-                return codB;
-            }
-
-            public double getTryMoney() {
-                return tryMoney;
-            }
-
-            public String getDni() {
-                return dni;
-            }
         }
 
-        public static class ValidationException extends RuntimeException {
-            private int codB;
-            private String dni;
+        public int getCodB() {
+            return idB;
+        }
 
-            public ValidationException(int codB, String dni) {
-                super("Validation failed.Dni:" + dni + " isn't associated with account:" + codB);
+        public double getTryMoney() {
+            return tryMoney;
+        }
 
-            }
-
-            public int getCodB() {
-                return codB;
-            }
-
-            public String getDni() {
-                return dni;
-            }
+        public String getDni() {
+            return dni;
         }
     }
+
+    public static class ValidationException extends RuntimeException {
+        private int idB;
+        private String dni;
+
+        public ValidationException(String dni) {
+            super("Validation failed.Dni:" + dni + " is not a valid document");
+
+        }
+
+        public int getCodB() {
+            return idB;
+        }
+
+        public String getDni() {
+            return dni;
+        }
+    }
+
 }

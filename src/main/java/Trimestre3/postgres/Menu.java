@@ -1,6 +1,7 @@
 package Trimestre3.postgres;
 
 import java.sql.*;
+import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,11 +10,11 @@ import java.time.format.DateTimeParseException;
 public class Menu {
 
     private final Scanner scanner = new Scanner(System.in);
-    private final Data data;
+    private final BankDao data;
     private final Inserts inserts;
 
     public Menu(Connection conn) {
-        this.data = new Data(conn);
+        this.data = new BankDao(conn);
         this.inserts = new Inserts(conn);
     }
 
@@ -83,17 +84,18 @@ public class Menu {
             case "2" -> {
                 try {
                     System.out.print("Código banco: ");
-                    int cod = Integer.parseInt(scanner.nextLine().trim());
+                    int id = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("NF banco: ");
                     String nf = scanner.nextLine().trim();
                     System.out.print("Nombre: ");
-                    String nombre = scanner.nextLine().trim();
+                    String name = scanner.nextLine().trim();
                     System.out.print("Domicilio fiscal: ");
                     String dom = scanner.nextLine().trim();
                     System.out.print("Población: ");
                     String pob = scanner.nextLine().trim();
-                    data.insertBank(cod, nf, nombre, dom, pob);
-                    System.out.println("Banco insertado");
+                    if (data.insertBank(id, nf, name, dom, pob)) {
+                        System.out.println("Banco insertado");
+                    }
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
@@ -101,17 +103,20 @@ public class Menu {
             case "3" -> {
                 try {
                     System.out.print("Código banco a actualizar: ");
-                    int cod = Integer.parseInt(scanner.nextLine().trim());
+                    int id = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("NF banco: ");
                     String nf = scanner.nextLine().trim();
                     System.out.print("Nombre: ");
-                    String nombre = scanner.nextLine().trim();
+                    String name = scanner.nextLine().trim();
                     System.out.print("Domicilio fiscal: ");
                     String dom = scanner.nextLine().trim();
                     System.out.print("Población: ");
                     String pob = scanner.nextLine().trim();
-                    data.updateBank(cod, nf, nombre, dom, pob);
-                    System.out.println("Banco actualizado");
+                    if (data.updateBank(id, nf, name, dom, pob)) {
+                        System.out.println("Banco actualizado");
+                    } else {
+                        System.out.println("No existe ese banco");
+                    }
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
@@ -119,9 +124,12 @@ public class Menu {
             case "4" -> {
                 try {
                     System.out.print("Código banco a eliminar: ");
-                    int cod = Integer.parseInt(scanner.nextLine().trim());
-                    data.deleteBank(cod);
-                    System.out.println("Banco eliminado");
+                    int id = Integer.parseInt(scanner.nextLine().trim());
+                    if (data.deleteBank(id)) {
+                        System.out.println("Banco eliminado");
+                    } else {
+                        System.out.println("No existe ese banco");
+                    }
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
@@ -156,17 +164,18 @@ public class Menu {
             case "2" -> {
                 try {
                     System.out.print("Código banco: ");
-                    int codB = Integer.parseInt(scanner.nextLine().trim());
+                    int idB = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Código sucursal: ");
-                    int codS = Integer.parseInt(scanner.nextLine().trim());
+                    int idS = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Nombre: ");
-                    String nombre = scanner.nextLine().trim();
+                    String name = scanner.nextLine().trim();
                     System.out.print("Localidad: ");
                     String loc = scanner.nextLine().trim();
                     System.out.print("Provincia: ");
                     String prov = scanner.nextLine().trim();
-                    data.insertBranch(codB, codS, nombre, loc, prov);
-                    System.out.println("Sucursal insertada");
+                    if (data.insertBranch(idB, idS, name, loc, prov)) {
+                        System.out.println("Sucursal insertada");
+                    }
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
@@ -174,17 +183,20 @@ public class Menu {
             case "3" -> {
                 try {
                     System.out.print("Código banco: ");
-                    int codB = Integer.parseInt(scanner.nextLine().trim());
+                    int idB = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Código sucursal: ");
-                    int codS = Integer.parseInt(scanner.nextLine().trim());
+                    int idS = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Nombre: ");
-                    String nombre = scanner.nextLine().trim();
+                    String name = scanner.nextLine().trim();
                     System.out.print("Localidad: ");
                     String loc = scanner.nextLine().trim();
                     System.out.print("Provincia: ");
                     String prov = scanner.nextLine().trim();
-                    data.updateBranch(codB, codS, nombre, loc, prov);
-                    System.out.println("Sucursal actualizada");
+                    if (data.updateBranch(idB, idS, name, loc, prov)) {
+                        System.out.println("Sucursal actualizada");
+                    } else {
+                        System.out.println("No existe esa sucursal");
+                    }
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
@@ -192,11 +204,14 @@ public class Menu {
             case "4" -> {
                 try {
                     System.out.print("Código banco: ");
-                    int codB = Integer.parseInt(scanner.nextLine().trim());
+                    int idB = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Código sucursal: ");
-                    int codS = Integer.parseInt(scanner.nextLine().trim());
-                    data.deleteBranch(codB, codS);
-                    System.out.println("Sucursal eliminada");
+                    int idS = Integer.parseInt(scanner.nextLine().trim());
+                    if (data.deleteBranch(idB, idS)) {
+                        System.out.println("Sucursal eliminada");
+                    } else {
+                        System.out.println("No existe esa sucursal");
+                    }
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
@@ -223,7 +238,19 @@ public class Menu {
         switch (scanner.nextLine().trim()) {
             case "1" -> {
                 try {
-                    data.getAllAccounts();
+                    List<Accounts> accounts = data.getAllAccounts();
+                    System.out.printf("%-10s | %-10s | %-10s | %-24s | %-10s | %-15s%n",
+                            "COD_BANCO", "COD_SUCUR", "NUM_CTA", "IBAN", "DNI", "SALDO");
+                    System.out.println("-".repeat(95));
+                    for (Accounts account : accounts) {
+                        System.out.printf("%-10d | %-10d | %-10d | %-24s | %-10s | %-15.2f%n",
+                                account.getCodB(),
+                                account.getCodS(),
+                                account.getAccNum(),
+                                account.getIban(),
+                                account.getDni(),
+                                account.getBalance());
+                    }
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
@@ -231,17 +258,17 @@ public class Menu {
             case "2" -> {
                 try {
                     System.out.print("Código banco: ");
-                    int codB = Integer.parseInt(scanner.nextLine().trim());
+                    int idB = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Código sucursal: ");
-                    int codS = Integer.parseInt(scanner.nextLine().trim());
-                    System.out.print("Número de cuenta: ");
-                    int numCta = Integer.parseInt(scanner.nextLine().trim());
+                    int idS = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("DNI titular: ");
                     String dni = scanner.nextLine().trim();
                     System.out.print("Saldo inicial: ");
-                    double saldo = Double.parseDouble(scanner.nextLine().trim());
-                    data.insertAccount(codB, codS, numCta, dni, saldo);
-                    System.out.println("Cuenta insertada");
+                    double amount = Double.parseDouble(scanner.nextLine().trim());
+                    Accounts account = data.createAccount(idB, idS, dni, amount);
+                    System.out.println("Cuenta insertada: " + account.getIban());
+                } catch (IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
@@ -249,13 +276,16 @@ public class Menu {
             case "3" -> {
                 try {
                     System.out.print("Código banco: ");
-                    int codB = Integer.parseInt(scanner.nextLine().trim());
+                    int idB = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Código sucursal: ");
-                    int codS = Integer.parseInt(scanner.nextLine().trim());
+                    int idS = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Número de cuenta: ");
-                    int numCta = Integer.parseInt(scanner.nextLine().trim());
-                    data.deleteAccount(codB, codS, numCta);
-                    System.out.println("Cuenta eliminada");
+                    long accNum = Long.parseLong(scanner.nextLine().trim());
+                    if (data.deleteAccount(idB, idS, accNum)) {
+                        System.out.println("Cuenta eliminada");
+                    } else {
+                        System.out.println("No existe esa cuenta");
+                    }
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
@@ -263,17 +293,20 @@ public class Menu {
             case "4" -> {
                 try {
                     System.out.print("Código banco: ");
-                    int codB = Integer.parseInt(scanner.nextLine().trim());
+                    int idB = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Código sucursal: ");
-                    int codS = Integer.parseInt(scanner.nextLine().trim());
+                    int idS = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Número de cuenta: ");
-                    int numCta = Integer.parseInt(scanner.nextLine().trim());
+                    long accNum = Long.parseLong(scanner.nextLine().trim());
                     System.out.println("DNI dueño: ");
                     String dni = scanner.nextLine().trim();
                     System.out.print("Saldo: ");
-                    double saldo = Double.parseDouble(scanner.nextLine().trim());
-                    data.updateAccount(codB, codS, numCta, dni, saldo);
-                    System.out.println("Cuenta actualizada");
+                    double amount = Double.parseDouble(scanner.nextLine().trim());
+                    if (data.updateAccount(idB, idS, accNum, dni, amount)) {
+                        System.out.println("Cuenta actualizada");
+                    } else {
+                        System.out.println("No existe esa cuenta");
+                    }
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                 }
@@ -309,11 +342,11 @@ public class Menu {
                     System.out.print("Num operación: ");
                     int numOp = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Código banco: ");
-                    int codB = Integer.parseInt(scanner.nextLine().trim());
+                    int idB = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Código sucursal: ");
-                    int codS = Integer.parseInt(scanner.nextLine().trim());
+                    int idS = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Número cuenta: ");
-                    int numCta = Integer.parseInt(scanner.nextLine().trim());
+                    long accNum = Long.parseLong(scanner.nextLine().trim());
                     System.out.print("Fecha (YYYY-MM-DD): ");
                     Date fecha;
                     try {
@@ -325,13 +358,14 @@ public class Menu {
                         return;
                     }
                     System.out.print("Cantidad: ");
-                    double cantidad = Double.parseDouble(scanner.nextLine().trim());
+                    double amount = Double.parseDouble(scanner.nextLine().trim());
                     System.out.print("Tipo operación: ");
                     String tipo = scanner.nextLine().trim();
                     System.out.print("Observación: ");
                     String obs = scanner.nextLine().trim();
-                    data.insertMovement(numOp, codB, codS, numCta, fecha, cantidad, tipo, obs);
-                    System.out.println("Movimiento insertado");
+                    if (data.insertMovement(numOp, idB, idS, accNum, fecha, amount, tipo, obs)) {
+                        System.out.println("Movimiento insertado");
+                    }
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
@@ -340,8 +374,11 @@ public class Menu {
                 try {
                     System.out.print("Num operación a eliminar: ");
                     int numOp = Integer.parseInt(scanner.nextLine().trim());
-                    data.deleteMovement(numOp);
-                    System.out.println("Movimiento eliminado");
+                    if (data.deleteMovement(numOp)) {
+                        System.out.println("Movimiento eliminado");
+                    } else {
+                        System.out.println("No existe ese movimiento");
+                    }
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }

@@ -1,23 +1,21 @@
 package Trimestre3.postgres;
 
 import java.util.ArrayList;
-import java.sql.*;
 
 public class Client {
 
     private String name;
-    private String dni;
-    private String nie;
+    private String doc;
     private int numAcc;
     private ArrayList<Accounts> accs = new ArrayList<>();
     private int accCount = 0;
     private final static int max_accs = 10;
 
-    public static boolean validateDni(String dni) {
-        if (dni.matches("\\d{8}-?[A-Za-z]")) {
+    public static boolean validateDni(String doc) {
+        if (doc.matches("\\d{8}-?[A-Za-z]")) {
             String DIGIT_CONTROL = "TRWAGMYFPDXBNJZSQVHLCKE";
-            String numbers = dni.replaceAll("[^0-9]", "");
-            String letter = dni.replaceAll("[^A-Za-z]", "").toUpperCase();
+            String numbers = doc.replaceAll("[^0-9]", "");
+            String letter = doc.replaceAll("[^A-Za-z]", "").toUpperCase();
 
             int numberDni = Integer.parseInt(numbers);
             int index = numberDni % 23;
@@ -27,11 +25,11 @@ public class Client {
         return false;
     }
 
-    public static boolean validateNie(String nie) {
-        if (nie.matches("^[XYZ]\\d{7}-?[A-Z]$")) {
+    public static boolean validateNie(String doc) {
+        if (doc.matches("^[XYZ]\\d{7}-?[A-Z]$")) {
             String DIGIT_CONTROL = "TRWAGMYFPDXBNJZSQVHLCKE";
-            String numbers = nie.replaceAll("[^0-9]", "");
-            String letter = nie.replaceAll("[^A-Za-z]", "").toUpperCase();
+            String numbers = doc.replaceAll("[^0-9]", "");
+            String letter = doc.replaceAll("[^A-Za-z]", "").toUpperCase();
 
             int numberNie = Integer.parseInt(numbers);
             int index = numberNie % 23;
@@ -41,11 +39,9 @@ public class Client {
         return false;
     }
 
-    public boolean addAccount(Accounts acc, Connection conn, String doc) throws SQLException {
+    public boolean addAccount(Accounts acc) {
         if (this.accs.size() < Client.max_accs) {
-            Accounts newAcc = new Accounts();
-            newAcc.createAcc(conn, doc);
-            accs.add(newAcc);
+            accs.add(acc);
             this.accCount++;
             System.out.println("Account added");
             System.out.println("Current accounts:");
@@ -67,20 +63,20 @@ public class Client {
         this.name = name;
     }
 
+    public String getDoc() {
+        return doc;
+    }
+
     public String getDni() {
-        return dni;
+        return doc;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setDni(String doc) {
+        this.doc = doc;
     }
 
-    public String getNie() {
-        return nie;
-    }
-
-    public void setNie(String nie) {
-        this.nie = nie;
+    public void setDoc(String doc) {
+        this.doc = doc;
     }
 
     public int getNumAcc() {

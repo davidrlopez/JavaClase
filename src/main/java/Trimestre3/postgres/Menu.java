@@ -240,10 +240,10 @@ public class Menu {
                 try {
                     List<Accounts> accounts = data.getAllAccounts();
                     System.out.printf("%-10s | %-10s | %-10s | %-24s | %-10s | %-15s%n",
-                            "COD_BANCO", "COD_SUCUR", "NUM_CTA", "IBAN", "DNI", "SALDO");
+                            "BANK_ID", "BRANCH_ID", "ACC_NUM", "IBAN", "DNI", "BALANCE");
                     System.out.println("-".repeat(95));
                     for (Accounts account : accounts) {
-                        System.out.printf("%-10d | %-10d | %-10d | %-24s | %-10s | %-15.2f%n",
+                        System.out.printf("%-10d | %-10d | %-10s | %-24s | %-10s | %-15.2f%n",
                                 account.getCodB(),
                                 account.getCodS(),
                                 account.getAccNum(),
@@ -280,7 +280,7 @@ public class Menu {
                     System.out.print("Código sucursal: ");
                     int idS = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Número de cuenta: ");
-                    long accNum = Long.parseLong(scanner.nextLine().trim());
+                    String accNum = scanner.nextLine().trim();
                     if (data.deleteAccount(idB, idS, accNum)) {
                         System.out.println("Cuenta eliminada");
                     } else {
@@ -297,7 +297,7 @@ public class Menu {
                     System.out.print("Código sucursal: ");
                     int idS = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Número de cuenta: ");
-                    long accNum = Long.parseLong(scanner.nextLine().trim());
+                    String accNum = scanner.nextLine().trim();
                     System.out.println("DNI dueño: ");
                     String dni = scanner.nextLine().trim();
                     System.out.print("Saldo: ");
@@ -346,7 +346,7 @@ public class Menu {
                     System.out.print("Código sucursal: ");
                     int idS = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Número cuenta: ");
-                    long accNum = Long.parseLong(scanner.nextLine().trim());
+                    String accNum = scanner.nextLine().trim();
                     System.out.print("Fecha (YYYY-MM-DD): ");
                     Date fecha;
                     try {

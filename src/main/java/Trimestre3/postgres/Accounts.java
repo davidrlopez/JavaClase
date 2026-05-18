@@ -1,16 +1,37 @@
 package Trimestre3.postgres;
 
-import java.sql.*;
-
 import java.math.BigInteger;
 
 public class Accounts {
 
     private String iban;
     private double balance;
+    private int idB;
+    private int idS;
+    private long accNum;
+    private String dni;
 
     public Accounts() {
         this.balance = 0;
+    }
+
+    public Accounts(int idB, int idS, long accNum, String iban, String dni, double balance) {
+        this.idB = idB;
+        this.idS = idS;
+        this.accNum = accNum;
+        this.iban = iban;
+        this.dni = dni;
+        this.balance = balance;
+    }
+
+    public static Accounts createNew(int idB, int idS, long accNum, String dni, double balance) {
+        String bank = String.format("%04d", idB);
+        String branch = String.format("%04d", idS);
+        String accountNumber = String.format("%010d", accNum);
+        String ccc = bank + branch + "06" + accountNumber;
+        String iban = generateIban(ccc);
+
+        return new Accounts(idB, idS, accNum, iban, dni, balance);
     }
 
     public static String generateIban(String ccc) {
@@ -23,50 +44,6 @@ public class Accounts {
         String dcFormat = String.format("%02d", controlDigits);
 
         return "ES" + dcFormat + ccc;
-    }
-
-    public boolean createAcc(Connection conn, String doc) throws SQLException {
-        String docF = doc.toUpperCase();
-
-        if (docF.matches("^\\d{8}-?[A-Z]$")) {
-            System.out.println("DNI validated");
-        } else if (docF.matches("^[XYZ]\\d{7}-?[A-Z]$")) {
-            System.out.println("NIE validated.");
-        } else {
-            System.out.println("Error: Insert a valid DNI or NIE");
-            return false;
-        }
-        String sqlInsert = "INSERT INTO account(balance,docF) VALUES (?,?)";
-        try (PreparedStatement pstmt = conn.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, docF);
-            pstmt.executeUpdate();
-            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    long idGenerated = generatedKeys.getLong(1);
-                    String baseNumber = String.format("%010d", idGenerated);
-                    String ccc = "5929" + "3621" + "06" + baseNumber;
-                    String finalIban = generateIban(ccc);
-                    updateIban(conn, idGenerated, finalIban);
-                    return true;
-                }
-            } catch (Exception e) {
-                System.out.println(e.getCause());
-                System.out.println(e.getMessage());
-                return false;
-            }
-        } finally {
-            System.out.println("Process finished succesfully for document: " + docF);
-        }
-        return false;
-    }
-
-    private void updateIban(Connection conn, long id, String finalIban) throws SQLException {
-        String sqlUpdate = "UPDATE accounts SET iban = ? WHERE id = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sqlUpdate)) {
-            pstmt.setString(1, finalIban);
-            pstmt.setLong(2, id);
-            pstmt.executeUpdate();
-        }
     }
 
     public String getIban() {
@@ -83,5 +60,37 @@ public class Accounts {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public int getCodB() {
+        return idB;
+    }
+
+    public void setCodB(int idB) {
+        this.idB = idB;
+    }
+
+    public int getCodS() {
+        return idS;
+    }
+
+    public void setCodS(int idS) {
+        this.idS = idS;
+    }
+
+    public long getAccNum() {
+        return accNum;
+    }
+
+    public void setAccNum(long accNum) {
+        this.accNum = accNum;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 }

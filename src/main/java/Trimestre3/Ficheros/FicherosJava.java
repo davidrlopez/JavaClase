@@ -6,6 +6,7 @@ package Trimestre3.Ficheros;
 
 import java.io.*;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 /**
  *
@@ -106,21 +107,34 @@ public class FicherosJava {
         Persona elena = new Persona("Elena", 18);
         System.out.println(elena.toString());
         String userHome = System.getProperty("user.home");
-        File fileg = Paths.get(userHome, "Desktop", "ObjElena.txt").toFile();
+        Scanner input = new Scanner(System.in);
+        System.out.println("Save as:");
+        String fileName = input.next();
+        if (Paths.get(userHome, fileName).toFile().exists()) {
+            if (fileName.contains(".")) {
+                int dotIndex = fileName.lastIndexOf(".");
+                fileName = fileName.substring(0, dotIndex) + "-2" + fileName.substring(dotIndex);
+            } else {
+                fileName = fileName.concat("-2");
+            }
+
+            if (!fileName.contains(".")) {
+                fileName = fileName.concat(".txt");
+            }
+        }
+        File fileg = Paths.get(userHome, fileName).toFile();
 
         try {
             FileOutputStream fos = new FileOutputStream(fileg);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             oos.writeObject(elena);
-
             oos.close();
             fos.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-
             ObjectInputStream in = new ObjectInputStream(
                     new FileInputStream(fileg));
 
@@ -130,9 +144,12 @@ public class FicherosJava {
 
             System.out.println(p.nombre);
             System.out.println(p.edad);
+            System.out.println("***************************************************");
+            System.out.println("File:" + fileg.getName() + " created at:" + userHome);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        input.close();
     }
 }

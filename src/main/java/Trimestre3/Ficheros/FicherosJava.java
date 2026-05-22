@@ -117,36 +117,44 @@ public class FicherosJava {
             } else {
                 fileName = fileName.concat("-2");
             }
-
-            if (!fileName.contains(".")) {
-                fileName = fileName.concat(".txt");
-            }
+        }
+        if (!fileName.contains(".")) {
+            fileName = fileName.concat(".txt");
         }
         File fileg = Paths.get(userHome, fileName).toFile();
-
+        int iterationsR = (int) (Math.random() * 1000);
         try {
             FileOutputStream fos = new FileOutputStream(fileg);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-
             oos.writeObject(elena);
+            for (int i = 0; i < iterationsR; i++) {
+                int ageRandom = (int) (Math.random() * 94) + 5;
+                int nameLengthR = (int) (Math.random() * 8) + 1;
+                String fullName = "";
+                for (int j = 0; j < nameLengthR; j++) {
+                    char charR = (char) (Math.random() * 24 + 97);
+                    fullName += charR;
+                }
+                Persona b = new Persona(fullName, ageRandom);
+                oos.writeObject(b);
+            }
             oos.close();
             fos.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            ObjectInputStream in = new ObjectInputStream(
-                    new FileInputStream(fileg));
-
-            Persona p = (Persona) in.readObject();
-
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileg));
+            try {
+                while (true) {
+                    Persona p = (Persona) in.readObject();
+                    System.out.println(p.nombre + " " + p.edad);
+                }
+            } catch (EOFException e) {
+            }
             in.close();
-
-            System.out.println(p.nombre);
-            System.out.println(p.edad);
             System.out.println("***************************************************");
             System.out.println("File:" + fileg.getName() + " created at:" + userHome);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

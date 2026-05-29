@@ -6,38 +6,44 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import Trimestre3.postgres.Exceptions.WithdrawException;
 
 public class Menu {
 
     private final Scanner scanner = new Scanner(System.in);
     private final BankDao data;
     private final Inserts inserts;
+    private final Actions actions;
 
-    public Menu(Connection conn) {
+    public Menu(Connection conn) throws SQLException {
         this.data = new BankDao(conn);
         this.inserts = new Inserts(conn);
+        this.actions = new Actions(data);
+
     }
 
-    public void run() {
+    public void run() throws SQLException {
         boolean exit = false;
         while (!exit) {
             System.out.println("""
                     \n=== DATABANK ===
-                    1. Crear tablas desde SQL
-                    2. Bancos
-                    3. Sucursales
-                    4. Cuentas
-                    5. Movimientos
+                    1. Bancos
+                    2. Sucursales
+                    3. Cuentas
+                    4. Movimientos
+                    5. Crear tablas SQL
+                    6. Insertar inserts random
                     0. Salir
                     """);
             System.out.print("Opción: ");
 
             switch (scanner.nextLine().trim()) {
-                case "1" -> createTables();
-                case "2" -> menuBanks();
-                case "3" -> menuBranches();
-                case "4" -> menuAccounts();
-                case "5" -> menuMovements();
+                case "1" -> menuBanks();
+                case "2" -> menuBranches();
+                case "3" -> menuAccounts();
+                case "4" -> menuMovements();
+                case "5" -> createTables();
+                case "6" -> inserts.randomTest();
                 case "0" -> exit = true;
                 default -> System.out.println("Opción no válida");
             }
@@ -47,9 +53,9 @@ public class Menu {
     // ── TABLAS ────────────────────────────────────────────────────────────────
 
     private void createTables() {
-        System.out.print("Ruta del archivo SQL [Enter para usar sql/databank.sql]: ");
+        System.out.print("Ruta del archivo SQL [Enter para usar src/main/resources/sql/databank.sql]: ");
         String input = scanner.nextLine().trim();
-        String route = input.isEmpty() ? "sql/databank.sql" : input;
+        String route = input.isEmpty() ? "src/main/resources/sql/databank.sql" : input;
 
         try {
             inserts.importFile(route);
@@ -77,7 +83,7 @@ public class Menu {
             case "1" -> {
                 try {
                     data.getAllBanks();
-                } catch (SQLException e) {
+                } catch (SQLException | IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                 }
             }
@@ -96,7 +102,7 @@ public class Menu {
                     if (data.insertBank(id, nf, name, dom, pob)) {
                         System.out.println("Banco insertado");
                     }
-                } catch (SQLException e) {
+                } catch (SQLException | IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                 }
             }
@@ -117,7 +123,7 @@ public class Menu {
                     } else {
                         System.out.println("No existe ese banco");
                     }
-                } catch (SQLException e) {
+                } catch (SQLException | IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                 }
             }
@@ -228,9 +234,12 @@ public class Menu {
         System.out.println("""
                 \n-- CUENTAS --
                 1. Ver todas
-                2. Insertar
-                3. Eliminar
-                4. Actualizar
+                2. Retirar dinero
+                3. Ingresar dinero
+                4. Transferencia
+                5. Insertar
+                6. Eliminar
+                7. Actualizar
                 0. Volver
                 """);
         System.out.print("Opción: ");
@@ -257,6 +266,60 @@ public class Menu {
             }
             case "2" -> {
                 try {
+                    System.out.println("IBAN:");
+                    String iban = scanner.nextLine().trim();
+                    System.out.println("DNI:");
+                    String dni = scanner.nextLine().trim();
+                    System.out.println("Cantidad a retirar");
+                    double withdraw = Double.parseDouble(scanner.nextLine().trim());
+                    Accounts account = data.findAccountByIbanAndDni(iban, dni)
+                            .orElseThrow(() -> new IllegalArgumentException("Cuenta o DNI incorrectos"));
+                    actions.withdraw(account, withdraw);
+                    System.out.println("Retirada realizada");
+                } catch (SQLException | WithdrawException | IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+            case "3" -> {
+                try {
+                    System.out.println("Cantidad a ingresar");
+                    double deposit = Double.parseDouble(scanner.nextLine().trim());
+                    System.out.println("IBAN:");
+                    String iban = scanner.nextLine().trim();
+                    Accounts account = data.findAccountByIban(iban)
+                            .orElseThrow(() -> new IllegalArgumentException("Cuenta incorrecta"));
+                    actions.deposit(account, deposit);
+                    System.out.println("Ingreso realizado");
+                } catch (SQLException | IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+
+            case "4" -> {
+                try {
+                    System.out.println("Cuenta origen:");
+                    System.out.println("IBAN:");
+                    String iban = scanner.nextLine().trim();
+                    System.out.println("DNI");
+                    String dni = scanner.nextLine().trim();
+                    Accounts origin = data.findAccountByIbanAndDni(iban, dni)
+                            .orElseThrow(() -> new IllegalArgumentException("Cuenta o DNI incorrectos"));
+                    System.out.println("Cuenta destino:");
+                    System.out.println("IBAN:");
+                    String ibanD = scanner.nextLine().trim();
+                    Accounts destiny = data.findAccountByIban(ibanD)
+                            .orElseThrow(() -> new IllegalArgumentException(
+                                    "No se encuentra la cuenta o no esta disponible"));
+                    System.out.println("Cantidad a transferir:");
+                    double amount = Double.parseDouble(scanner.nextLine().trim());
+                    actions.transaction(origin, destiny, amount);
+                    System.out.println("Transferencia realizada");
+                } catch (SQLException | WithdrawException | IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+            case "5" -> {
+                try {
                     System.out.print("Código banco: ");
                     int idB = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Código sucursal: ");
@@ -273,7 +336,7 @@ public class Menu {
                     System.err.println(e.getMessage());
                 }
             }
-            case "3" -> {
+            case "6" -> {
                 try {
                     System.out.print("Código banco: ");
                     int idB = Integer.parseInt(scanner.nextLine().trim());
@@ -290,24 +353,22 @@ public class Menu {
                     System.err.println(e.getMessage());
                 }
             }
-            case "4" -> {
+            case "7" -> {
                 try {
-                    System.out.print("Código banco: ");
-                    int idB = Integer.parseInt(scanner.nextLine().trim());
-                    System.out.print("Código sucursal: ");
-                    int idS = Integer.parseInt(scanner.nextLine().trim());
-                    System.out.print("Número de cuenta: ");
-                    String accNum = scanner.nextLine().trim();
+                    System.out.print("IBAN: ");
+                    String iban = scanner.nextLine().trim();
                     System.out.println("DNI dueño: ");
                     String dni = scanner.nextLine().trim();
                     System.out.print("Saldo: ");
                     double amount = Double.parseDouble(scanner.nextLine().trim());
-                    if (data.updateAccount(idB, idS, accNum, dni, amount)) {
+                    Accounts account = data.findAccountByIbanAndDni(iban, dni)
+                            .orElseThrow(() -> new IllegalArgumentException("Cuenta o DNI incorrectos"));
+                    if (data.updateAccount(account.getIban(), amount)) {
                         System.out.println("Cuenta actualizada");
                     } else {
                         System.out.println("No existe esa cuenta");
                     }
-                } catch (Exception e) {
+                } catch (SQLException | IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                 }
             }
@@ -340,11 +401,11 @@ public class Menu {
             case "2" -> {
                 try {
                     System.out.print("Num operación: ");
-                    int numOp = Integer.parseInt(scanner.nextLine().trim());
+                    long numOperac = Long.parseLong(scanner.nextLine().trim());
                     System.out.print("Código banco: ");
-                    int idB = Integer.parseInt(scanner.nextLine().trim());
+                    int idBank = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Código sucursal: ");
-                    int idS = Integer.parseInt(scanner.nextLine().trim());
+                    int idBranch = Integer.parseInt(scanner.nextLine().trim());
                     System.out.print("Número cuenta: ");
                     String accNum = scanner.nextLine().trim();
                     System.out.print("Fecha (YYYY-MM-DD): ");
@@ -362,8 +423,8 @@ public class Menu {
                     System.out.print("Tipo operación: ");
                     String tipo = scanner.nextLine().trim();
                     System.out.print("Observación: ");
-                    String obs = scanner.nextLine().trim();
-                    if (data.insertMovement(numOp, idB, idS, accNum, fecha, amount, tipo, obs)) {
+                    String observacion = scanner.nextLine().trim();
+                    if (data.insertMovement(numOperac, idBank, idBranch, accNum, amount, tipo, observacion)) {
                         System.out.println("Movimiento insertado");
                     }
                 } catch (SQLException e) {

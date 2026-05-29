@@ -6,27 +6,12 @@ public class Client {
 
     private String name;
     private String doc;
-    private int numAcc;
     private ArrayList<Accounts> accs = new ArrayList<>();
     private int accCount = 0;
     private final static int max_accs = 10;
 
-    public static boolean validateDni(String doc) {
-        if (doc.matches("\\d{8}-?[A-Za-z]")) {
-            String DIGIT_CONTROL = "TRWAGMYFPDXBNJZSQVHLCKE";
-            String numbers = doc.replaceAll("[^0-9]", "");
-            String letter = doc.replaceAll("[^A-Za-z]", "").toUpperCase();
-
-            int numberDni = Integer.parseInt(numbers);
-            int index = numberDni % 23;
-
-            return letter.equals(String.valueOf(DIGIT_CONTROL.charAt(index)));
-        }
-        return false;
-    }
-
-    public static boolean validateNie(String doc) {
-        if (doc.matches("^[XYZ]\\d{7}-?[A-Z]$")) {
+    public static boolean validateDoc(String doc) {
+        if (doc.matches("^[XYZ]\\d{7}-?[A-Z]$") || doc.matches("\\d{8}-?[A-Za-z]")) {
             String DIGIT_CONTROL = "TRWAGMYFPDXBNJZSQVHLCKE";
             String numbers = doc.replaceAll("[^0-9]", "");
             String letter = doc.replaceAll("[^A-Za-z]", "").toUpperCase();
@@ -37,6 +22,17 @@ public class Client {
             return letter.equals(String.valueOf(DIGIT_CONTROL.charAt(index)));
         }
         return false;
+    }
+
+    public static String generateDoc() {
+        String DIGIT_CONTROL = "TRWAGMYFPDXBNJZSQVHLCKE";
+        int numbers = (int) (Math.random() * 90_000_000) + 10_000_000;
+        char letter = DIGIT_CONTROL.charAt(numbers % 23);
+        String fullDoc = numbers + "-" + letter;
+        if (!validateDoc(fullDoc)) {
+            return "Invalid dni";
+        }
+        return fullDoc;
     }
 
     public boolean addAccount(Accounts acc) {
@@ -67,24 +63,11 @@ public class Client {
         return doc;
     }
 
-    public String getDni() {
-        return doc;
-    }
-
-    public void setDni(String doc) {
+    public void setDoc(String doc) throws IllegalArgumentException {
+        if (!validateDoc(doc)) {
+            throw new IllegalArgumentException("Invalid doc");
+        }
         this.doc = doc;
-    }
-
-    public void setDoc(String doc) {
-        this.doc = doc;
-    }
-
-    public int getNumAcc() {
-        return numAcc;
-    }
-
-    public void setNumAcc(int numAcc) {
-        this.numAcc = numAcc;
     }
 
     public ArrayList<Accounts> getAccs() {
@@ -105,5 +88,12 @@ public class Client {
 
     public static int getMaxAccs() {
         return max_accs;
+    }
+
+    public Client(String name, String doc, ArrayList<Accounts> accs, int accCount) throws IllegalArgumentException {
+        this.name = name;
+        setDoc(doc);
+        this.accs = accs;
+        this.accCount = accCount;
     }
 }
